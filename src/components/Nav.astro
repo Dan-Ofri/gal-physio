@@ -20,20 +20,15 @@ const links = [
     <a
       href="/"
       aria-label={`${SITE.name} — עמוד הבית`}
-      class="group flex shrink-0 items-center gap-3"
+      class="group shrink-0 transition-opacity hover:opacity-85"
     >
-      <span
-        aria-hidden="true"
-        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white shadow-teal transition-colors group-hover:bg-teal-500"
-      >
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm-4.5 9.5A3.5 3.5 0 0 0 4 15v5h16v-5a3.5 3.5 0 0 0-3.5-3.5h-9z"/>
-        </svg>
-      </span>
-      <div class="leading-tight">
-        <span class="block font-serif text-[17px] font-semibold leading-none text-white">גל עופרי</span>
-        <span class="mt-0.5 block text-[11px] font-medium tracking-wide text-teal-300">פיזיותרפיה ושיקום</span>
-      </div>
+      <img
+        src="/logo.svg"
+        alt="גל עופרי פיזיותרפיה — לוגו"
+        class="h-10 w-auto"
+        width="72"
+        height="40"
+      />
     </a>
 
     <!-- Desktop Nav Links -->
@@ -100,13 +95,8 @@ const links = [
 >
   <!-- Top bar (mirrors header) -->
   <div class="container-prose flex items-center justify-between py-4">
-    <a href="/" aria-label={`${SITE.name} — עמוד הבית`} class="flex items-center gap-3">
-      <span aria-hidden="true" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm-4.5 9.5A3.5 3.5 0 0 0 4 15v5h16v-5a3.5 3.5 0 0 0-3.5-3.5h-9z"/>
-        </svg>
-      </span>
-      <span class="font-serif text-base font-semibold text-white">גל עופרי</span>
+    <a href="/" aria-label={`${SITE.name} — עמוד הבית`}>
+      <img src="/logo.svg" alt="גל עופרי פיזיותרפיה — לוגו" class="h-9 w-auto" width="65" height="36" />
     </a>
     <button
       id="nav-close-btn"

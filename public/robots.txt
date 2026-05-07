@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.galofri-physio.co.il/sitemap-index.xml

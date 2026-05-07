@@ -46,5 +46,24 @@ const { bodyClass, ...seoProps } = Astro.props;
 
     <!-- Slot for page-level scripts -->
     <slot name="scripts" />
+
+    <script>
+      // Scroll-reveal: fade-in-up for all sections except hero
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('reveal-in');
+            observer.unobserve(e.target);
+          }
+        }),
+        { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
+      );
+      document
+        .querySelectorAll('section:not(#hero)')
+        .forEach((el) => {
+          el.classList.add('reveal-init');
+          observer.observe(el);
+        });
+    </script>
   </body>
 </html>
