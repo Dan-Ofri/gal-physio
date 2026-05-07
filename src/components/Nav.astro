@@ -25,7 +25,7 @@ const links = [
       <img
         src="/logo.svg"
         alt="גל עופרי פיזיותרפיה — לוגו"
-        class="h-20 w-auto md:h-24"
+        class="h-14 w-auto md:h-16"
         width="115"
         height="96"
       />
@@ -46,7 +46,7 @@ const links = [
     <!-- Desktop Actions -->
     <div class="hidden items-center gap-4 lg:flex">
       <a
-        href={`tel:${SITE.phone}`}
+        href={`tel:${SITE.phoneE164}`}
         aria-label={`חייג ל-${SITE.name}: ${SITE.phone}`}
         class="flex items-center gap-1.5 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-800"
       >
@@ -96,7 +96,7 @@ const links = [
   <!-- Top bar (mirrors header) -->
   <div class="container-prose flex items-center justify-between py-4">
     <a href="/" aria-label={`${SITE.name} — עמוד הבית`}>
-      <img src="/logo.svg" alt="גל עופרי פיזיותרפיה — לוגו" class="h-16 w-auto" width="86" height="64" />
+      <img src="/logo.svg" alt="גל עופרי פיזיותרפיה — לוגו" class="h-12 w-auto" width="86" height="64" />
     </a>
     <button
       id="nav-close-btn"

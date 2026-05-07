@@ -26,6 +26,9 @@
   --color-navy-800: #2a1511;
   --color-navy-900: #1a0c09;
 
+  /* Contact & quote section dark bg — used as bg-[#42221E] */
+  --color-section-dark: #42221E;
+
   /* Warm neutrals — site background pure white */
   --color-neutral-50:  #fdfbf7;
   --color-neutral-100: #f7f6f4;
@@ -266,7 +269,7 @@
 #services,
 #testimonials,
 #contact {
-  scroll-margin-top: 6rem; /* ~96px — mobile header height */
+  scroll-margin-top: 4.5rem; /* ~72px — mobile header height */
 }
 
 @media (min-width: 768px) {
@@ -274,7 +277,7 @@
   #services,
   #testimonials,
   #contact {
-    scroll-margin-top: 7.5rem; /* ~120px — desktop header height */
+    scroll-margin-top: 5.5rem; /* ~88px — desktop header height */
   }
 }
 

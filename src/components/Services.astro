@@ -115,6 +115,18 @@ const services: Service[] = [
             {service.description}
           </p>
 
+          <!-- Card CTA -->
+          <a
+            href="#contact"
+            class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-teal-700 transition-colors hover:text-teal-600"
+            aria-label={`לפגישת ייעוץ על ${service.title}`}
+          >
+            לתיאום פגישה
+            <svg class="h-3.5 w-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
           <!-- SEO keyword list — hidden visually -->
           <ul class="sr-only" aria-hidden="true">
             {service.keywords.map((k) => <li>{k}</li>)}

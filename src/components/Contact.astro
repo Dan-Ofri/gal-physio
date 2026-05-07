@@ -35,8 +35,7 @@ const contactItems = [
 <section
   id="contact"
   aria-labelledby="contact-heading"
-  class="relative overflow-hidden section-padding"
-  style="background-color: #42221E"
+  class="relative overflow-hidden section-padding bg-[#42221E]"
 >
   <!-- Background blobs -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -48,7 +47,7 @@ const contactItems = [
 
     <!-- Section header (centred, above the 2-col grid) -->
     <div class="mx-auto mb-14 max-w-2xl text-center">
-      <p class="text-xs font-semibold uppercase tracking-widest text-teal-400" aria-hidden="true">
+      <p class="text-xs font-semibold uppercase tracking-widest text-teal-300" aria-hidden="true">
         צור קשר
       </p>
       <h2
@@ -171,25 +170,30 @@ const contactItems = [
           </a>
         </div>
 
+        <!-- Error state -->
+        <div
+          id="form-error-state"
+          class="hidden mt-4 rounded-2xl bg-red-50 px-5 py-4 text-sm text-red-700 ring-1 ring-red-200"
+          role="alert"
+          aria-live="assertive"
+          tabindex="-1"
+        >
+          שגיאה בשליחת הטופס. אנא נסו שוב, או פנו אלינו ישירות בוואטסאפ.
+        </div>
+
         <form
           id="contact-form"
-          name="contact"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
           novalidate
           aria-label="טופס יצירת קשר"
           class="mt-5 space-y-4"
         >
-          <!-- Honeypot (spam filter) -->
-          <input type="hidden" name="form-name" value="contact" />
-          <div class="hidden" aria-hidden="true">
-            <label>אל תמלאו שדה זה: <input name="bot-field" /></label>
-          </div>
+          <!-- Web3Forms access key — get yours free at web3forms.com/create -->
+          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="subject" value="פנייה חדשה מהאתר — גל עופרי פיזיותרפיה" />
 
           <!-- Name -->
           <div>
-            <label for="contact-name" class="sr-only">שם מלא</label>
+            <label for="contact-name" class="form-label">שם מלא</label>
             <input
               type="text"
               id="contact-name"
@@ -205,7 +209,7 @@ const contactItems = [
 
           <!-- Phone -->
           <div>
-            <label for="contact-phone" class="sr-only">מספר טלפון</label>
+            <label for="contact-phone" class="form-label">מספר טלפון</label>
             <input
               type="tel"
               id="contact-phone"
@@ -222,7 +226,7 @@ const contactItems = [
 
           <!-- Message -->
           <div>
-            <label for="contact-message" class="sr-only">הודעה</label>
+            <label for="contact-message" class="form-label">הודעה</label>
             <textarea
               id="contact-message"
               name="message"
@@ -267,6 +271,7 @@ const contactItems = [
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const successEl = document.getElementById('form-success')!;
+  const errorEl = document.getElementById('form-error-state')!;
   const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
   const submitText = document.getElementById('submit-text')!;
   const submitSpinner = document.getElementById('submit-spinner')!;
@@ -321,21 +326,41 @@ const contactItems = [
     e.preventDefault();
     if (!validate()) return;
 
-    // Loading state
     submitBtn.disabled = true;
     submitText.textContent = 'שולח...';
     submitSpinner.classList.remove('hidden');
+    errorEl.classList.add('hidden');
 
     try {
-      // Netlify / any POST endpoint — replace action with your own if needed
-      const data = new FormData(form);
-      await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data as unknown as Record<string, string>).toString() });
-    } catch {
-      // Silently fail — show success regardless; real messages go via WhatsApp fallback
-    } finally {
+      const accessKey = (form.querySelector('[name="access_key"]') as HTMLInputElement).value;
+      const name = (document.getElementById('contact-name') as HTMLInputElement).value.trim();
+      const phone = (document.getElementById('contact-phone') as HTMLInputElement).value.trim();
+      const message = (document.getElementById('contact-message') as HTMLTextAreaElement).value.trim();
+
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: 'פנייה חדשה מהאתר — גל עופרי פיזיותרפיה',
+          name,
+          phone,
+          message,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Submission failed');
+
       form.classList.add('hidden');
+      errorEl.classList.add('hidden');
       successEl.classList.remove('hidden');
       successEl.focus();
+    } catch {
+      submitBtn.disabled = false;
+      submitText.textContent = 'שלחו הודעה';
+      submitSpinner.classList.add('hidden');
+      errorEl.classList.remove('hidden');
+      errorEl.focus();
     }
   });
 </script>

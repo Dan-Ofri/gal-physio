@@ -15,7 +15,8 @@ const { bodyClass, ...seoProps } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0d6e8b" />
+    <meta name="theme-color" content="#fdfbf7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a0c09" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -31,7 +32,7 @@ const { bodyClass, ...seoProps } = Astro.props;
     <!-- Skip navigation for screen readers and keyboard users -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-teal-800 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-50 focus:rounded-lg focus:bg-teal-800 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
     >
       דלג לתוכן הראשי
     </a>
