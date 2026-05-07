@@ -2,11 +2,6 @@
 import { Image } from 'astro:assets';
 import clinicHero from '../assets/clinic.png';
 
-const stats: { value?: string; label: string }[] = [
-  { value: '100%', label: 'ליווי אישי' },
-  { value: '500+', label: 'מטופלים' },
-  { label: 'טיפול מבוסס מחקר' },
-];
 ---
 
 <section
@@ -21,7 +16,7 @@ const stats: { value?: string; label: string }[] = [
   </div>
 
   <!-- ── Content grid ── -->
-  <div class="container-prose relative z-10 grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
+  <div class="container-prose relative z-10 grid items-center gap-12 py-16 pb-24 lg:grid-cols-2 lg:gap-20 lg:py-32">
 
     <!-- Text (first in DOM = right column in RTL desktop, top in mobile) -->
     <div class="flex flex-col text-center lg:text-start">
@@ -78,29 +73,6 @@ const stats: { value?: string; label: string }[] = [
         </a>
       </div>
 
-      <!-- Trust stats -->
-      <div
-        class="animate-fade-up mt-10 flex items-center justify-center gap-7 border-t border-neutral-200 pt-8 lg:justify-start [animation-delay:0.8s]"
-        aria-label="נתוני אמון"
-      >
-        {stats.map(({ value, label }, i) => (
-          <>
-            <div class="text-center lg:text-start">
-              {value ? (
-                <>
-                  <p class="font-serif text-2xl font-bold text-neutral-900" aria-label={`${value} ${label}`}>{value}</p>
-                  <p class="mt-0.5 text-xs font-medium text-neutral-500">{label}</p>
-                </>
-              ) : (
-                <p class="text-sm font-semibold leading-snug text-neutral-600" aria-label={label}>{label}</p>
-              )}
-            </div>
-            {i < stats.length - 1 && (
-              <div aria-hidden="true" class="h-8 w-px shrink-0 bg-neutral-200"></div>
-            )}
-          </>
-        ))}
-      </div>
     </div>
 
     <!-- ── Photo column ── -->
