@@ -1,7 +1,6 @@
 /* Fonts */
-@import '@fontsource-variable/rubik';
+@import '@fontsource-variable/assistant';
 @import '@fontsource-variable/inter';
-@import '@fontsource-variable/playfair-display';
 
 /* Tailwind v4 entry point */
 @import 'tailwindcss';
@@ -35,9 +34,9 @@
   --color-accent-gold: #c9a84c;
   --color-accent-rose: #e8a598;
 
-  /* Typography — Rubik leads for Hebrew; Inter is the Latin fallback */
-  --font-sans: 'Rubik Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
+  /* Typography — Assistant Variable for Hebrew & Latin; Inter as Latin fallback */
+  --font-sans:  'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
 
   /* Spacing scale extensions */
   --spacing-18: 4.5rem;
@@ -102,7 +101,8 @@
 
   body {
     background-color: var(--color-neutral-50);
-    color: var(--color-neutral-800);
+    color: var(--color-neutral-700);
+    line-height: 1.7;
   }
 
   /* Focus styles — always visible, never outline:none */
@@ -113,14 +113,14 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-serif);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
   }
 
   p, li, blockquote {
-    line-height: 1.75;
+    line-height: 1.7;
   }
 
   img {
