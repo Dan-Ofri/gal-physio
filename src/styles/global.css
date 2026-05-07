@@ -26,10 +26,10 @@
   --color-navy-800: #2a1511;
   --color-navy-900: #1a0c09;
 
-  /* Warm neutrals — site background #faf8f5 */
-  --color-neutral-50:  #faf8f5;
-  --color-neutral-100: #f3f0eb;
-  --color-neutral-200: #e5e0d8;
+  /* Warm neutrals — site background pure white */
+  --color-neutral-50:  #ffffff;
+  --color-neutral-100: #f7f6f4;
+  --color-neutral-200: #e8e3db;
   --color-neutral-300: #d1c9bf;
   --color-neutral-500: #8a8078;
   --color-neutral-600: #6b6259;

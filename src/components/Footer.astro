@@ -41,18 +41,10 @@ const socialLinks = [
         <a
           href="/"
           aria-label={`${SITE.name} — עמוד הבית`}
-          class="group inline-flex items-center gap-3"
+          class="group inline-flex items-center"
         >
-          <span
-            aria-hidden="true"
-            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-teal-600 text-white transition-colors group-hover:bg-teal-500"
-          >
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm-4.5 9.5A3.5 3.5 0 0 0 4 15v5h16v-5a3.5 3.5 0 0 0-3.5-3.5h-9z"/>
-            </svg>
-          </span>
           <div class="leading-tight">
-            <span class="block font-serif text-[17px] font-semibold text-white">גל עופרי</span>
+            <span class="block font-serif text-[17px] font-semibold text-white transition-colors group-hover:text-teal-300">גל עופרי</span>
             <span class="block text-[11px] font-medium text-teal-400">פיזיותרפיה ושיקום</span>
           </div>
         </a>
@@ -105,7 +97,17 @@ const socialLinks = [
               {SITE.email}
             </a>
           </li>
-          <li class="text-sm text-neutral-500">{SITE.address.street}, {SITE.address.cityHebrew}</li>
+          <li>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-neutral-400 transition-colors hover:text-white"
+              aria-label={`פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`}
+            >
+              {SITE.address.street}, {SITE.address.cityHebrew}
+            </a>
+          </li>
         </ul>
       </div>
 
