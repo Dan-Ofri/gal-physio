@@ -1,0 +1,148 @@
+---
+interface Testimonial {
+  id: number;
+  text: string;
+  author: string;
+  role: string;
+  initials: string;
+  service: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    id: 1,
+    text: 'לאחר פציעת ברך שחשבתי שתסיים את הספורט שלי לנצח, גל הצליחה להחזיר אותי לאימונים בפחות מחודשיים. היא לא רק פיזיותרפיסטית — היא שותפה אמיתית במסע השיקום. מקצועית, קשובה ומדהימה בכל מובן.',
+    author: 'רן כ.',
+    role: 'רץ אמן, גיל 32',
+    initials: 'רכ',
+    service: 'שיקום ספורט',
+  },
+  {
+    id: 2,
+    text: 'סבלתי מכאבי גב תחתון כרוניים במשך שנים. גל אבחנה את הבעיה שאף מטפל.ת אחר.ת לא הצליח.ה למצוא, ואחרי שישה שבועות של טיפול — הכאב פשוט נעלם. ממליצה עליה בחום לכל מי שסובל.ת מכאב.',
+    author: 'מיכל א.',
+    role: 'מנהלת שיווק, גיל 45',
+    initials: 'מא',
+    service: 'טיפול בכאב',
+  },
+  {
+    id: 3,
+    text: 'הבאתי את בתי בת ה-16 לגל כשסבלה מכאבי גדילה עצומים. הגישה של גל לבני נוער היא מיוחדת במינה — סבלנית, מקצועית ותמיד עם חיוך. הבת שלי חזרה לשגרה הפעילה שלה ומאוד אוהבת את הטיפולים.',
+    author: 'שרה מ.',
+    role: 'אמא של מטופלת',
+    initials: 'שמ',
+    service: 'ליווי בני נוער',
+  },
+];
+
+const STAR_PATH =
+  'M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z';
+---
+
+<section
+  id="testimonials"
+  aria-labelledby="testimonials-heading"
+  class="section-padding bg-white"
+>
+  <div class="container-prose">
+
+    <!-- Section header -->
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="text-xs font-semibold uppercase tracking-widest text-teal-700" aria-hidden="true">
+        מה אומרים המטופלים
+      </p>
+      <h2
+        id="testimonials-heading"
+        class="mt-3 font-serif text-3xl font-bold text-neutral-900 md:text-4xl"
+      >
+        סיפורים של חזרה לחיים
+      </h2>
+      <p class="mt-4 leading-relaxed text-neutral-500">
+        כל מטופל.ת מביא.ה איתו.ה סיפור שונה — ואנחנו כאן בשביל כולם.
+      </p>
+    </div>
+
+    <!-- Testimonial cards grid -->
+    <div
+      class="mt-14 grid gap-6 md:grid-cols-3"
+      role="list"
+      aria-label="המלצות מטופלים"
+    >
+      {testimonials.map((t) => (
+        <article
+          role="listitem"
+          class="group flex flex-col rounded-3xl bg-neutral-50 p-8 ring-1 ring-neutral-100 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover hover:ring-teal-100"
+          aria-label={`המלצה מ-${t.author}`}
+        >
+          <!-- Stars -->
+          <div
+            class="flex items-center gap-0.5"
+            role="img"
+            aria-label="דירוג: 5 כוכבים מתוך 5"
+          >
+            {Array.from({ length: 5 }).map(() => (
+              <svg
+                class="h-4 w-4 text-amber-400"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d={STAR_PATH} />
+              </svg>
+            ))}
+          </div>
+
+          <!-- Blockquote -->
+          <blockquote class="mt-5 flex-1">
+            <!-- Decorative opening quote mark -->
+            <svg
+              aria-hidden="true"
+              class="mb-3 h-6 w-6 text-teal-200 transition-colors duration-300 group-hover:text-teal-300"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+            <p class="text-sm leading-relaxed text-neutral-600">
+              {t.text}
+            </p>
+          </blockquote>
+
+          <!-- Divider -->
+          <div aria-hidden="true" class="my-6 h-px bg-neutral-200/70"></div>
+
+          <!-- Author -->
+          <footer class="flex items-center gap-3">
+            <!-- Avatar with initials -->
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-700"
+              aria-hidden="true"
+            >
+              {t.initials}
+            </div>
+            <div class="min-w-0">
+              <cite class="block text-sm font-semibold not-italic text-neutral-800">
+                {t.author}
+              </cite>
+              <p class="text-xs text-neutral-400">{t.role}</p>
+            </div>
+            <!-- Service tag -->
+            <span
+              class="ms-auto shrink-0 rounded-full bg-teal-50 px-2.5 py-1 text-xs font-medium text-teal-700"
+              aria-label={`שירות: ${t.service}`}
+            >
+              {t.service}
+            </span>
+          </footer>
+        </article>
+      ))}
+    </div>
+
+    <!-- Aggregate trust signal -->
+    <p class="mt-10 text-center text-sm text-neutral-400" aria-live="polite">
+      <span class="font-semibold text-neutral-600">500+</span> מטופלים מרוצים •
+      דירוג ממוצע <span class="font-semibold text-neutral-600">5/5</span> כוכבים
+    </p>
+
+  </div>
+</section>

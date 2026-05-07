@@ -27,16 +27,17 @@ const imageUrl = new URL(image, SITE.url).href;
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': ['LocalBusiness', 'MedicalBusiness'],
   '@id': SITE.url,
   name: SITE.name,
   description: SITE.description,
   url: SITE.url,
-  telephone: SITE.phone,
+  telephone: SITE.phoneE164,
   email: SITE.email,
   address: {
     '@type': 'PostalAddress',
     streetAddress: SITE.address.street,
+    // addressLocality uses the English city name to maximise Google local ranking
     addressLocality: SITE.address.city,
     addressRegion: SITE.address.region,
     postalCode: SITE.address.postalCode,
@@ -51,9 +52,16 @@ const jsonLd = {
     '@type': 'OpeningHoursSpecification',
     description: hours,
   })),
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: SITE.phoneE164,
+    contactType: 'customer support',
+    availableLanguage: { '@type': 'Language', name: 'Hebrew' },
+  },
   medicalSpecialty: 'PhysicalTherapy',
   image: imageUrl,
   priceRange: '$$',
+  sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.linkedin].filter(Boolean),
 };
 ---
 
