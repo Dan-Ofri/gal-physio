@@ -1,0 +1,50 @@
+---
+import SEO from '@components/SEO.astro';
+import type { Props as SEOProps } from '@components/SEO.astro';
+import '@styles/global.css';
+
+export interface Props extends SEOProps {
+  bodyClass?: string;
+}
+
+const { bodyClass, ...seoProps } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d6e8b" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <SEO {...seoProps} />
+
+    <!-- Preconnect to font CDN if using web fonts -->
+    <slot name="head" />
+  </head>
+
+  <body class={bodyClass}>
+    <!-- Skip navigation for screen readers and keyboard users -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-teal-800 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <slot name="header" />
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <slot name="footer" />
+
+    <!-- Slot for page-level scripts -->
+    <slot name="scripts" />
+  </body>
+</html>

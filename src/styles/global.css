@@ -1,0 +1,179 @@
+/* Fonts */
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/playfair-display';
+
+/* Tailwind v4 entry point */
+@import 'tailwindcss';
+
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+@theme {
+  /* Brand palette */
+  --color-teal-50: #eef9fb;
+  --color-teal-100: #d4f0f5;
+  --color-teal-200: #ace2ec;
+  --color-teal-400: #4ecdc4;
+  --color-teal-600: #1a8fa8;
+  --color-teal-700: #0d7a92;
+  --color-teal-800: #0d6e8b;
+  --color-teal-900: #0a5269;
+
+  --color-navy-700: #264c73;
+  --color-navy-800: #1b3a5c;
+  --color-navy-900: #0f1e2d;
+
+  --color-neutral-50: #fafaf8;
+  --color-neutral-100: #f5f5f0;
+  --color-neutral-200: #e8e8e2;
+  --color-neutral-300: #d4d4cc;
+  --color-neutral-500: #8b8b84;
+  --color-neutral-600: #6b6b65;
+  --color-neutral-700: #4f4f4a;
+  --color-neutral-800: #3d3d38;
+  --color-neutral-900: #1e1e1a;
+
+  --color-accent-gold: #c9a84c;
+  --color-accent-rose: #e8a598;
+
+  /* Typography */
+  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
+
+  /* Spacing scale extensions */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-88: 22rem;
+  --spacing-128: 32rem;
+
+  /* Border radius */
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  /* Shadows */
+  --shadow-teal: 0 4px 24px -4px rgb(13 110 139 / 0.25);
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
+  --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
+}
+
+/* ─── Base Styles ────────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    scroll-behavior: smooth;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-neutral-50);
+    color: var(--color-neutral-800);
+  }
+
+  /* Focus styles — always visible, never outline:none */
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  p, li, blockquote {
+    line-height: 1.75;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ─── Components ─────────────────────────────────────────────────────────── */
+@layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: var(--color-teal-800);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    border-radius: 9999px;
+    transition: background-color 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+    box-shadow: var(--shadow-teal);
+    text-decoration: none;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-teal-700);
+    box-shadow: 0 6px 32px -4px rgb(13 110 139 / 0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    background-color: transparent;
+    color: var(--color-teal-800);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.01em;
+    border-radius: 9999px;
+    border: 2px solid var(--color-teal-800);
+    transition: background-color 200ms ease, color 200ms ease, transform 150ms ease;
+    text-decoration: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--color-teal-800);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 7rem;
+      padding-bottom: 7rem;
+    }
+  }
+
+  .container-prose {
+    width: 100%;
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-prose {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+}

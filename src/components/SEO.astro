@@ -1,0 +1,86 @@
+---
+import { SITE } from '@data/site';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
+  url?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = SITE.description,
+  image = SITE.openGraph.image,
+  imageAlt = SITE.openGraph.imageAlt,
+  url = Astro.url.href,
+  type = 'website',
+  noindex = false,
+} = Astro.props;
+
+const fullTitle = title ? `${title} | ${SITE.name}` : SITE.name;
+const canonicalUrl = new URL(url, SITE.url).href;
+const imageUrl = new URL(image, SITE.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': SITE.url,
+  name: SITE.name,
+  description: SITE.description,
+  url: SITE.url,
+  telephone: SITE.phone,
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.geo.latitude,
+    longitude: SITE.geo.longitude,
+  },
+  openingHoursSpecification: SITE.openingHours.map((hours) => ({
+    '@type': 'OpeningHoursSpecification',
+    description: hours,
+  })),
+  medicalSpecialty: 'PhysicalTherapy',
+  image: imageUrl,
+  priceRange: '$$',
+};
+---
+
+<!-- Primary Meta -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- OpenGraph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:image:width" content={String(SITE.openGraph.imageWidth)} />
+<meta property="og:image:height" content={String(SITE.openGraph.imageHeight)} />
+<meta property="og:locale" content={SITE.locale} />
+<meta property="og:site_name" content={SITE.name} />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={imageAlt} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
