@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 600" width="480" height="600" role="img" aria-label="גל עופרי, פיזיותרפיסטית מוסמכת">
+  <title>גל עופרי — פיזיותרפיסטית מוסמכת</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F1E2D"/>
+      <stop offset="100%" stop-color="#0A4A60"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#4ECDC4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0D6E8B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bodyGlow" cx="50%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#1A8FA8" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#0D6E8B" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="figFill" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4ECDC4" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#0D6E8B" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="coat" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A8FA8" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#0A4A60" stop-opacity="0.3"/>
+    </linearGradient>
+    <clipPath id="frame">
+      <rect width="480" height="600" rx="0"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="600" fill="url(#bg)"/>
+  <rect width="480" height="600" fill="url(#glow)"/>
+  <rect width="480" height="600" fill="url(#bodyGlow)"/>
+
+  <g clip-path="url(#frame)">
+    <!-- Decorative circles -->
+    <circle cx="430" cy="70" r="90" fill="#0D6E8B" fill-opacity="0.22"/>
+    <circle cx="430" cy="70" r="50" fill="#4ECDC4" fill-opacity="0.12"/>
+    <circle cx="50" cy="550" r="70" fill="#4ECDC4" fill-opacity="0.1"/>
+
+    <!-- Dot grid (subtle, top-left) -->
+    <g fill="#4ECDC4" fill-opacity="0.12">
+      <circle cx="52"  cy="52"  r="2.5"/><circle cx="80"  cy="52"  r="2.5"/><circle cx="108" cy="52"  r="2.5"/>
+      <circle cx="52"  cy="80"  r="2.5"/><circle cx="80"  cy="80"  r="2.5"/><circle cx="108" cy="80"  r="2.5"/>
+      <circle cx="52"  cy="108" r="2.5"/><circle cx="80"  cy="108" r="2.5"/><circle cx="108" cy="108" r="2.5"/>
+    </g>
+
+    <!-- Medical cross (top-right, subtle) -->
+    <g transform="translate(410,48)" fill="#4ECDC4" fill-opacity="0.45">
+      <rect x="-3"  y="-11" width="6"  height="22" rx="3"/>
+      <rect x="-11" y="-3"  width="22" height="6"  rx="3"/>
+    </g>
+
+    <!-- ── Person silhouette ── -->
+    <!-- Head -->
+    <circle cx="240" cy="178" r="75" fill="url(#figFill)"/>
+    <!-- Neck -->
+    <rect   x="218" y="244" width="44" height="30" rx="4" fill="url(#figFill)"/>
+    <!-- Lab coat / body -->
+    <path d="M110 600 Q118 405 240 355 Q362 405 370 600Z" fill="url(#coat)"/>
+    <!-- Coat lapels (give a professional "white coat" feel) -->
+    <path d="M204 358 Q185 430 210 460 L240 430Z" fill="#0F1E2D" fill-opacity="0.35"/>
+    <path d="M276 358 Q295 430 270 460 L240 430Z" fill="#0F1E2D" fill-opacity="0.35"/>
+    <!-- Arms (subtle, hanging at sides) -->
+    <ellipse cx="138" cy="470" rx="22" ry="50" fill="url(#coat)" transform="rotate(8,138,470)"/>
+    <ellipse cx="342" cy="470" rx="22" ry="50" fill="url(#coat)" transform="rotate(-8,342,470)"/>
+    <!-- Stethoscope (around neck) -->
+    <path d="M215 268 Q188 320 188 375 Q188 415 220 428 Q248 438 250 412"
+          stroke="#4ECDC4" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-opacity="0.65"/>
+    <circle cx="219" cy="430" r="9" fill="none" stroke="#4ECDC4" stroke-width="3" stroke-opacity="0.6"/>
+    <circle cx="219" cy="430" r="4" fill="#4ECDC4" fill-opacity="0.5"/>
+
+    <!-- Name badge (bottom) -->
+    <rect x="110" y="540" width="260" height="50" rx="14" fill="#0D6E8B" fill-opacity="0.55" stroke="#4ECDC4" stroke-width="1" stroke-opacity="0.35"/>
+    <text x="240" y="561" text-anchor="middle" font-family="'Rubik','Arial',sans-serif" font-size="15" font-weight="700" fill="#4ECDC4" fill-opacity="0.92">גל עופרי</text>
+    <text x="240" y="580" text-anchor="middle" font-family="'Rubik','Arial',sans-serif" font-size="10" fill="white" fill-opacity="0.5">פיזיותרפיסטית מוסמכת • B.P.T</text>
+  </g>
+
+  <!-- Outer border ring -->
+  <rect width="480" height="600" fill="none" stroke="#4ECDC4" stroke-width="1" stroke-opacity="0.18"/>
+</svg>

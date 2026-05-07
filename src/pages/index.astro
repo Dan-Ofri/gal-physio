@@ -1,41 +1,14 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/Nav.astro';
+import Hero from '@components/Hero.astro';
 import { SITE } from '@data/site';
 ---
 
-<BaseLayout
-  title="Home"
-  description={SITE.description}
->
-  <Fragment slot="header">
-    <!-- Header / Nav will be built in the next phase -->
-  </Fragment>
+<BaseLayout description={SITE.description}>
+  <Nav slot="header" />
 
-  <!-- Hero Section (placeholder — will be replaced) -->
-  <section
-    aria-labelledby="hero-heading"
-    class="relative flex min-h-screen items-center bg-navy-800"
-  >
-    <div class="container-prose py-24 text-center text-white md:text-left">
-      <p class="mb-4 font-sans text-sm font-semibold uppercase tracking-widest text-teal-400">
-        Physiotherapy &amp; Rehabilitation
-      </p>
-      <h1 id="hero-heading" class="font-serif text-4xl font-bold md:text-6xl lg:text-7xl">
-        {SITE.tagline}
-      </h1>
-      <p class="mx-auto mt-6 max-w-2xl font-sans text-lg text-neutral-200 md:mx-0">
-        {SITE.description}
-      </p>
-      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row md:items-start">
-        <a href="#contact" class="btn-primary">Book an Appointment</a>
-        <a href="#services" class="btn-secondary border-white text-white hover:bg-white hover:text-navy-800">
-          Our Services
-        </a>
-      </div>
-    </div>
-  </section>
+  <Hero />
 
-  <Fragment slot="footer">
-    <!-- Footer will be built in the next phase -->
-  </Fragment>
+  <!-- Future sections: Services, About, Testimonials, Contact, Footer -->
 </BaseLayout>

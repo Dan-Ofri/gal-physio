@@ -1,4 +1,5 @@
 /* Fonts */
+@import '@fontsource-variable/rubik';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/playfair-display';
 
@@ -34,8 +35,8 @@
   --color-accent-gold: #c9a84c;
   --color-accent-rose: #e8a598;
 
-  /* Typography */
-  --font-sans: 'Inter Variable', system-ui, -apple-system, sans-serif;
+  /* Typography — Rubik leads for Hebrew; Inter is the Latin fallback */
+  --font-sans: 'Rubik Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
   --font-serif: 'Playfair Display Variable', Georgia, 'Times New Roman', serif;
 
   /* Spacing scale extensions */
@@ -53,6 +54,37 @@
   --shadow-teal: 0 4px 24px -4px rgb(13 110 139 / 0.25);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
+
+  /* Animations */
+  --animate-fade-up: fadeUp 0.7s ease both;
+  --animate-fade-in: fadeIn 0.8s ease both;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* ─── Base Styles ────────────────────────────────────────────────────────── */
