@@ -172,19 +172,20 @@
     gap: 0.5rem;
     padding: 0.75rem 2rem;
     background-color: transparent;
-    color: var(--color-teal-800);
+    color: var(--color-neutral-700);
     font-weight: 600;
     font-size: 0.9375rem;
     letter-spacing: 0.01em;
     border-radius: 9999px;
-    border: 2px solid var(--color-teal-800);
-    transition: background-color 200ms ease, color 200ms ease, transform 150ms ease;
+    border: 1.5px solid var(--color-neutral-300);
+    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
     text-decoration: none;
   }
 
   .btn-secondary:hover {
-    background-color: var(--color-teal-800);
-    color: white;
+    background-color: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+    border-color: var(--color-neutral-400);
     transform: translateY(-1px);
   }
 

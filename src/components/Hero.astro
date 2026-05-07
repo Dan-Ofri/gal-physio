@@ -2,10 +2,10 @@
 import { Image } from 'astro:assets';
 import clinicHero from '../assets/clinic.png';
 
-const stats = [
-  { value: 'B.P.T', label: 'מוסמכת' },
-  { value: '500+', label: 'מטופלים.ות' },
-  { value: '100%', label: 'מחויבות לתוצאות' },
+const stats: { value?: string; label: string }[] = [
+  { value: '100%', label: 'ליווי אישי' },
+  { value: '500+', label: 'מטופלים' },
+  { label: 'טיפול מבוסס מחקר' },
 ];
 ---
 
@@ -30,8 +30,8 @@ const stats = [
       <p
         class="animate-fade-up mb-6 inline-flex items-center justify-center gap-2 self-center text-sm font-medium text-accent-gold lg:self-start [animation-delay:0.1s]"
       >
-        <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>
-        פיזיותרפיה ושיקום מקצועי
+        <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-accent-gold"></span>
+        פיזיותרפיסטית מוסמכת (B.P.T)
       </p>
 
       <!-- H1 — includes "פיזיותרפיה" and "שיקום" keywords -->
@@ -48,7 +48,7 @@ const stats = [
       <p
         class="animate-fade-up mt-6 text-base leading-relaxed text-neutral-500 sm:text-lg lg:max-w-lg [animation-delay:0.45s]"
       >
-        שילוב בין ידע רפואי מעמיק להבנה אינטואיטיבית של הגוף. משיקום פציעות מורכבות ועד לשיפור התפקוד היומיומי — אני כאן כדי ללוות אתכם בתהליך חזרה בטוח, מדויק ונטול כאב לשגרה שלכם.
+        שילוב בין ידע רפואי מעמיק להבנה אינטואיטיבית של הגוף. משיקום פציעות מורכבות ועד לשיפור התפקוד היומיומי — אני כאן כדי ללוות אתכם בתהליך חזרה בטוחה, מדויקת ונטולת כאב לשגרה שלכם.
       </p>
 
       <!-- CTA buttons -->
@@ -86,8 +86,14 @@ const stats = [
         {stats.map(({ value, label }, i) => (
           <>
             <div class="text-center lg:text-start">
-              <p class="font-serif text-2xl font-bold text-neutral-900" aria-label={`${value} ${label}`}>{value}</p>
-              <p class="mt-0.5 text-xs font-medium text-neutral-500">{label}</p>
+              {value ? (
+                <>
+                  <p class="font-serif text-2xl font-bold text-neutral-900" aria-label={`${value} ${label}`}>{value}</p>
+                  <p class="mt-0.5 text-xs font-medium text-neutral-500">{label}</p>
+                </>
+              ) : (
+                <p class="text-sm font-semibold leading-snug text-neutral-600" aria-label={label}>{label}</p>
+              )}
             </div>
             {i < stats.length - 1 && (
               <div aria-hidden="true" class="h-8 w-px shrink-0 bg-neutral-200"></div>
@@ -121,24 +127,6 @@ const stats = [
             class="block w-full object-cover object-top"
           />
         </figure>
-
-        <!-- Floating credential badge -->
-        <div
-          class="absolute -bottom-5 -start-5 flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-card ring-1 ring-teal-200/60"
-          role="note"
-          aria-label="פיזיותרפיסטית מוסמכת (B.P.T)"
-        >
-          <span aria-hidden="true" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-teal-100">
-            <svg class="h-5 w-5 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke-linecap="round"/>
-              <polyline points="22 4 12 14.01 9 11.01" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <div>
-            <p class="text-sm font-semibold leading-tight text-neutral-800">פיזיותרפיסטית מוסמכת</p>
-            <p class="text-xs leading-tight text-neutral-500">(B.P.T)</p>
-          </div>
-        </div>
 
       </div>
     </div>
