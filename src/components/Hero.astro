@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import galPlaceholder from '../assets/gal-placeholder.svg';
+import galHero from '../assets/gal-hero.jpg';
 
 const stats = [
   { value: '10+',  label: 'שנות ניסיון' },
@@ -117,21 +117,14 @@ const stats = [
 
         <!-- Photo frame -->
         <figure class="relative overflow-hidden rounded-[2rem] ring-1 ring-white/8 shadow-card-hover">
-          <!--
-            Replace with a real photo:
-            import { Image } from 'astro:assets';
-            import galPhoto from '../assets/gal-photo.jpg';
-            <Image src={galPhoto} alt="גל עופרי, פיזיותרפיסטית מוסמכת" width={480} height={600}
-                   loading="eager" fetchpriority="high" class="w-full object-cover" />
-          -->
           <Image
-            src={galPlaceholder}
-            alt="גל עופרי, פיזיותרפיסטית מוסמכת — תמונה תוחלף בקרוב"
+            src={galHero}
+            alt="גל עופרי פיזיותרפיסטית בתל אביב — טיפול פיזיותרפיה בשיקום ספורט לבני נוער"
             width={480}
             height={600}
             loading="eager"
             fetchpriority="high"
-            class="block w-full"
+            class="block w-full object-cover object-top"
           />
         </figure>
 
