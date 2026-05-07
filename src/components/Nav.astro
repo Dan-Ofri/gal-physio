@@ -36,7 +36,7 @@ const links = [
       {links.map(({ href, label }) => (
         <a
           href={href}
-          class="rounded-lg px-3.5 py-2 text-sm font-medium text-neutral-600 transition-all duration-200 hover:bg-neutral-100 hover:text-neutral-900 focus-visible:bg-neutral-100 focus-visible:text-neutral-900"
+          class="rounded-lg px-3.5 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
         >
           {label}
         </a>
@@ -154,13 +154,13 @@ const links = [
 <style>
   /* ── Header scroll state ── */
   #site-header {
-    background: transparent;
+    background: #fdfbf7;
   }
   #site-header.is-scrolled {
-    background: rgb(250 248 245 / 0.94);
+    background: rgb(253 251 247 / 0.82);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
-    box-shadow: 0 1px 0 rgb(0 0 0 / 0.06), 0 4px 16px -4px rgb(0 0 0 / 0.07);
+    box-shadow: 0 1px 32px -8px rgb(0 0 0 / 0.08);
   }
 
   /* ── Mobile menu overlay ── */
