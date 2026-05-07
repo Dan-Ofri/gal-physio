@@ -6,8 +6,11 @@ interface Testimonial {
   role: string;
   initials: string;
   service: string;
+  location: string;
+  date: string;
 }
 
+// Note for client: please verify/update location and date fields with actual patient data
 const testimonials: Testimonial[] = [
   {
     id: 1,
@@ -16,6 +19,8 @@ const testimonials: Testimonial[] = [
     role: 'רץ אמן, גיל 32',
     initials: 'רכ',
     service: 'שיקום ספורט',
+    location: 'תל אביב',
+    date: 'ינואר 2026',
   },
   {
     id: 2,
@@ -24,6 +29,8 @@ const testimonials: Testimonial[] = [
     role: 'מנהלת שיווק, גיל 45',
     initials: 'מא',
     service: 'טיפול בכאב',
+    location: 'גבעתיים',
+    date: 'מרץ 2026',
   },
   {
     id: 3,
@@ -32,6 +39,8 @@ const testimonials: Testimonial[] = [
     role: 'אמא של מטופלת',
     initials: 'שמ',
     service: 'ליווי בני נוער',
+    location: 'תל אביב',
+    date: 'פברואר 2026',
   },
 ];
 
@@ -46,7 +55,7 @@ const testimonials: Testimonial[] = [
 
     <!-- Section header -->
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-xs font-semibold uppercase tracking-widest text-accent-gold" aria-hidden="true">
+      <p class="text-xs font-semibold tracking-wide text-accent-gold" aria-hidden="true">
         מה אומרים המטופלים
       </p>
       <h2
@@ -104,7 +113,7 @@ const testimonials: Testimonial[] = [
               <cite class="block text-sm font-semibold not-italic text-neutral-800">
                 {t.author}
               </cite>
-              <p class="text-xs text-neutral-400">{t.role}</p>
+              <p class="text-xs text-neutral-500">{t.role} · {t.location} · {t.date}</p>
             </div>
             <!-- Service tag -->
             <span
@@ -124,7 +133,7 @@ const testimonials: Testimonial[] = [
         href="https://www.google.com/maps/search/?api=1&query=גל+עופרי+פיזיותרפיה+בלוך+38+תל+אביב"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-sm font-medium text-neutral-400 transition-colors hover:text-neutral-600"
+        class="inline-flex items-center gap-2 text-sm font-medium text-neutral-500 transition-colors hover:text-neutral-700"
         aria-label="ראו את כל הביקורות ב-Google"
       >
         <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">

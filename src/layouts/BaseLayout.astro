@@ -28,7 +28,7 @@ const { bodyClass, ...seoProps } = Astro.props;
     <slot name="head" />
   </head>
 
-  <body class={bodyClass}>
+  <body class={`pb-16 lg:pb-0${bodyClass ? ` ${bodyClass}` : ''}`}>
     <!-- Skip navigation for screen readers and keyboard users -->
     <a
       href="#main-content"

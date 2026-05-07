@@ -139,8 +139,8 @@ const links = [
       תיאום ייעוץ ראשוני
     </a>
     <a
-      href={`tel:${SITE.phone}`}
-      class="flex items-center justify-center gap-2 text-sm text-neutral-400 transition-colors hover:text-neutral-700"
+      href={`tel:${SITE.phoneE164}`}
+      class="flex items-center justify-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-700"
       aria-label={`חייג: ${SITE.phone}`}
     >
       <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -186,6 +186,8 @@ const links = [
   const menu      = document.getElementById('mobile-menu')!;
   const iconMenu  = document.getElementById('icon-menu')!;
   const iconClose = document.getElementById('icon-close')!;
+  const mainEl    = document.getElementById('main-content')!;
+  const footerEl  = document.querySelector('footer')!;
 
   // ── Scroll → frosted glass ──
   const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 20);
@@ -200,6 +202,9 @@ const links = [
     iconMenu.classList.add('hidden');
     iconClose.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    // Trap focus: background content becomes inert
+    mainEl.setAttribute('inert', '');
+    footerEl.setAttribute('inert', '');
     (menu.querySelector('a') as HTMLElement | null)?.focus();
   };
 
@@ -210,6 +215,8 @@ const links = [
     iconMenu.classList.remove('hidden');
     iconClose.classList.add('hidden');
     document.body.style.overflow = '';
+    mainEl.removeAttribute('inert');
+    footerEl.removeAttribute('inert');
     toggle.focus();
   };
 

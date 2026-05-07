@@ -34,6 +34,7 @@
   --color-neutral-100: #f7f6f4;
   --color-neutral-200: #e8e3db;
   --color-neutral-300: #d1c9bf;
+  --color-neutral-400: #b0a79e;
   --color-neutral-500: #8a8078;
   --color-neutral-600: #6b6259;
   --color-neutral-700: #504740;
@@ -249,7 +250,7 @@
   }
 
   .form-input::placeholder {
-    color: var(--color-neutral-400);
+    color: var(--color-neutral-500);
   }
 
   .form-input[aria-invalid='true'] {
