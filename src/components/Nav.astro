@@ -20,16 +20,15 @@ const links = [
     <button
       id="nav-toggle"
       type="button"
-      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-neutral-700 transition-colors hover:bg-neutral-100 lg:hidden"
+      class="flex h-10 w-10 shrink-0 items-center justify-center text-neutral-700 transition-colors hover:text-teal-600 lg:hidden"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="פתח תפריט ניווט"
     >
-      <svg id="icon-menu" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
-      <svg id="icon-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path stroke-linecap="round" d="M18 6 6 18M6 6l12 12"/>
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <line class="menu-bar" id="bar-top" x1="4" y1="7" x2="20" y2="7" stroke-linecap="round" />
+        <line class="menu-bar" id="bar-mid" x1="4" y1="12" x2="20" y2="12" stroke-linecap="round" />
+        <line class="menu-bar" id="bar-bot" x1="4" y1="17" x2="20" y2="17" stroke-linecap="round" />
       </svg>
     </button>
 
@@ -50,23 +49,15 @@ const links = [
       </a>
     </div>
 
-    <!-- Mobile: phone icon (left=end in RTL); hidden on desktop -->
-    <a
-      href={`tel:${SITE.phoneE164}`}
-      aria-label={`חייגו לגל עופרי: ${SITE.phone}`}
-      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-neutral-700 transition-colors hover:bg-neutral-100 lg:hidden"
-    >
-      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.33a2 2 0 0 1 2-1.72h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.94 6.94l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
+    <!-- Spacer: keeps logo centered between hamburger and this (lg:hidden = desktop collapses it) -->
+    <div class="h-10 w-10 shrink-0 lg:hidden" aria-hidden="true"></div>
 
     <!-- Desktop Nav Links; hidden on mobile -->
-    <nav aria-label="ניווט ראשי" class="hidden items-center gap-1 lg:flex">
+    <nav aria-label="ניווט ראשי" class="hidden items-center gap-2 lg:flex">
       {links.map(({ href, label }) => (
         <a
           href={href}
-          class="rounded-lg px-4 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
+          class="rounded-lg px-5 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
         >
           {label}
         </a>
@@ -178,6 +169,22 @@ const links = [
     box-shadow: 0 4px 24px -4px rgb(0 0 0 / 0.12);
   }
 
+  /* ── Hamburger → X animation ── */
+  .menu-bar {
+    transform-box: stroke-box;
+    transform-origin: center;
+    transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  }
+  #nav-toggle[aria-expanded='true'] #bar-top {
+    transform: translateY(5px) rotate(45deg);
+  }
+  #nav-toggle[aria-expanded='true'] #bar-mid {
+    opacity: 0;
+  }
+  #nav-toggle[aria-expanded='true'] #bar-bot {
+    transform: translateY(-5px) rotate(-45deg);
+  }
+
   /* ── Mobile menu overlay — animated entrance/exit ── */
   #mobile-menu {
     display: flex;
@@ -209,14 +216,12 @@ const links = [
 </style>
 
 <script>
-  const header    = document.getElementById('site-header')!;
-  const toggle    = document.getElementById('nav-toggle')!;
-  const closeBtn  = document.getElementById('nav-close-btn')!;
-  const menu      = document.getElementById('mobile-menu')!;
-  const iconMenu  = document.getElementById('icon-menu')!;
-  const iconClose = document.getElementById('icon-close')!;
-  const mainEl    = document.getElementById('main-content')!;
-  const footerEl  = document.querySelector('footer')!;
+  const header   = document.getElementById('site-header')!;
+  const toggle   = document.getElementById('nav-toggle')!;
+  const closeBtn = document.getElementById('nav-close-btn')!;
+  const menu     = document.getElementById('mobile-menu')!;
+  const mainEl   = document.getElementById('main-content')!;
+  const footerEl = document.querySelector('footer')!;
 
   // ── Scroll → frosted glass ──
   const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 20);
@@ -228,8 +233,6 @@ const links = [
     menu.dataset.open = 'true';
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'סגור תפריט ניווט');
-    iconMenu.classList.add('hidden');
-    iconClose.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
     header.classList.add('menu-open');
     mainEl.setAttribute('inert', '');
@@ -241,8 +244,6 @@ const links = [
     menu.dataset.open = 'false';
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'פתח תפריט ניווט');
-    iconMenu.classList.remove('hidden');
-    iconClose.classList.add('hidden');
     document.body.style.overflow = '';
     header.classList.remove('menu-open');
     mainEl.removeAttribute('inert');

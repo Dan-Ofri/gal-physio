@@ -45,6 +45,9 @@ const { bodyClass, ...seoProps } = Astro.props;
 
     <slot name="footer" />
 
+    <!-- Fixed overlays (sticky bars, modals) — keeps them inside <body> -->
+    <slot name="overlay" />
+
     <!-- Slot for page-level scripts -->
     <slot name="scripts" />
 

@@ -25,14 +25,14 @@ import { SITE } from '@data/site';
   <Contact />
 
   <Footer slot="footer" />
-</BaseLayout>
 
-<!-- ── Sticky mobile action bar — replaces floating WhatsApp button ── -->
-<div
-  class="fixed inset-x-0 bottom-0 z-30 lg:hidden"
-  role="complementary"
-  aria-label="יצירת קשר מהירה"
->
+  <!-- ── Sticky mobile action bar ── -->
+  <div
+    slot="overlay"
+    class="fixed inset-x-0 bottom-0 z-30 lg:hidden"
+    role="complementary"
+    aria-label="יצירת קשר מהירה"
+  >
   <div class="flex border-t border-neutral-200/60 bg-white/96 backdrop-blur-md">
     <a
       href={`tel:${SITE.phoneE164}`}
@@ -58,4 +58,5 @@ import { SITE } from '@data/site';
       וואטסאפ
     </a>
   </div>
-</div>
+  </div>
+</BaseLayout>
