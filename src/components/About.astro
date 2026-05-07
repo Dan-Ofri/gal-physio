@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import galAbout from '../assets/gal-about.jpg';
+import treatmentAbout from '../assets/treatment.png';
 
 ---
 
@@ -26,8 +26,8 @@ import galAbout from '../assets/gal-about.jpg';
 
           <figure class="relative overflow-hidden rounded-[2rem] shadow-card ring-1 ring-neutral-200/60">
             <Image
-              src={galAbout}
-              alt="גל עופרי פיזיותרפיסטית בתל אביב — טיפול פיזיותרפיה ודיקור יבש בקליניקה"
+              src={treatmentAbout}
+              alt="טיפול פיזיותרפיה מקצועי בקליניקת גל עופרי בתל אביב"
               width={480}
               height={560}
               loading="lazy"
@@ -44,14 +44,14 @@ import galAbout from '../assets/gal-about.jpg';
       <div class="order-1 lg:order-2">
 
         <!-- Eyebrow -->
-        <p class="text-xs font-semibold uppercase tracking-widest text-teal-700" aria-hidden="true">
+        <p class="text-xs font-semibold uppercase tracking-widest text-accent-gold" aria-hidden="true">
           אודות
         </p>
 
         <!-- H2 — "פיזיותרפיסטית מוסמכת" is the primary keyword here -->
         <h2
           id="about-heading"
-          class="mt-3 font-serif text-3xl font-bold leading-tight text-neutral-900 md:text-4xl"
+          class="mt-3 font-serif text-3xl font-bold leading-tight text-teal-700 md:text-4xl"
         >
           נעים להכיר, אני גל
           <span class="sr-only">— פיזיותרפיסטית מוסמכת לשיקום ופיזיותרפיה</span>

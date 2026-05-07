@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import galHero from '../assets/gal-hero.jpg';
+import clinicHero from '../assets/clinic.png';
 
 const stats = [
   { value: 'B.P.T', label: 'מוסמכת' },
@@ -12,7 +12,7 @@ const stats = [
 <section
   id="hero"
   aria-labelledby="hero-heading"
-  class="relative flex min-h-svh items-center overflow-hidden bg-neutral-50 pt-20"
+  class="relative flex min-h-svh items-center overflow-hidden bg-neutral-50 pt-28 md:pt-36"
 >
   <!-- Subtle warm glow — very low opacity, clinical feel -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0 select-none overflow-hidden">
@@ -28,7 +28,7 @@ const stats = [
 
       <!-- Eyebrow / badge -->
       <p
-        class="animate-fade-up mb-6 inline-flex items-center justify-center gap-2 self-center text-sm font-medium text-teal-700 lg:self-start [animation-delay:0.1s]"
+        class="animate-fade-up mb-6 inline-flex items-center justify-center gap-2 self-center text-sm font-medium text-accent-gold lg:self-start [animation-delay:0.1s]"
       >
         <span aria-hidden="true" class="h-1.5 w-1.5 rounded-full bg-teal-500"></span>
         פיזיותרפיה ושיקום מקצועי
@@ -110,10 +110,10 @@ const stats = [
         ></div>
 
         <!-- Photo frame -->
-        <figure class="relative overflow-hidden rounded-[2rem] ring-1 ring-neutral-200/80 shadow-card-hover">
+        <figure class="relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/80 shadow-card-hover">
           <Image
-            src={galHero}
-            alt="גל עופרי פיזיותרפיסטית בתל אביב — טיפול פיזיותרפיה בשיקום ספורט לבני נוער"
+            src={clinicHero}
+            alt="קליניקת פיזיותרפיה של גל עופרי בתל אביב — סביבת טיפול מקצועית וחמה"
             width={480}
             height={600}
             loading="eager"
