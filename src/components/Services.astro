@@ -63,7 +63,7 @@ const services: Service[] = [
 
     <!-- Section header -->
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-xs font-semibold tracking-wide text-accent-gold" aria-hidden="true">
+      <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">
         השירותים שלי
       </p>
       <h2
@@ -72,7 +72,7 @@ const services: Service[] = [
       >
         איך אני יכולה לעזור לך?
       </h2>
-      <p class="mt-4 leading-relaxed text-neutral-500">
+      <p class="mt-4 leading-relaxed text-neutral-600">
         מטיפול בכאב ועד שיקום ספורט — אני כאן לעזור לכם לחזור לנוע בחופשיות, לתפקד ביומיום ולהרגיש טוב בגוף שלכם.
       </p>
     </div>
@@ -114,18 +114,6 @@ const services: Service[] = [
           <p class="mt-3 flex-1 text-sm leading-relaxed text-neutral-600">
             {service.description}
           </p>
-
-          <!-- Card CTA -->
-          <a
-            href="#contact"
-            class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-teal-700 transition-colors hover:text-teal-600"
-            aria-label={`לפגישת ייעוץ על ${service.title}`}
-          >
-            לתיאום פגישה
-            <svg class="h-3.5 w-3.5 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-              <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
 
           <!-- SEO keyword list — hidden visually -->
           <ul class="sr-only" aria-hidden="true">
