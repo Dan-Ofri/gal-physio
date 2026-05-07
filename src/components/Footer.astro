@@ -28,7 +28,7 @@ const socialLinks = [
 ---
 
 <footer
-  class="border-t border-white/6 bg-navy-900"
+  class="border-t-2 border-teal-100 bg-teal-50"
   aria-label="כותרת תחתונה"
 >
   <div class="container-prose py-12 md:py-16">
@@ -44,11 +44,11 @@ const socialLinks = [
           class="group inline-flex flex-col items-start"
         >
           <div class="leading-tight">
-            <span class="block font-serif text-[17px] font-semibold text-white transition-colors group-hover:text-teal-300">גל עופרי</span>
-            <span class="block text-[11px] font-medium text-accent-gold">פיזיותרפיה ושיקום</span>
+            <span class="block font-serif text-[17px] font-semibold text-neutral-900 transition-colors group-hover:text-teal-700">גל עופרי</span>
+            <span class="block text-[11px] font-medium text-teal-600">פיזיותרפיה ושיקום</span>
           </div>
         </a>
-        <p class="mt-4 max-w-xs text-sm leading-loose text-neutral-500">
+        <p class="mt-4 max-w-xs text-sm leading-loose text-neutral-600">
           פיזיותרפיסטית מוסמכת בתל אביב — שיקום ספורט, טיפול בכאב, וליווי אישי לכל שלב בחיים.
         </p>
       </div>
@@ -58,7 +58,7 @@ const socialLinks = [
 
       <!-- Navigation links -->
       <nav aria-label="ניווט תחתון">
-        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-300">
+        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">
           ניווט
         </p>
         <ul class="space-y-2.5">
@@ -66,7 +66,7 @@ const socialLinks = [
             <li>
               <a
                 href={href}
-                class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
+                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
               >
                 {label}
               </a>
@@ -77,7 +77,7 @@ const socialLinks = [
 
       <!-- Contact details -->
       <div>
-        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-300">
+        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">
           יצירת קשר
         </p>
         <ul class="space-y-2.5" aria-label="פרטי יצירת קשר">
@@ -85,7 +85,7 @@ const socialLinks = [
             <a
               href={`tel:${SITE.phoneE164}`}
               dir="ltr"
-              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
+              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
               aria-label={`חייגו: ${SITE.phone}`}
             >
               {SITE.phone}
@@ -94,7 +94,7 @@ const socialLinks = [
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
+              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
               aria-label={`שלחו אימייל: ${SITE.email}`}
             >
               {SITE.email}
@@ -105,7 +105,7 @@ const socialLinks = [
               href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
+              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
               aria-label={`פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`}
             >
               {SITE.address.street}, {SITE.address.cityHebrew}
@@ -119,11 +119,11 @@ const socialLinks = [
     </div>
 
     <!-- Divider -->
-    <div aria-hidden="true" class="my-10 h-px bg-[#FDFBF7]/20"></div>
+    <div aria-hidden="true" class="my-10 h-px bg-teal-100"></div>
 
     <!-- Bottom bar: copyright + social icons -->
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <p class="text-sm text-neutral-500" aria-label={`זכויות יוצרים ${year}`}>
+      <p class="text-sm text-neutral-600" aria-label={`זכויות יוצרים ${year}`}>
         © {year} גל עופרי — פיזיותרפיסטית מוסמכת
       </p>
 
@@ -136,7 +136,7 @@ const socialLinks = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              class="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-neutral-400 transition-all duration-200 hover:border-teal-300/40 hover:text-teal-300"
+              class="flex h-8 w-8 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-all duration-200 hover:border-teal-200 hover:text-teal-600"
             >
               <svg
                 class="h-4 w-4"
