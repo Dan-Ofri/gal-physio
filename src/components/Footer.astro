@@ -34,28 +34,36 @@ const socialLinks = [
   <div class="container-prose py-12 md:py-16">
 
     <!-- Top grid: brand | nav | contact -->
-    <div class="grid gap-10 md:grid-cols-3 md:gap-8">
+    <div class="grid gap-10 md:grid-cols-3 md:gap-6">
 
       <!-- Brand -->
       <div>
         <a
           href="/"
           aria-label={`${SITE.name} — עמוד הבית`}
-          class="group inline-flex items-center"
+          class="group inline-flex flex-col items-start"
         >
+          <img
+            src="/favicon.svg"
+            alt=""
+            aria-hidden="true"
+            width="30"
+            height="30"
+            class="mb-1.5 h-[30px] w-[30px] opacity-85 transition-opacity group-hover:opacity-100"
+          />
           <div class="leading-tight">
             <span class="block font-serif text-[17px] font-semibold text-white transition-colors group-hover:text-teal-300">גל עופרי</span>
-            <span class="block text-[11px] font-medium text-teal-400">פיזיותרפיה ושיקום</span>
+            <span class="block text-[11px] font-medium text-accent-gold">פיזיותרפיה ושיקום</span>
           </div>
         </a>
-        <p class="mt-4 max-w-xs text-sm leading-relaxed text-neutral-500">
+        <p class="mt-4 max-w-xs text-sm leading-loose text-neutral-500">
           פיזיותרפיסטית מוסמכת בתל אביב — שיקום ספורט, טיפול בכאב, וליווי אישי לכל שלב בחיים.
         </p>
       </div>
 
       <!-- Navigation links -->
       <nav aria-label="ניווט תחתון">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-neutral-500">
+        <p class="mb-4 text-xs font-bold uppercase tracking-widest text-neutral-300">
           ניווט
         </p>
         <ul class="space-y-2.5">
@@ -63,7 +71,7 @@ const socialLinks = [
             <li>
               <a
                 href={href}
-                class="text-sm text-neutral-400 transition-colors hover:text-white"
+                class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
               >
                 {label}
               </a>
@@ -74,7 +82,7 @@ const socialLinks = [
 
       <!-- Contact details -->
       <div>
-        <p class="mb-4 text-xs font-semibold uppercase tracking-widest text-neutral-500">
+        <p class="mb-4 text-xs font-bold uppercase tracking-widest text-neutral-300">
           יצירת קשר
         </p>
         <ul class="space-y-2.5" aria-label="פרטי יצירת קשר">
@@ -82,7 +90,7 @@ const socialLinks = [
             <a
               href={`tel:${SITE.phoneE164}`}
               dir="ltr"
-              class="text-sm text-neutral-400 transition-colors hover:text-white"
+              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
               aria-label={`חייגו: ${SITE.phone}`}
             >
               {SITE.phone}
@@ -91,7 +99,7 @@ const socialLinks = [
           <li>
             <a
               href={`mailto:${SITE.email}`}
-              class="text-sm text-neutral-400 transition-colors hover:text-white"
+              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
               aria-label={`שלחו אימייל: ${SITE.email}`}
             >
               {SITE.email}
@@ -102,7 +110,7 @@ const socialLinks = [
               href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-sm text-neutral-400 transition-colors hover:text-white"
+              class="text-sm text-neutral-400 underline-offset-2 transition-colors hover:text-teal-300 hover:underline"
               aria-label={`פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`}
             >
               {SITE.address.street}, {SITE.address.cityHebrew}
@@ -114,7 +122,7 @@ const socialLinks = [
     </div>
 
     <!-- Divider -->
-    <div aria-hidden="true" class="my-10 h-px bg-white/6"></div>
+    <div aria-hidden="true" class="my-10 h-px bg-[#FDFBF7]/20"></div>
 
     <!-- Bottom bar: copyright + social icons -->
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -123,7 +131,7 @@ const socialLinks = [
       </p>
 
       <!-- Social icons -->
-      <div class="flex items-center gap-2" role="list" aria-label="קישורי רשתות חברתיות">
+      <div class="flex items-center gap-3" role="list" aria-label="קישורי רשתות חברתיות">
         {socialLinks.map((social) => (
           <div role="listitem">
             <a
@@ -131,14 +139,14 @@ const socialLinks = [
               target="_blank"
               rel="noopener noreferrer"
               aria-label={social.label}
-              class="flex h-9 w-9 items-center justify-center rounded-xl text-neutral-500 ring-1 ring-white/10 transition-all duration-200 hover:bg-white/8 hover:text-white hover:ring-white/20"
+              class="flex h-8 w-8 items-center justify-center rounded-full border border-white/15 text-neutral-400 transition-all duration-200 hover:border-teal-300/40 hover:text-teal-300"
             >
               <svg
                 class="h-4 w-4"
                 viewBox="0 0 24 24"
                 fill={social.fill ? 'currentColor' : 'none'}
                 stroke={social.fill ? 'none' : 'currentColor'}
-                stroke-width="2"
+                stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 aria-hidden="true"
