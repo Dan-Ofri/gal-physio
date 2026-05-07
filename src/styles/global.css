@@ -262,6 +262,23 @@
   }
 }
 
+/* ─── Anchor Scroll Offset (fixed header compensation) ──────────────────────── */
+#about,
+#services,
+#testimonials,
+#contact {
+  scroll-margin-top: 6rem; /* ~96px — mobile header height */
+}
+
+@media (min-width: 768px) {
+  #about,
+  #services,
+  #testimonials,
+  #contact {
+    scroll-margin-top: 7.5rem; /* ~120px — desktop header height */
+  }
+}
+
 /* ─── Scroll Reveal ──────────────────────────────────────────────────────────── */
 .reveal-init {
   opacity: 0;
