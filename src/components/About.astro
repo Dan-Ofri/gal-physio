@@ -24,7 +24,7 @@ import galAboutPro from '../assets/gal-about-pro.jpeg';
             class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-teal-50/80 to-transparent blur-sm"
           ></div>
 
-          <figure class="relative overflow-hidden rounded-[2rem] shadow-card ring-1 ring-neutral-200/60">
+          <figure class="relative overflow-hidden rounded-3xl shadow-card ring-1 ring-neutral-200/60">
             <Image
               src={galAboutPro}
               alt="גל עופרי פיזיותרפיסטית מוסמכת מבצעת טיפול — קליניקה בתל אביב"
@@ -41,40 +41,40 @@ import galAboutPro from '../assets/gal-about-pro.jpeg';
         Text: left column in RTL (lg:order-2 = second grid position = left in RTL),
         top on mobile (order-1).
       -->
-      <div class="order-1 lg:order-2">
+      <div class="order-1 px-6 text-center lg:order-2 lg:px-0 lg:text-start">
 
         <!-- Eyebrow -->
         <p class="text-xs font-semibold uppercase tracking-widest text-accent-gold" aria-hidden="true">
           אודות
         </p>
 
-        <!-- H2 — "פיזיותרפיסטית מוסמכת" is the primary keyword here -->
+        <!-- H2 -->
         <h2
           id="about-heading"
           class="mt-3 font-serif text-3xl font-bold leading-tight text-teal-700 md:text-4xl"
         >
-          נעים מאוד, אני גל
+          גל עופרי
           <span class="sr-only">— פיזיותרפיסטית מוסמכת לשיקום ופיזיותרפיה</span>
         </h2>
         <p class="mt-2 text-sm font-medium tracking-wide text-teal-700">
-          B.P.T · פיזיותרפיסטית מוסמכת · לשעבר מתעמלת תחרותית
+          פיזיותרפיסטית מוסמכת (B.P.T) | מתעמלת תחרותית לשעבר
         </p>
 
         <!-- Introduction -->
-        <p class="mt-5 leading-relaxed text-neutral-600">
-          אני גל עופרי –
-          <strong class="font-semibold text-neutral-800">פיזיותרפיסטית מוסמכת (B.P.T)</strong>,
-          עם תשוקה אמיתית לעזור לאנשים לחזור לנוע בחופשיות ולהרגיש טוב בגוף שלהם. הגעתי לתחום מתוך אהבה עמוקה לתנועה ולאנשים.
+        <p class="mt-5 leading-[1.85] text-neutral-600">
+          נעים מאוד, אני גל עופרי –
+          <strong class="font-semibold text-neutral-800">עם תשוקה אמיתית לעזור לאנשים</strong>
+          לחזור לנוע בחופשיות ולהרגיש טוב בגוף שלהם. הגעתי לתחום מתוך אהבה עמוקה לתנועה ולאנשים.
         </p>
 
         <!-- Personal story -->
-        <p class="leading-relaxed text-neutral-600">
+        <p class="leading-[1.85] text-neutral-600">
           כ<strong class="font-semibold text-neutral-800">מתעמלת תחרותית לשעבר</strong>
           שחוותה פציעות ותהליכי שיקום מורכבים בעצמה, אני מכירה מקרוב לא רק את האנטומיה, אלא גם את האתגר המנטלי הכרוך בכאב. בשנים האחרונות אני מלווה ספורטאים, מתבגרים ומבוגרים בתהליכי שיקום ושיפור ביצועים.
         </p>
 
         <!-- Philosophy -->
-        <p class="leading-relaxed text-neutral-600">
+        <p class="leading-[1.85] text-neutral-600">
           מה שמניע אותי הוא הרגע שבו המטופלים מבינים שהם יכולים לחזור לרוץ, להתאמן, להרים את הילד בלי כאב, או פשוט לקום בבוקר ולהרגיש קל יותר בגוף. אני מאמינה שטיפול הוא הסתכלות על
           <strong class="font-semibold text-neutral-800">האדם כולו</strong>:
           על ההרגלים, הנפש, והיכולת של הגוף לרפא את עצמו כשנותנים לו את הכלים והליווי הנכונים.
@@ -88,7 +88,7 @@ import galAboutPro from '../assets/gal-about-pro.jpeg';
         </ul>
 
         <!-- CTA -->
-        <div class="mt-8">
+        <div class="mt-8 flex justify-center lg:justify-start">
           <a
             href="#contact"
             class="btn-primary"
