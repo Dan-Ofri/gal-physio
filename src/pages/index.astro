@@ -2,6 +2,8 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/Nav.astro';
 import Hero from '@components/Hero.astro';
+import Services from '@components/Services.astro';
+import About from '@components/About.astro';
 import { SITE } from '@data/site';
 ---
 
@@ -10,5 +12,13 @@ import { SITE } from '@data/site';
 
   <Hero />
 
-  <!-- Future sections: Services, About, Testimonials, Contact, Footer -->
+  <!--
+    Section order rationale:
+    Services → About mirrors the visitor's thought process:
+    "What can you do for me?" (Services) → "Who are you?" (About) → Contact
+  -->
+  <Services />
+  <About />
+
+  <!-- TODO: Testimonials, Contact, Footer -->
 </BaseLayout>
