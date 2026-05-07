@@ -105,37 +105,16 @@ const contactItems = [
           ))}
         </div>
 
-        <!-- Opening hours -->
-        <div class="rounded-2xl bg-white/5 p-6 ring-1 ring-white/8">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-neutral-500">
-            שעות פעילות
-          </p>
-          <ul class="space-y-1.5" aria-label="שעות פעילות הקליניקה">
-            <li class="flex justify-between text-sm">
-              <span class="text-neutral-400">ראשון – חמישי</span>
-              <span class="font-medium text-white" dir="ltr">08:00 – 19:00</span>
-            </li>
-            <li class="flex justify-between text-sm">
-              <span class="text-neutral-400">שישי</span>
-              <span class="font-medium text-white" dir="ltr">08:00 – 14:00</span>
-            </li>
-            <li class="flex justify-between text-sm">
-              <span class="text-neutral-400">שבת</span>
-              <span class="font-medium text-neutral-500">סגור</span>
-            </li>
-          </ul>
-        </div>
-
         <!-- Navigation buttons -->
         <div class="flex flex-wrap gap-2.5" aria-label="כלי ניווט לקליניקה">
           <a
             href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-xl bg-[#4285F4]/15 px-4 py-2.5 text-sm font-medium text-white ring-1 ring-[#4285F4]/30 transition-all duration-200 hover:bg-[#4285F4]/25 hover:ring-[#4285F4]/50"
+            class="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-white/75 transition-all duration-200 hover:border-white/40 hover:text-white"
             aria-label="ניווט לקליניקה ב-Google Maps"
           >
-            <svg class="h-4 w-4 shrink-0 text-[#4285F4]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/>
               <circle cx="12" cy="10" r="3"/>
             </svg>
@@ -145,7 +124,7 @@ const contactItems = [
             href="https://waze.com/ul?q=Bloch%2038%20Tel%20Aviv"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-xl bg-[#33CCFF]/15 px-4 py-2.5 text-sm font-medium text-white ring-1 ring-[#33CCFF]/30 transition-all duration-200 hover:bg-[#33CCFF]/25 hover:ring-[#33CCFF]/50"
+            class="inline-flex items-center gap-2 rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium text-white/75 transition-all duration-200 hover:border-white/40 hover:text-white"
             aria-label="ניווט לקליניקה ב-Waze"
           >
             <svg class="h-4 w-4 shrink-0 text-[#33CCFF]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

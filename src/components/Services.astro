@@ -136,29 +136,23 @@ const services: Service[] = [
             {service.keywords.map((k) => <li>{k}</li>)}
           </ul>
 
-          <!-- Divider -->
-          <div aria-hidden="true" class="my-7 h-px bg-neutral-100"></div>
-
-          <!-- Card CTA -->
-          <a
-            href="#contact"
-            class="inline-flex items-center gap-2 text-sm font-semibold text-teal-700 transition-all duration-200 hover:text-teal-900 group-hover:gap-3"
-            aria-label={`לתיאום ייעוץ ראשוני עבור ${service.title}`}
-          >
-            לתיאום ייעוץ ראשוני
-            <svg
-              class="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:-translate-x-0.5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              aria-hidden="true"
-            >
-              <polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
         </article>
       ))}
+    </div>
+
+    <!-- Section CTA -->
+    <div class="mt-14 text-center">
+      <a
+        href="#contact"
+        class="btn-primary px-10 py-4 text-base"
+        aria-label="לתיאום ייעוץ ראשוני עם גל עופרי פיזיותרפיה"
+      >
+        <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linejoin="round"/>
+          <path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/>
+        </svg>
+        לתיאום ייעוץ ראשוני
+      </a>
     </div>
 
   </div>
