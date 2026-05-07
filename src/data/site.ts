@@ -15,11 +15,11 @@ export const SITE = {
 
   // ── Address ───────────────────────────────────────────────────────────────
   address: {
-    street: 'תל אביב',
-    city: 'Tel Aviv',           // English for Google local SEO
-    cityHebrew: 'תל אביב',
+    street: 'בלוך 38',
+    city: 'Tel Aviv-Yafo',
+    cityHebrew: 'תל אביב-יפו',
     region: 'Tel Aviv District',
-    postalCode: '6100000',
+    postalCode: '6522407',
     country: 'IL',
     countryName: 'Israel',
   },
@@ -33,7 +33,7 @@ export const SITE = {
 
   // ── Social ────────────────────────────────────────────────────────────────
   social: {
-    instagram: '',
+    instagram: 'https://www.instagram.com/galofri/',
     facebook: '',
     linkedin: '',
   },

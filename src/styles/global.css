@@ -7,34 +7,35 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 @theme {
-  /* ── Brand palette — derived from logo warm earth tones ── */
+  /* ── Brand palette — logo's dominant dusty rose (#a8645d) + amber (#de9256) ── */
 
-  /* Terracotta / brand-primary  (replaces teal) */
-  --color-teal-50:  #fdf4ef;   /* lightest blush */
-  --color-teal-100: #f8e5d8;
-  --color-teal-200: #f2cbb4;
-  --color-teal-300: #e8a87a;   /* hero h1 accent, light text on dark */
-  --color-teal-400: #de9256;   /* amber — direct logo colour */
-  --color-teal-600: #c5663a;   /* medium terracotta */
-  --color-teal-700: #a85430;   /* hover / dark-mode accent */
-  --color-teal-800: #8f4326;   /* primary CTA — 6.7:1 with #fff ✅ WCAG AA */
-  --color-teal-900: #6d3118;   /* deepest brand */
+  /* Dusty rose scale — primary brand */
+  --color-teal-50:  #fdf7f5;   /* site background blush */
+  --color-teal-100: #f5e8e5;
+  --color-teal-200: #e8ccc8;
+  --color-teal-300: #d19e97;   /* light rose — use on dark bg */
+  --color-teal-400: #be7d77;   /* mid rose */
+  --color-teal-500: #a8645d;   /* logo primary colour */
+  --color-teal-600: #8f504a;   /* hover */
+  --color-teal-700: #733f3a;   /* body text accent — 7.3:1 on white ✅ */
+  --color-teal-800: #5c312c;   /* primary CTA — 9.1:1 on white ✅ WCAG AAA */
+  --color-teal-900: #3d1e1a;   /* deepest */
 
-  /* Warm charcoal  (replaces navy) */
-  --color-navy-700: #3d2418;
-  --color-navy-800: #2a1810;   /* dark card panels */
-  --color-navy-900: #1a0e08;   /* hero / section dark bg */
+  /* Warm charcoal (replaces navy) — footer / dark sections */
+  --color-navy-700: #3a1e1a;
+  --color-navy-800: #2a1511;
+  --color-navy-900: #1a0c09;
 
-  /* Neutrals — warm-shifted */
-  --color-neutral-50:  #fdfaf7;
-  --color-neutral-100: #f7f2ed;
-  --color-neutral-200: #ede6df;
-  --color-neutral-300: #d9cfc6;
-  --color-neutral-500: #8c8278;
-  --color-neutral-600: #6e6459;
-  --color-neutral-700: #524840;
-  --color-neutral-800: #3d3530;
-  --color-neutral-900: #1f1a16;
+  /* Warm neutrals — site background #faf8f5 */
+  --color-neutral-50:  #faf8f5;
+  --color-neutral-100: #f3f0eb;
+  --color-neutral-200: #e5e0d8;
+  --color-neutral-300: #d1c9bf;
+  --color-neutral-500: #8a8078;
+  --color-neutral-600: #6b6259;
+  --color-neutral-700: #504740;
+  --color-neutral-800: #3a322c;
+  --color-neutral-900: #1f1714;
 
   /* Accents — pulled directly from logo */
   --color-accent-gold: #de9256;   /* logo amber */
@@ -56,7 +57,7 @@
   --radius-3xl: 2rem;
 
   /* Shadows */
-  --shadow-teal: 0 4px 24px -4px rgb(143 67 38 / 0.30);
+  --shadow-teal: 0 4px 24px -4px rgb(92 49 44 / 0.25);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
 
@@ -156,7 +157,7 @@
 
   .btn-primary:hover {
     background-color: var(--color-teal-700);
-    box-shadow: 0 6px 32px -4px rgb(143 67 38 / 0.4);
+    box-shadow: 0 6px 32px -4px rgb(92 49 44 / 0.35);
     transform: translateY(-1px);
   }
 

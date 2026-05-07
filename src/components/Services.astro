@@ -58,7 +58,7 @@ const services: Service[] = [
 <section
   id="services"
   aria-labelledby="services-heading"
-  class="relative section-padding overflow-hidden bg-white"
+  class="relative section-padding overflow-hidden bg-neutral-50"
 >
   <!-- Subtle decorative radial at corner -->
   <div
@@ -97,47 +97,16 @@ const services: Service[] = [
       {services.map((service) => (
         <article
           role="listitem"
-          class:list={[
-            'group relative flex flex-col rounded-3xl p-8 transition-all duration-300 ease-out',
-            'hover:-translate-y-2 focus-within:-translate-y-1',
-            service.featured
-              ? [
-                  'bg-navy-800',
-                  'shadow-[0_8px_40px_-8px_rgb(15_30_45_/_0.45)]',
-                  'hover:shadow-[0_20px_60px_-12px_rgb(15_30_45_/_0.6)]',
-                ]
-              : [
-                  'bg-white',
-                  'shadow-card',
-                  'ring-1 ring-neutral-200/80',
-                  'hover:shadow-card-hover hover:ring-teal-200/60',
-                ],
-          ]}
+          class="group flex flex-col rounded-2xl bg-white p-10 ring-1 ring-neutral-200 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-teal-200/70 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.07)]"
         >
-          <!-- "Hכי נפוץ" badge for featured card -->
-          {service.featured && (
-            <div
-              class="absolute -top-3.5 end-6 rounded-full bg-teal-500 px-4 py-1 text-xs font-bold text-white shadow-sm"
-              aria-label="השירות הנפוץ ביותר"
-            >
-              הכי נפוץ
-            </div>
-          )}
-
           <!-- Icon container -->
           <div
-            class:list={[
-              'mb-6 flex h-14 w-14 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110',
-              service.featured ? 'bg-teal-600/90' : 'bg-teal-50',
-            ]}
+            class="mb-7 flex h-12 w-12 items-center justify-center rounded-xl bg-teal-50 transition-colors duration-300 group-hover:bg-teal-100"
             role="img"
             aria-label={service.iconAriaLabel}
           >
             <svg
-              class:list={[
-                'h-6 w-6',
-                service.featured ? 'text-white' : 'text-teal-700',
-              ]}
+              class="h-5 w-5 text-teal-700"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -148,63 +117,35 @@ const services: Service[] = [
           </div>
 
           <!-- Title -->
-          <h3
-            class:list={[
-              'font-serif text-xl font-bold leading-snug',
-              service.featured ? 'text-white' : 'text-neutral-900',
-            ]}
-          >
+          <h3 class="font-serif text-xl font-bold leading-snug text-neutral-900">
             {service.title}
           </h3>
 
           <!-- Tagline -->
-          <p
-            class:list={[
-              'mt-1.5 text-sm font-semibold',
-              service.featured ? 'text-teal-300' : 'text-teal-700',
-            ]}
-          >
+          <p class="mt-1.5 text-sm font-semibold text-teal-700">
             {service.tagline}
           </p>
 
           <!-- Description -->
-          <p
-            class:list={[
-              'mt-4 flex-1 text-sm leading-relaxed',
-              service.featured ? 'text-neutral-300' : 'text-neutral-500',
-            ]}
-          >
+          <p class="mt-4 flex-1 text-sm leading-relaxed text-neutral-500">
             {service.description}
           </p>
 
-          <!-- SEO keyword list — hidden visually, readable by search crawlers -->
+          <!-- SEO keyword list — hidden visually -->
           <ul class="sr-only" aria-hidden="true">
             {service.keywords.map((k) => <li>{k}</li>)}
           </ul>
 
           <!-- Divider -->
-          <div
-            aria-hidden="true"
-            class:list={[
-              'my-6 h-px',
-              service.featured ? 'bg-white/10' : 'bg-neutral-100',
-            ]}
-          ></div>
+          <div aria-hidden="true" class="my-7 h-px bg-neutral-100"></div>
 
           <!-- Card CTA -->
           <a
             href="#contact"
-            class:list={[
-              'inline-flex items-center gap-2 text-sm font-semibold',
-              'transition-all duration-200 group-hover:gap-3',
-              service.featured
-                ? 'text-teal-300 hover:text-white'
-                : 'text-teal-700 hover:text-teal-900',
-            ]}
+            class="inline-flex items-center gap-2 text-sm font-semibold text-teal-700 transition-all duration-200 hover:text-teal-900 group-hover:gap-3"
             aria-label={`לתיאום ייעוץ ראשוני עבור ${service.title}`}
           >
             לתיאום ייעוץ ראשוני
-            <!-- RTL: left-pointing chevron = "forward / go" direction -->
             <svg
               class="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:-translate-x-0.5"
               viewBox="0 0 24 24"

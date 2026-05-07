@@ -18,13 +18,13 @@ import galAbout from '../assets/gal-about.jpg';
       -->
       <div class="order-2 lg:order-1">
         <div class="relative">
-          <!-- Decorative soft halo behind the frame -->
+          <!-- Decorative soft halo -->
           <div
             aria-hidden="true"
-            class="absolute -inset-6 rounded-[2.5rem] bg-gradient-to-br from-teal-100/60 to-teal-50/30 blur-sm"
+            class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-teal-50/80 to-transparent blur-sm"
           ></div>
 
-          <figure class="relative overflow-hidden rounded-[2rem] shadow-card-hover ring-1 ring-teal-200/40">
+          <figure class="relative overflow-hidden rounded-[2rem] shadow-card ring-1 ring-neutral-200/60">
             <Image
               src={galAbout}
               alt="גל עופרי פיזיותרפיסטית בתל אביב — טיפול פיזיותרפיה ודיקור יבש בקליניקה"
@@ -34,16 +34,6 @@ import galAbout from '../assets/gal-about.jpg';
               class="block w-full object-cover object-top"
             />
           </figure>
-
-          <!-- Credential badge -->
-          <div
-            class="absolute -top-5 -end-5 rounded-2xl bg-white px-5 py-3.5 shadow-card ring-1 ring-neutral-200/70"
-            role="note"
-            aria-label="פיזיותרפיסטית מוסמכת B.P.T"
-          >
-            <p class="font-serif text-base font-bold leading-none text-teal-800">B.P.T</p>
-            <p class="mt-0.5 text-xs font-medium text-neutral-500">מוסמכת</p>
-          </div>
         </div>
       </div>
 
