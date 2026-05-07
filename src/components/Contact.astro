@@ -189,9 +189,7 @@ const contactItems = [
 
           <!-- Name -->
           <div>
-            <label for="contact-name" class="form-label">
-              שם מלא <span class="text-red-500" aria-hidden="true">*</span>
-            </label>
+            <label for="contact-name" class="sr-only">שם מלא</label>
             <input
               type="text"
               id="contact-name"
@@ -199,7 +197,7 @@ const contactItems = [
               autocomplete="name"
               required
               aria-required="true"
-              placeholder="ישראל ישראלי"
+              placeholder="שם מלא"
               class="form-input"
             />
             <p class="form-error hidden" id="name-error" role="alert"></p>
@@ -207,9 +205,7 @@ const contactItems = [
 
           <!-- Phone -->
           <div>
-            <label for="contact-phone" class="form-label">
-              מספר טלפון <span class="text-red-500" aria-hidden="true">*</span>
-            </label>
+            <label for="contact-phone" class="sr-only">מספר טלפון</label>
             <input
               type="tel"
               id="contact-phone"
@@ -217,7 +213,7 @@ const contactItems = [
               autocomplete="tel"
               required
               aria-required="true"
-              placeholder="05X-XXX-XXXX"
+              placeholder="מספר טלפון"
               dir="ltr"
               class="form-input text-start"
             />
@@ -226,40 +222,40 @@ const contactItems = [
 
           <!-- Message -->
           <div>
-            <label for="contact-message" class="form-label">
-              הודעה <span class="text-red-500" aria-hidden="true">*</span>
-            </label>
+            <label for="contact-message" class="sr-only">הודעה</label>
             <textarea
               id="contact-message"
               name="message"
               rows={3}
               required
               aria-required="true"
-              placeholder="ספרו לי במה אוכל לעזור לכם..."
+              placeholder="ספרו לי קצת על הכאב או הצורך שלכם..."
               class="form-input resize-none"
             ></textarea>
             <p class="form-error hidden" id="message-error" role="alert"></p>
           </div>
 
           <!-- Submit -->
-          <button
-            type="submit"
-            id="submit-btn"
-            class="btn-primary py-3.5 px-10"
-            aria-label="שלחו את הפנייה לגל עופרי"
-          >
-            <span id="submit-text">שלחו הודעה</span>
-            <svg
-              id="submit-spinner"
-              class="hidden h-4 w-4 animate-spin"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
+          <div class="flex justify-center pt-1">
+            <button
+              type="submit"
+              id="submit-btn"
+              class="btn-primary py-3.5 px-10"
+              aria-label="שלחו את הפנייה לגל עופרי"
             >
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4z"/>
-            </svg>
-          </button>
+              <span id="submit-text">שלחו הודעה</span>
+              <svg
+                id="submit-spinner"
+                class="hidden h-4 w-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden="true"
+              >
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 8-8V0C5.373 0 0 5.373 0 12h4z"/>
+              </svg>
+            </button>
+          </div>
 
         </form>
 
