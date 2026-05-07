@@ -7,27 +7,27 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 @theme {
-  /* ── Brand palette — logo's dominant dusty rose (#a8645d) + amber (#de9256) ── */
+  /* ── Brand palette — logo's vibrant rose-coral (#c76574) + amber (#de9256) ── */
 
-  /* Dusty rose scale — primary brand */
-  --color-teal-50:  #fdf7f5;   /* site background blush */
-  --color-teal-100: #f5e8e5;
-  --color-teal-200: #e8ccc8;
-  --color-teal-300: #d19e97;   /* light rose — use on dark bg */
-  --color-teal-400: #be7d77;   /* mid rose */
-  --color-teal-500: #a8645d;   /* logo primary colour */
-  --color-teal-600: #8f504a;   /* hover */
-  --color-teal-700: #733f3a;   /* body text accent — 7.3:1 on white ✅ */
-  --color-teal-800: #5c312c;   /* primary CTA — 9.1:1 on white ✅ WCAG AAA */
-  --color-teal-900: #3d1e1a;   /* deepest */
+  /* Rose-coral scale — primary brand (upgraded from dusty #a8645d) */
+  --color-teal-50:  #fdf2f4;   /* light blush */
+  --color-teal-100: #fae3e7;
+  --color-teal-200: #f3c1c8;
+  --color-teal-300: #e8939f;   /* light rose — use on dark bg */
+  --color-teal-400: #d87282;   /* mid rose */
+  --color-teal-500: #c76574;   /* logo rose-coral — PRIMARY */
+  --color-teal-600: #a84d5d;   /* hover */
+  --color-teal-700: #8c3a49;   /* body text accent — 7.6:1 on white ✅ */
+  --color-teal-800: #6e2b37;   /* primary CTA — 10.6:1 on white ✅ WCAG AAA */
+  --color-teal-900: #4a1b22;   /* deepest */
 
-  /* Warm charcoal (replaces navy) — footer / dark sections */
-  --color-navy-700: #3a1e1a;
-  --color-navy-800: #2a1511;
-  --color-navy-900: #1a0c09;
+  /* Deep rose-plum — footer / dark sections (replaces warm brownish-black) */
+  --color-navy-700: #3d1b26;
+  --color-navy-800: #2d1219;
+  --color-navy-900: #1e0b10;
 
-  /* Contact & quote section dark bg — used as bg-[#42221E] */
-  --color-section-dark: #42221E;
+  /* Contact & quote section dark bg — rich rose-wine (replaces earthy #42221E) */
+  --color-section-dark: #5c2232;
 
   /* Warm neutrals — site background pure white */
   --color-neutral-50:  #fdfbf7;
@@ -61,7 +61,7 @@
   --radius-3xl: 2rem;
 
   /* Shadows */
-  --shadow-teal: 0 4px 24px -4px rgb(92 49 44 / 0.25);
+  --shadow-teal: 0 4px 24px -4px rgb(110 43 55 / 0.25);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
 
@@ -161,7 +161,7 @@
 
   .btn-primary:hover {
     background-color: var(--color-teal-700);
-    box-shadow: 0 6px 32px -4px rgb(92 49 44 / 0.35);
+    box-shadow: 0 6px 32px -4px rgb(110 43 55 / 0.35);
     transform: translateY(-1px);
   }
 
