@@ -148,19 +148,19 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
-    background-color: var(--color-teal-800);
+    background: linear-gradient(to left, var(--color-teal-700), var(--color-accent-gold));
     color: white;
     font-weight: 600;
     font-size: 0.9375rem;
     letter-spacing: 0.01em;
     border-radius: 9999px;
-    transition: background-color 200ms ease, box-shadow 200ms ease, transform 150ms ease;
+    transition: box-shadow 200ms ease, transform 150ms ease;
     box-shadow: var(--shadow-teal);
     text-decoration: none;
   }
 
   .btn-primary:hover {
-    background-color: var(--color-teal-700);
+    background: linear-gradient(to left, var(--color-teal-800), #c47a38);
     box-shadow: 0 6px 32px -4px rgb(110 43 55 / 0.35);
     transform: translateY(-1px);
   }
