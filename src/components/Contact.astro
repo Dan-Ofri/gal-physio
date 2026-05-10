@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { SITE } from '@data/site';
+import contactBg from '../assets/clinic.png';
 
 const contactItems = [
   {
@@ -35,19 +37,26 @@ const contactItems = [
 <section
   id="contact"
   aria-labelledby="contact-heading"
-  class="relative overflow-hidden section-padding bg-section-dark"
+  class="relative overflow-hidden section-padding"
 >
-  <!-- Background blobs -->
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-    <div class="absolute -top-32 -end-32 h-[500px] w-[500px] rounded-full bg-teal-900/40 blur-[120px]"></div>
-    <div class="absolute -bottom-32 -start-32 h-[400px] w-[400px] rounded-full bg-teal-800/20 blur-[100px]"></div>
+  <!-- Full-bleed background image + dark overlay -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <Image
+      src={contactBg}
+      alt=""
+      width={1440}
+      height={900}
+      loading="lazy"
+      class="h-full w-full object-cover object-center"
+    />
+    <div class="absolute inset-0 bg-navy-900/78"></div>
   </div>
 
   <div class="container-prose relative z-10">
 
-    <!-- Section header (centred, above the 2-col grid) -->
+    <!-- Section header -->
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      <p class="text-xs font-semibold tracking-wide text-accent-gold" aria-hidden="true">
+      <p class="text-xs font-semibold tracking-[0.15em] uppercase text-accent-gold" aria-hidden="true">
         צור קשר
       </p>
       <h2
@@ -58,83 +67,90 @@ const contactItems = [
       </h2>
     </div>
 
-    <!-- 2-column grid: info (right in RTL) + form card (left in RTL) -->
+    <!-- 2-column grid: info (right in RTL) + form (left in RTL) -->
     <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
 
-      <!-- ── Contact info (first in DOM = right column in RTL) ── -->
-      <div class="flex flex-col gap-8">
+      <!-- ── Contact info — glassmorphism panel ── -->
+      <div class="flex flex-col gap-5">
 
-        <!-- Info items -->
-        <div class="space-y-5" role="list" aria-label="פרטי יצירת קשר">
-          {contactItems.map((item) => (
-            <div role="listitem" class="flex items-center gap-3">
-              <div
-                class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20"
-                aria-hidden="true"
-              >
-                <svg
-                  class="h-5 w-5 text-accent-gold"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+        <div
+          class="rounded-3xl bg-white/8 p-6 ring-1 ring-white/15 lg:p-8"
+          style="backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);"
+        >
+          <div class="space-y-5" role="list" aria-label="פרטי יצירת קשר">
+            {contactItems.map((item) => (
+              <div role="listitem" class="flex items-center gap-3">
+                <div
+                  class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/12 ring-1 ring-white/20"
                   aria-hidden="true"
-                  set:html={item.iconPath.split(' M').map((d, i) => `<path d="${i === 0 ? d : 'M' + d}"/>`).join('')}
-                />
-              </div>
-              <div>
-                <p class="text-xs font-semibold tracking-wide text-neutral-400">
-                  {item.label}
-                </p>
-                <a
-                  href={item.href}
-                  aria-label={item.ariaLabel}
-                  class="mt-0.5 block text-base font-medium text-white transition-colors hover:text-accent-gold"
-                  dir={item.id === 'phone' ? 'ltr' : undefined}
-                  {...(item.id === 'location' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
-                  {item.value}
-                </a>
+                  <svg
+                    class="h-5 w-5 text-accent-gold"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    set:html={item.iconPath.split(' M').map((d, i) => `<path d="${i === 0 ? d : 'M' + d}"/>`).join('')}
+                  />
+                </div>
+                <div>
+                  <p class="text-xs font-semibold tracking-wide text-white/50">
+                    {item.label}
+                  </p>
+                  <a
+                    href={item.href}
+                    aria-label={item.ariaLabel}
+                    class="mt-0.5 block text-base font-medium text-white transition-colors hover:text-accent-gold"
+                    dir={item.id === 'phone' ? 'ltr' : undefined}
+                    {...(item.id === 'location' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  >
+                    {item.value}
+                  </a>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <!-- Navigation buttons -->
-        <div class="flex flex-wrap gap-2" aria-label="כלי ניווט לקליניקה">
-          <a
-            href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/70 transition-all duration-200 hover:border-white/40 hover:text-white"
-            aria-label="ניווט לקליניקה ב-Google Maps"
-          >
-            <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            Google Maps
-          </a>
-          <a
-            href="https://waze.com/ul?q=Bloch%2038%20Tel%20Aviv"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/70 transition-all duration-200 hover:border-white/40 hover:text-white"
-            aria-label="ניווט לקליניקה ב-Waze"
-          >
-            <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M20.54 6.63C19.07 3.24 15.69 1 12 1 6.48 1 2 5.48 2 11c0 3.05 1.37 5.8 3.54 7.65L4.5 21l2.68-1.07C8.14 20.6 10.02 21 12 21c5.52 0 10-4.48 10-10 0-1.55-.35-3.01-.96-4.31L20.54 6.63zM12 19c-1.77 0-3.47-.47-4.93-1.31L6.5 18l.36-1.47C5.12 15.38 4 13.29 4 11c0-4.41 3.59-8 8-8 3.07 0 5.79 1.75 7.14 4.33.43.81.66 1.71.66 2.67 0 3.55-2.74 6.62-6.11 7.75L12 19zm2.5-9.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-5 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm2.5 5c-1.48 0-2.75-.81-3.45-2h6.9c-.7 1.19-1.97 2-3.45 2z"/>
-            </svg>
-            Waze
-          </a>
+          <!-- Hairline divider -->
+          <div class="my-5 h-px bg-white/12" aria-hidden="true"></div>
+
+          <!-- Navigation buttons -->
+          <div class="flex flex-wrap gap-2" aria-label="כלי ניווט לקליניקה">
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/70 transition-all duration-200 hover:border-white/40 hover:text-white"
+              aria-label="ניווט לקליניקה ב-Google Maps"
+            >
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Google Maps
+            </a>
+            <a
+              href="https://waze.com/ul?q=Bloch%2038%20Tel%20Aviv"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/70 transition-all duration-200 hover:border-white/40 hover:text-white"
+              aria-label="ניווט לקליניקה ב-Waze"
+            >
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.54 6.63C19.07 3.24 15.69 1 12 1 6.48 1 2 5.48 2 11c0 3.05 1.37 5.8 3.54 7.65L4.5 21l2.68-1.07C8.14 20.6 10.02 21 12 21c5.52 0 10-4.48 10-10 0-1.55-.35-3.01-.96-4.31L20.54 6.63zM12 19c-1.77 0-3.47-.47-4.93-1.31L6.5 18l.36-1.47C5.12 15.38 4 13.29 4 11c0-4.41 3.59-8 8-8 3.07 0 5.79 1.75 7.14 4.33.43.81.66 1.71.66 2.67 0 3.55-2.74 6.62-6.11 7.75L12 19zm2.5-9.5c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm-5 0c-.55 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1zm2.5 5c-1.48 0-2.75-.81-3.45-2h6.9c-.7 1.19-1.97 2-3.45 2z"/>
+              </svg>
+              Waze
+            </a>
+          </div>
         </div>
 
       </div>
 
-      <!-- ── Contact form (second in DOM = left column in RTL) ── -->
-      <div class="rounded-3xl bg-white px-6 py-8 shadow-[0_2px_20px_-4px_rgb(0_0_0_/_0.09)] ring-1 ring-neutral-200/60 lg:px-8 lg:py-8">
+      <!-- ── Contact form — pure white card ── -->
+      <div class="rounded-3xl bg-white px-6 py-8 shadow-[0_8px_48px_-8px_rgb(0_0_0_/_0.45)] ring-1 ring-white/20 lg:px-8 lg:py-8">
 
         <h3 class="font-serif text-2xl font-bold text-neutral-900">השאירו פרטים ואחזור אליכם בהקדם</h3>
         <p class="mt-1.5 text-sm text-neutral-600">ספרו לי על הכאב שלכם — ונמצא יחד את הפתרון הנכון.</p>
@@ -184,7 +200,6 @@ const contactItems = [
           aria-label="טופס יצירת קשר"
           class="mt-6 space-y-5"
         >
-          <!-- Web3Forms access key — get yours free at web3forms.com/create -->
           <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
           <input type="hidden" name="subject" value="פנייה חדשה מהאתר — גל עופרי פיזיותרפיה" />
 
