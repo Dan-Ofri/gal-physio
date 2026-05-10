@@ -121,11 +121,17 @@ const socialLinks = [
     <!-- Divider -->
     <div aria-hidden="true" class="my-10 h-px bg-teal-200"></div>
 
-    <!-- Bottom bar: copyright + social icons -->
+    <!-- Bottom bar: copyright + policy links + social icons -->
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
-      <p class="text-sm text-neutral-600" aria-label={`זכויות יוצרים ${year}`}>
-        © {year} גל עופרי — פיזיותרפיסטית מוסמכת
-      </p>
+      <div class="flex flex-col items-center gap-2 sm:items-start">
+        <p class="text-sm text-neutral-600" aria-label={`זכויות יוצרים ${year}`}>
+          © {year} גל עופרי — פיזיותרפיסטית מוסמכת
+        </p>
+        <nav aria-label="קישורי מדיניות ונגישות" class="flex gap-5">
+          <a href="/privacy" class="text-xs text-neutral-400 transition-colors hover:text-neutral-700">מדיניות פרטיות</a>
+          <a href="/accessibility" class="text-xs text-neutral-400 transition-colors hover:text-neutral-700">הצהרת נגישות</a>
+        </nav>
+      </div>
 
       <!-- Social icons -->
       <div class="flex items-center gap-3" role="list" aria-label="קישורי רשתות חברתיות">

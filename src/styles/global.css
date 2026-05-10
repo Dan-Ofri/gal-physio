@@ -148,7 +148,7 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
-    background: linear-gradient(to left, var(--color-teal-700), var(--color-accent-gold));
+    background: linear-gradient(to left, var(--color-teal-700), #ae5d18);
     color: white;
     font-weight: 600;
     font-size: 0.9375rem;
@@ -160,7 +160,7 @@
   }
 
   .btn-primary:hover {
-    background: linear-gradient(to left, var(--color-teal-800), #c47a38);
+    background: linear-gradient(to left, var(--color-teal-800), #8c4a10);
     box-shadow: 0 6px 32px -4px rgb(110 43 55 / 0.35);
     transform: translateY(-1px);
   }
