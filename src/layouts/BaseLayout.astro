@@ -28,7 +28,7 @@ const { bodyClass, ...seoProps } = Astro.props;
     <slot name="head" />
   </head>
 
-  <body class={`pb-16 lg:pb-0 min-h-svh flex flex-col${bodyClass ? ` ${bodyClass}` : ''}`}>
+  <body class={`min-h-svh flex flex-col${bodyClass ? ` ${bodyClass}` : ''}`}>
     <!-- Skip navigation for screen readers and keyboard users -->
     <a
       href="#main-content"
