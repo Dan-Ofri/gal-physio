@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
 import orthoImg    from '../assets/service-ortho-ref.png';
-import sportsImg   from '../assets/service-sports-ref.png';
+import sportsImg   from '../assets/service-sports.jpeg';
 import preventImg  from '../assets/service-preventive-ref.png';
 
 interface Service {
@@ -20,9 +20,9 @@ const services: Service[] = [
   {
     id: 'ortho-rehab',
     image: orthoImg,
-    imageAlt: 'פיזיותרפיסטית מבצעת טיפול ידני בגב — שיקום אורתופדי ומפרקי',
+    imageAlt: 'פיזיותרפיסטית מבצעת טיפול ידני בגב — שיקום אורתופדי',
     imagePosition: 'object-center',
-    title: 'שיקום אורתופדי ומפרקי',
+    title: 'שיקום אורתופדי',
     description:
       'טיפול בכאבי גב, צוואר ומפרקים, וליווי מקצועי בתהליכי שיקום לאחר פציעות או ניתוחים — לחזרה מלאה ובטוחה לשגרה.',
     keywords: ['שיקום אורתופדי', 'כאב גב', 'כאב צוואר', 'שיקום מפרקים', 'שיקום לאחר ניתוח'],
@@ -30,7 +30,7 @@ const services: Service[] = [
   {
     id: 'sports-rehab',
     image: sportsImg,
-    imageAlt: 'פיזיותרפיסטית מטפלת בברך של ספורטאי בחדר כושר — שיקום ספורטאים',
+    imageAlt: 'גל עופרי מטפלת בספורטאי צעיר בחדר טיפולים — שיקום ספורטאים ושיפור ביצועים',
     imagePosition: 'object-center',
     title: 'שיקום ספורטאים ושיפור ביצועים',
     description:
