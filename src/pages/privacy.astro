@@ -7,7 +7,7 @@ import { SITE } from '@data/site';
 
 <BaseLayout
   title="מדיניות פרטיות — גל עופרי פיזיותרפיה"
-  description="מדיניות הפרטיות של קליניקת גל עופרי לפיזיותרפיה — מה אנו אוספים, כיצד אנו משתמשים במידע, וכיצד ניתן לפנות אלינו."
+  description="מדיניות הפרטיות של קליניקת גל עופרי לפיזיותרפיה — מה נאסף, כיצד אנו משתמשים במידע, סודיות רפואית, והזכויות שלכם."
   bodyClass="!pb-0"
 >
   <Nav slot="header" />
@@ -15,15 +15,49 @@ import { SITE } from '@data/site';
   <section class="section-padding bg-neutral-50">
     <div class="container-prose max-w-3xl">
 
+      <!-- Back link -->
+      <a
+        href="/"
+        class="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+        aria-label="חזרה לעמוד הבית"
+      >
+        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        חזרה לעמוד הבית
+      </a>
+
       <h1 class="font-serif text-3xl font-bold text-teal-700 md:text-4xl">מדיניות פרטיות</h1>
       <p class="mt-2 text-sm text-neutral-500">עודכן לאחרונה: מאי 2026</p>
 
+      <!-- Intro callout -->
+      <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
+        <p class="text-sm leading-relaxed text-neutral-700">
+          פרטיותכם חשובה לנו. כקליניקה רפואית, אנו מחויבים לשמירת סודיות מוחלטת — הן לפי חוק הגנת הפרטיות, התשמ"א–1981, והן לפי חוק זכויות החולה, התשנ"ו–1996. מסמך זה מסביר בשקיפות מה נאסף, כיצד אנו משתמשים בו, ומהן הזכויות שלכם.
+        </p>
+      </div>
+
+      <!-- Table of Contents -->
+      <nav aria-label="תוכן העניינים" class="mt-8 rounded-2xl border border-neutral-200 bg-white px-6 py-5">
+        <p class="mb-4 text-xs font-bold uppercase tracking-wide text-neutral-500">תוכן העניינים</p>
+        <ol class="grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+          <li><a href="#s1" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">1. מי אנחנו</a></li>
+          <li><a href="#s2" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">2. מידע שנאסף דרך האתר</a></li>
+          <li><a href="#s3" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">3. כיצד אנו משתמשים במידע</a></li>
+          <li><a href="#s4" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">4. סודיות רפואית</a></li>
+          <li><a href="#s5" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">5. העברה לצדדים שלישיים</a></li>
+          <li><a href="#s6" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">6. שמירת מידע ואבטחה</a></li>
+          <li><a href="#s7" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">7. הזכויות שלכם</a></li>
+          <li><a href="#s8" class="text-teal-700 underline-offset-2 transition-colors hover:underline hover:text-teal-800">8. עוגיות</a></li>
+        </ol>
+      </nav>
+
       <div class="mt-10 space-y-10 leading-relaxed text-neutral-700">
 
-        <section>
+        <section id="s1">
           <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">1. מי אנחנו</h2>
-          <p>קליניקת גל עופרי לפיזיותרפיה מפעילה אתר אינטרנט זה ואחראית על המידע האישי הנאסף דרכו.</p>
-          <ul class="mt-3 space-y-1 text-sm">
+          <p>קליניקת גל עופרי לפיזיותרפיה מפעילה אתר אינטרנט זה ואחראית על המידע האישי הנאסף דרכו. כבעלת רישיון מקצועי לפי חוק הסדרת העיסוק במקצועות הבריאות, תשס"ח–2008, גל עופרי מחויבת לסטנדרטים מחמירים של סודיות מקצועית.</p>
+          <ul class="mt-3 space-y-1.5 text-sm">
             <li><strong class="font-semibold text-neutral-800">שם:</strong> גל עופרי, פיזיותרפיסטית מוסמכת</li>
             <li><strong class="font-semibold text-neutral-800">כתובת:</strong> {SITE.address.street}, {SITE.address.cityHebrew}</li>
             <li><strong class="font-semibold text-neutral-800">טלפון:</strong> <a href={`tel:${SITE.phoneE164}`} dir="ltr" class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a></li>
@@ -31,50 +65,76 @@ import { SITE } from '@data/site';
           </ul>
         </section>
 
-        <section>
-          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">2. איזה מידע אנו אוספים</h2>
+        <section id="s2">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">2. מידע שנאסף דרך האתר</h2>
           <p>כאשר ממלאים את טופס יצירת הקשר באתר, אנו אוספים:</p>
-          <ul class="mt-3 list-disc list-inside space-y-1 text-sm">
+          <ul class="mt-3 list-disc list-inside space-y-1.5 text-sm">
             <li>שם מלא</li>
             <li>מספר טלפון</li>
             <li>הודעה חופשית (תיאור הצורך או הכאב)</li>
           </ul>
-          <p class="mt-4">איננו אוספים מידע רפואי רגיש דרך האתר. שיחות בנושאים רפואיים מתנהלות אישית בלבד.</p>
+          <p class="mt-4"><strong class="font-semibold text-neutral-800">מידע רפואי מפורט אינו נאסף דרך האתר.</strong> כל שיחה בנושאים רפואיים מתנהלת אישית בלבד — בטלפון, בוואטסאפ, או בתוך הקליניקה.</p>
         </section>
 
-        <section>
+        <section id="s3">
           <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">3. כיצד אנו משתמשים במידע</h2>
-          <p>המידע משמש אך ורק למטרה אחת — חזרה אליכם לצורך תיאום ייעוץ ראשוני או פגישה. איננו משתמשים במידע לשיווק, ניוזלטר, או כל מטרה מסחרית אחרת ללא הסכמתכם המפורשת.</p>
+          <p>המידע משמש <strong class="font-semibold text-neutral-800">אך ורק</strong> לצורך חזרה אליכם לתיאום ייעוץ ראשוני או פגישה. איננו משתמשים בו לשיווק, ניוזלטר, ניתוח נתונים, או כל מטרה מסחרית אחרת ללא הסכמתכם המפורשת.</p>
         </section>
 
-        <section>
-          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">4. העברת מידע לצדדים שלישיים</h2>
+        <section id="s4">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">4. סודיות רפואית</h2>
+          <p>בתוקף היותנו קליניקה רפואית, כל מידע הנמסר בהקשר הטיפולי — לרבות מצב בריאותי, תהליך שיקום, ותכנית טיפול — מוגן בחובת הסודיות הרפואית המפורטת ב<strong class="font-semibold text-neutral-800">חוק זכויות החולה, התשנ"ו–1996</strong>, סעיפים 19–23.</p>
+          <p class="mt-3">מידע זה:</p>
+          <ul class="mt-2 list-disc list-inside space-y-1.5 text-sm">
+            <li>לא ייחשף לאיש ללא הסכמתכם המפורשת בכתב</li>
+            <li>לא יועבר לגורמי ביטוח, מעסיקים, בני משפחה, או גורמים אחרים ללא אישורכם</li>
+            <li>ייחשף רק במקרים שבהם חובת החיסיון מוגבלת על-פי דין (למשל, צו שיפוטי)</li>
+          </ul>
+          <p class="mt-4 text-sm text-neutral-500">הערה: מדיניות זו מתייחסת למידע שנמסר דרך האתר. רשומות רפואיות מנוהלות בנפרד, בהתאם לחובות החוק ולנהלים המקצועיים.</p>
+        </section>
+
+        <section id="s5">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">5. העברת מידע לצדדים שלישיים</h2>
           <p>טופס יצירת הקשר מועבר דרך שירות <strong class="font-semibold text-neutral-800">Web3Forms</strong> (web3forms.com), המשמש כמעבד נתונים מורשה. Web3Forms מאחסנת את הנתונים זמנית ומעבירה אותם אלינו בדוא"ל בלבד. מדיניות הפרטיות שלהם זמינה באתר web3forms.com.</p>
           <p class="mt-3">איננו מוכרים, משכירים, או מעבירים מידע אישי לצדדים שלישיים נוספים.</p>
         </section>
 
-        <section>
-          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">5. שמירת מידע</h2>
-          <p>המידע נשמר לתקופה הנחוצה לטיפול בפנייה בלבד, ולא מעבר לנדרש לצרכים תפעוליים סבירים. תוכלו לבקש מחיקת המידע שלכם בכל עת.</p>
+        <section id="s6">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">6. שמירת מידע ואבטחה</h2>
+          <p>המידע הנאסף דרך האתר נשמר לתקופה הנחוצה לטיפול בפנייה בלבד. לאחר יצירת הקשר, ניתן לבקש מחיקת המידע בכל עת.</p>
+          <p class="mt-3">אנו נוקטים באמצעי אבטחה סבירים להגנה על המידע, בהתאם לתקנות הגנת הפרטיות (אבטחת מידע), התשע"ז–2017.</p>
         </section>
 
-        <section>
-          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">6. הזכויות שלכם</h2>
-          <p>בהתאם לחוק הגנת הפרטיות הישראלי, יש לכם זכות:</p>
-          <ul class="mt-3 list-disc list-inside space-y-1 text-sm">
-            <li>לעיין במידע שנשמר עליכם</li>
-            <li>לתקן מידע שגוי</li>
-            <li>לבקש מחיקת המידע</li>
+        <section id="s7">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">7. הזכויות שלכם</h2>
+          <p>בהתאם לחוק הגנת הפרטיות הישראלי, התשמ"א–1981, ולחוק זכויות החולה, יש לכם זכות:</p>
+          <ul class="mt-3 list-disc list-inside space-y-1.5 text-sm">
+            <li>לעיין במידע האישי ו/או הרפואי שנשמר עליכם</li>
+            <li>לתקן מידע שגוי או לא מדויק</li>
+            <li>לבקש מחיקת המידע (בכפוף למגבלות חוקיות)</li>
+            <li>לקבל עותק מהמידע שלכם</li>
           </ul>
           <p class="mt-4">לפנייה בנושא פרטיות: <a href={`mailto:${SITE.email}`} class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a></p>
+          <p class="mt-2 text-sm text-neutral-500">נשיב לפנייה תוך 30 ימי עסקים, בהתאם לקבוע בחוק.</p>
         </section>
 
-        <section>
-          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">7. עוגיות (Cookies)</h2>
-          <p>אתר זה אינו משתמש בעוגיות לצורכי שיווק, פרסום, או מעקב. טכנולוגיות אחסון מינימליות עשויות לשמש לצרכים טכניים בלבד.</p>
+        <section id="s8">
+          <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">8. עוגיות (Cookies)</h2>
+          <p>אתר זה אינו משתמש בעוגיות לצורכי שיווק, פרסום, או מעקב. טכנולוגיות אחסון מינימליות עשויות לשמש לצרכים טכניים בלבד (כגון שמירת העדפות בסיסיות), ללא יכולת זיהוי אישי.</p>
         </section>
 
       </div>
+
+      <!-- Back to home CTA -->
+      <div class="mt-12 flex justify-center border-t border-neutral-200 pt-10">
+        <a href="/" class="btn-primary" aria-label="חזרה לעמוד הבית של גל עופרי פיזיותרפיה">
+          <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          חזרה לעמוד הבית
+        </a>
+      </div>
+
     </div>
   </section>
 
