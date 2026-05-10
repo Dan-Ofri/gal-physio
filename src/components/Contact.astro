@@ -35,7 +35,7 @@ const contactItems = [
 <section
   id="contact"
   aria-labelledby="contact-heading"
-  class="relative overflow-hidden section-padding bg-[#5c2232]"
+  class="relative overflow-hidden section-padding bg-section-dark"
 >
   <!-- Background blobs -->
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -47,7 +47,7 @@ const contactItems = [
 
     <!-- Section header (centred, above the 2-col grid) -->
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      <p class="text-xs font-semibold tracking-wide text-[#de9256]" aria-hidden="true">
+      <p class="text-xs font-semibold tracking-wide text-accent-gold" aria-hidden="true">
         צור קשר
       </p>
       <h2
@@ -73,7 +73,7 @@ const contactItems = [
                 aria-hidden="true"
               >
                 <svg
-                  class="h-5 w-5 text-[#de9256]"
+                  class="h-5 w-5 text-accent-gold"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -91,7 +91,7 @@ const contactItems = [
                 <a
                   href={item.href}
                   aria-label={item.ariaLabel}
-                  class="mt-0.5 block text-base font-medium text-white transition-colors hover:text-[#de9256]"
+                  class="mt-0.5 block text-base font-medium text-white transition-colors hover:text-accent-gold"
                   dir={item.id === 'phone' ? 'ltr' : undefined}
                   {...(item.id === 'location' ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
@@ -157,7 +157,7 @@ const contactItems = [
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-6 inline-flex items-center gap-2 rounded-full bg-[#25D366]/10 px-5 py-2.5 text-sm font-semibold text-[#25D366] ring-1 ring-[#25D366]/30 transition hover:bg-[#25D366]/20"
+            class="mt-6 inline-flex items-center gap-2 rounded-full bg-whatsapp/10 px-5 py-2.5 text-sm font-semibold text-whatsapp ring-1 ring-whatsapp/30 transition hover:bg-whatsapp/20"
             aria-label="שלחו הודעה מהירה בוואטסאפ"
           >
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

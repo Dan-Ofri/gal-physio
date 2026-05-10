@@ -90,7 +90,7 @@ const links = [
         href={SITE.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:text-[#25D366]"
+        class="flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors hover:text-whatsapp"
         aria-label="שלחו הודעה לגל עופרי בוואטסאפ"
       >
         <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -178,10 +178,10 @@ const links = [
 <style>
   /* ── Header scroll state ── */
   #site-header {
-    background: #fdfbf7;
+    background: var(--color-neutral-50);
   }
   #site-header.is-scrolled {
-    background: rgb(253 251 247 / 0.82);
+    background: color-mix(in srgb, var(--color-neutral-50) 82%, transparent);
     backdrop-filter: blur(20px) saturate(160%);
     -webkit-backdrop-filter: blur(20px) saturate(160%);
     box-shadow: 0 1px 32px -8px rgb(0 0 0 / 0.08);
@@ -213,7 +213,7 @@ const links = [
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgb(250 248 245 / 0.98);
+    background: color-mix(in srgb, var(--color-neutral-50) 98%, transparent);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
 
