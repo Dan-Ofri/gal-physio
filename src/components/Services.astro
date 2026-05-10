@@ -2,9 +2,9 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-import orthoImg    from '../assets/service-ortho.jpeg';
-import sportsImg   from '../assets/service-sports.jpeg';
-import preventImg  from '../assets/service-preventive.jpeg';
+import orthoImg    from '../assets/service-ortho-ref.png';
+import sportsImg   from '../assets/service-sports-ref.png';
+import preventImg  from '../assets/service-preventive-ref.png';
 
 interface Service {
   id: string;
@@ -20,8 +20,8 @@ const services: Service[] = [
   {
     id: 'ortho-rehab',
     image: orthoImg,
-    imageAlt: 'גל עופרי מבצעת דיקור יבש בברך — שיקום אורתופדי ומפרקי',
-    imagePosition: 'object-top',
+    imageAlt: 'פיזיותרפיסטית מבצעת טיפול ידני בגב — שיקום אורתופדי ומפרקי',
+    imagePosition: 'object-center',
     title: 'שיקום אורתופדי ומפרקי',
     description:
       'טיפול בכאבי גב, צוואר ומפרקים, וליווי מקצועי בתהליכי שיקום לאחר פציעות או ניתוחים — לחזרה מלאה ובטוחה לשגרה.',
@@ -30,8 +30,8 @@ const services: Service[] = [
   {
     id: 'sports-rehab',
     image: sportsImg,
-    imageAlt: 'גל עופרי מטפלת בשחקן כדורגל צעיר — שיקום ספורטאים ושיפור ביצועים',
-    imagePosition: 'object-[center_30%]',
+    imageAlt: 'פיזיותרפיסטית מטפלת בברך של ספורטאי בחדר כושר — שיקום ספורטאים',
+    imagePosition: 'object-center',
     title: 'שיקום ספורטאים ושיפור ביצועים',
     description:
       'אבחון פציעות ספורט, שיפור טכניקת תנועה ובניית תוכנית חזרה מדורגת לאימונים ולתחרות, תוך מניעת פציעות חוזרות.',
@@ -40,8 +40,8 @@ const services: Service[] = [
   {
     id: 'preventive',
     image: preventImg,
-    imageAlt: 'גל עופרי מבצעת טיפול ידני בכתף בחדר כושר — פיזיותרפיה מניעתית',
-    imagePosition: 'object-top',
+    imageAlt: 'פיזיותרפיסטית מבצעת הערכת יציבה לפציינטית עומדת — פיזיותרפיה מניעתית',
+    imagePosition: 'object-center',
     title: 'פיזיותרפיה מניעתית ותחזוקת הגוף',
     description:
       'שיפור היציבה, איזון עומסים יומיומיים ובניית חוסן גופני ארוך טווח באמצעות תרגול מותאם אישית לצרכים שלך.',

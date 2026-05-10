@@ -1,11 +1,27 @@
 ---
+import { Image } from 'astro:assets';
+import quoteBg from '../assets/quote-bg.png';
 ---
 
 <section
   aria-label="ציטוט אישי — גל עופרי"
-  class="py-20 md:py-28 bg-teal-900"
+  class="relative overflow-hidden py-24 md:py-36"
 >
-  <div class="container-prose">
+  <!-- Background image -->
+  <div class="absolute inset-0" aria-hidden="true">
+    <Image
+      src={quoteBg}
+      alt=""
+      width={1440}
+      height={640}
+      loading="lazy"
+      class="h-full w-full object-cover object-center"
+    />
+    <!-- Dark brand overlay -->
+    <div class="absolute inset-0 bg-[#1e0b10]/72"></div>
+  </div>
+
+  <div class="container-prose relative z-10">
     <blockquote cite="https://gal-physio.vercel.app/">
       <p class="mx-auto max-w-3xl text-center font-serif text-2xl font-medium leading-relaxed text-white md:text-4xl md:leading-[1.5]">
         הגוף שלנו נועד לנוע.<br />
