@@ -7,29 +7,29 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 @theme {
-  /* ── Brand palette — warm orange #ff872b ── */
+  /* ── Brand palette — soft peach-orange (H 20°, warm, healing) ── */
 
-  /* Orange scale — primary brand */
-  --color-teal-50:  #fff8f0;
-  --color-teal-100: #ffeedd;
-  --color-teal-200: #ffd4a8;
-  --color-teal-300: #ffb870;
-  --color-teal-400: #ff9e45;
-  --color-teal-500: #ff872b;   /* brand orange — PRIMARY */
-  --color-teal-600: #b84f00;   /* hover / eyebrow text — 4.9:1 on white ✅ */
-  --color-teal-700: #8c3c00;   /* headings — 7.7:1 on white ✅ */
-  --color-teal-800: #662c00;   /* CTA button — 10.9:1 on white ✅ WCAG AAA */
-  --color-teal-900: #421c00;   /* deepest */
+  /* Peach Orange scale — primary brand */
+  --color-teal-50:  #fff5f1;
+  --color-teal-100: #ffe5d4;
+  --color-teal-200: #ffcaab;
+  --color-teal-300: #ffaa80;
+  --color-teal-400: #f8906a;
+  --color-teal-500: #f48249;   /* signature peach-orange — PRIMARY */
+  --color-teal-600: #be4a1e;   /* hover / eyebrow text — 4.87:1 on warm white ✅ */
+  --color-teal-700: #8e3812;   /* headings — 7.52:1 on warm white ✅ */
+  --color-teal-800: #692608;   /* CTA button — 11.2:1 on warm white ✅ WCAG AAA */
+  --color-teal-900: #421505;   /* deepest */
 
   /* Deep warm-dark — footer / dark sections */
-  --color-navy-700: #2a1600;
-  --color-navy-800: #1a0e00;
-  --color-navy-900: #100800;
+  --color-navy-700: #2c1a10;
+  --color-navy-800: #1c0e08;
+  --color-navy-900: #100804;
 
   /* Contact & quote section dark bg */
-  --color-section-dark: #3d2400;
+  --color-section-dark: #2d1808;
 
-  /* Warm neutrals — site background pure white */
+  /* Warm neutrals — site background warm oatmeal */
   --color-neutral-50:  #fdfbf7;
   --color-neutral-100: #f7f6f4;
   --color-neutral-200: #e8e3db;
@@ -42,12 +42,12 @@
   --color-neutral-900: #1f1714;
 
   /* Accents */
-  --color-accent-gold: #de9256;   /* amber */
-  --color-accent-rose: #ff872b;   /* brand orange */
+  --color-accent-gold: #e8a878;   /* peachy gold — eyebrow on dark backgrounds */
+  --color-accent-rose: #f5916b;   /* bright peach — decorative */
 
   /* Gradient endpoints — btn-primary + hero heading */
-  --color-brand-amber: #d47000;
-  --color-brand-amber-hover: #a85500;
+  --color-brand-amber:       #c44520;  /* warm peach-amber — 4.88:1 w/ white ✅ */
+  --color-brand-amber-hover: #9a3510;  /* deep hover — 7.24:1 w/ white ✅ */
 
   /* Third-party brand */
   --color-whatsapp: #25D366;
@@ -71,7 +71,7 @@
   --radius-3xl: 2rem;
 
   /* Shadows */
-  --shadow-teal: 0 4px 24px -4px rgb(140 60 0 / 0.25);
+  --shadow-teal: 0 4px 24px -4px rgb(190 74 30 / 0.25);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
 
@@ -171,7 +171,7 @@
 
   .btn-primary:hover {
     background: linear-gradient(to left, var(--color-teal-900), var(--color-brand-amber-hover));
-    box-shadow: 0 6px 32px -4px rgb(140 60 0 / 0.35);
+    box-shadow: 0 6px 32px -4px rgb(190 74 30 / 0.35);
     transform: translateY(-1px);
   }
 
