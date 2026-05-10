@@ -1,9 +1,16 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+import orthoImg    from '../assets/service-ortho.jpeg';
+import sportsImg   from '../assets/service-sports.jpeg';
+import preventImg  from '../assets/service-preventive.jpeg';
+
 interface Service {
   id: string;
-  /** Inner SVG elements only (paths, polylines, etc.) — rendered via set:html */
-  iconHTML: string;
-  iconAriaLabel: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  imagePosition: string;
   title: string;
   description: string;
   keywords: readonly string[];
@@ -12,12 +19,9 @@ interface Service {
 const services: Service[] = [
   {
     id: 'ortho-rehab',
-    iconHTML: `
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="12" y1="8" x2="12" y2="16" stroke-linecap="round"/>
-      <line x1="8"  y1="12" x2="16" y2="12" stroke-linecap="round"/>
-    `,
-    iconAriaLabel: 'אייקון מגן — שיקום אורתופדי ומפרקי',
+    image: orthoImg,
+    imageAlt: 'גל עופרי מבצעת דיקור יבש בברך — שיקום אורתופדי ומפרקי',
+    imagePosition: 'object-top',
     title: 'שיקום אורתופדי ומפרקי',
     description:
       'טיפול בכאבי גב, צוואר ומפרקים, וליווי מקצועי בתהליכי שיקום לאחר פציעות או ניתוחים — לחזרה מלאה ובטוחה לשגרה.',
@@ -25,8 +29,9 @@ const services: Service[] = [
   },
   {
     id: 'sports-rehab',
-    iconHTML: `<polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" stroke-linecap="round" stroke-linejoin="round"/>`,
-    iconAriaLabel: 'אייקון ברק — שיקום ספורטאים',
+    image: sportsImg,
+    imageAlt: 'גל עופרי מטפלת בשחקן כדורגל צעיר — שיקום ספורטאים ושיפור ביצועים',
+    imagePosition: 'object-[center_30%]',
     title: 'שיקום ספורטאים ושיפור ביצועים',
     description:
       'אבחון פציעות ספורט, שיפור טכניקת תנועה ובניית תוכנית חזרה מדורגת לאימונים ולתחרות, תוך מניעת פציעות חוזרות.',
@@ -34,8 +39,9 @@ const services: Service[] = [
   },
   {
     id: 'preventive',
-    iconHTML: `<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke-linecap="round" stroke-linejoin="round"/>`,
-    iconAriaLabel: 'אייקון פעילות — פיזיותרפיה מניעתית',
+    image: preventImg,
+    imageAlt: 'גל עופרי מבצעת טיפול ידני בכתף בחדר כושר — פיזיותרפיה מניעתית',
+    imagePosition: 'object-top',
     title: 'פיזיותרפיה מניעתית ותחזוקת הגוף',
     description:
       'שיפור היציבה, איזון עומסים יומיומיים ובניית חוסן גופני ארוך טווח באמצעות תרגול מותאם אישית לצרכים שלך.',
@@ -49,7 +55,7 @@ const services: Service[] = [
   aria-labelledby="services-heading"
   class="relative section-padding overflow-hidden bg-neutral-50"
 >
-  <!-- Subtle decorative radial at corner -->
+  <!-- Subtle decorative radials -->
   <div
     aria-hidden="true"
     class="pointer-events-none absolute -top-24 end-0 h-[480px] w-[480px] rounded-full bg-neutral-100/60 blur-3xl"
@@ -86,39 +92,32 @@ const services: Service[] = [
       {services.map((service) => (
         <article
           role="listitem"
-          class="group flex h-full flex-col rounded-2xl bg-white p-8 ring-1 ring-neutral-200 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-teal-200/70 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.07)]"
+          class="group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-neutral-200 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-teal-200/70 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.08)]"
         >
-          <!-- Icon container -->
-          <div
-            class="mb-6 flex h-11 w-11 items-center justify-center rounded-xl bg-teal-50 transition-colors duration-300 group-hover:bg-teal-100"
-            role="img"
-            aria-label={service.iconAriaLabel}
-          >
-            <svg
-              class="h-5 w-5 text-teal-700"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-              set:html={service.iconHTML}
+          <!-- Photo -->
+          <div class="overflow-hidden">
+            <Image
+              src={service.image}
+              alt={service.imageAlt}
+              width={480}
+              height={360}
+              loading="lazy"
+              class={`w-full aspect-[4/3] object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] ${service.imagePosition}`}
             />
           </div>
 
-          <!-- Title -->
-          <h3 class="font-serif text-xl font-bold leading-snug text-neutral-900">
-            {service.title}
-          </h3>
-
-          <!-- Description -->
-          <p class="mt-3 flex-1 text-sm leading-relaxed text-neutral-600">
-            {service.description}
-          </p>
-
-          <!-- SEO keyword list — hidden visually -->
-          <ul class="sr-only" aria-hidden="true">
-            {service.keywords.map((k) => <li>{k}</li>)}
-          </ul>
+          <!-- Text content -->
+          <div class="flex flex-1 flex-col p-7">
+            <h3 class="font-serif text-xl font-bold leading-snug text-neutral-900">
+              {service.title}
+            </h3>
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-neutral-600">
+              {service.description}
+            </p>
+            <ul class="sr-only" aria-hidden="true">
+              {service.keywords.map((k) => <li>{k}</li>)}
+            </ul>
+          </div>
 
         </article>
       ))}
