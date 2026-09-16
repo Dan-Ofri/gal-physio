@@ -14,7 +14,7 @@ const faqs: FaqItem[] = [
   {
     id: 'booking',
     question: 'איך קובעים תור לטיפול ראשון?',
-    answer: 'אפשר לקבוע תור בטלפון, בוואטסאפ, או דרך טופס יצירת הקשר באתר — כל דרך שנוחה לכם.',
+    answer: 'אפשר לקבוע תור בטלפון, בוואטסאפ, או דרך טופס יצירת הקשר באתר, בכל דרך שנוחה לכם.',
   },
   {
     id: 'referral',
@@ -29,7 +29,7 @@ const faqs: FaqItem[] = [
   },
   {
     id: 'specialties',
-    question: 'באילו תחומים גל מתמחה?',
+    question: 'באילו תחומים את מתמחה?',
     answer:
       'שיקום אורתופדי (כאבי גב, צוואר ומפרקים, ושיקום לאחר פציעות או ניתוחים), שיקום ספורטאים ושיפור ביצועים, ופיזיותרפיה מניעתית ותחזוקת הגוף.',
   },
@@ -43,7 +43,7 @@ const faqs: FaqItem[] = [
     id: 'cost',
     question: 'כמה עולה טיפול?',
     answer:
-      'העלות משתנה בהתאם לסוג הטיפול ולצרכים האישיים שלכם — מוזמנים ליצור קשר לפרטים ולהתאמה אישית.',
+      'העלות משתנה בהתאם לסוג הטיפול ולצרכים האישיים שלכם. מוזמנים ליצור קשר לפרטים ולהתאמה אישית.',
   },
   {
     id: 'accessibility',
@@ -79,7 +79,7 @@ const faqJsonLd = {
 ---
 
 <BaseLayout
-  title="שאלות נפוצות — גל עופרי פיזיותרפיה"
+  title="שאלות נפוצות"
   description="תשובות לשאלות הנפוצות ביותר על קביעת תור, מדיניות ביטולים, תחומי התמחות, נגישות ותשלום בקליניקת גל עופרי לפיזיותרפיה בתל אביב."
   bodyClass="!pb-0"
 >
@@ -115,19 +115,21 @@ const faqJsonLd = {
       <!-- Intro callout -->
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
         <p class="text-sm leading-relaxed text-neutral-700">
-          ריכזתי כאן תשובות לשאלות שאני נשאלת הכי הרבה. לא מצאתם את מה שחיפשתם? אתם מוזמנים
+          ריכזתי כאן תשובות לשאלות שאני נשאלת הכי הרבה. לא מצאתם את מה שחיפשתם? אתם מוזמנים{' '}
           <a
             href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             class="font-semibold text-teal-700 underline-offset-2 hover:underline"
             >לשלוח לי הודעה בוואטסאפ</a
-          >
-          או <a
+          >{' '}
+          או{' '}
+          <a
             href={`tel:${SITE.phoneE164}`}
             dir="ltr"
             class="font-semibold text-teal-700 underline-offset-2 hover:underline">להתקשר</a
-          > ישירות.
+          >{' '}
+          ישירות.
         </p>
       </div>
 

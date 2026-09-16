@@ -1,17 +1,11 @@
 ---
 import { Image } from 'astro:assets';
 import galAboutPro from '../assets/About example.png';
-
 ---
 
-<section
-  id="about"
-  aria-labelledby="about-heading"
-  class="section-padding bg-neutral-50"
->
+<section id="about" aria-labelledby="about-heading" class="section-padding bg-neutral-50">
   <div class="container-prose">
     <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-
       <!--
         Photo: right column in RTL (lg:order-1 = first grid position = right in RTL),
         bottom on mobile (order-2).
@@ -22,16 +16,19 @@ import galAboutPro from '../assets/About example.png';
           <div
             aria-hidden="true"
             class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-teal-50/80 to-transparent blur-sm"
-          ></div>
+          >
+          </div>
 
-          <figure class="relative overflow-hidden rounded-3xl shadow-card ring-1 ring-neutral-200/60">
+          <figure
+            class="shadow-card relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/60"
+          >
             <Image
               src={galAboutPro}
-              alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת — תמונת ייחוס"
+              alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
               width={480}
               height={560}
               loading="lazy"
-              class="block w-full aspect-square object-cover object-top"
+              class="block aspect-square w-full object-cover object-top"
             />
           </figure>
         </div>
@@ -42,19 +39,16 @@ import galAboutPro from '../assets/About example.png';
         top on mobile (order-1).
       -->
       <div class="order-1 px-6 text-start lg:order-2 lg:px-0">
-
         <!-- Eyebrow -->
-        <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">
-          אודות
-        </p>
+        <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">אודות</p>
 
         <!-- H2 -->
         <h2
           id="about-heading"
-          class="mt-3 font-serif text-3xl font-bold leading-tight text-teal-700 md:text-4xl"
+          class="mt-3 font-serif text-3xl leading-tight font-bold text-teal-700 md:text-4xl"
         >
           גל עופרי
-          <span class="sr-only">— פיזיותרפיסטית מוסמכת לשיקום ופיזיותרפיה</span>
+          <span class="sr-only">, פיזיותרפיסטית מוסמכת לשיקום ופיזיותרפיה</span>
         </h2>
         <p class="mt-2 text-sm font-medium tracking-wide text-teal-700">
           פיזיותרפיסטית מוסמכת (B.P.T) | מתעמלת תחרותית לשעבר
@@ -62,22 +56,25 @@ import galAboutPro from '../assets/About example.png';
 
         <!-- Introduction -->
         <p class="mt-5 leading-[1.85] text-neutral-600">
-          נעים מאוד, אני גל עופרי –
-          <strong class="font-semibold text-neutral-800">עם תשוקה אמיתית לעזור לאנשים</strong>
+          נעים מאוד, אני גל עופרי, ו
+          <strong class="font-semibold text-neutral-800">יש לי תשוקה אמיתית לעזור לאנשים</strong>
           לחזור לנוע בחופשיות ולהרגיש טוב בגוף שלהם. הגעתי לתחום מתוך אהבה עמוקה לתנועה ולאנשים.
         </p>
 
         <!-- Personal story -->
         <p class="mt-5 leading-[1.85] text-neutral-600">
           כ<strong class="font-semibold text-neutral-800">מתעמלת תחרותית לשעבר</strong>
-          שחוותה פציעות ותהליכי שיקום מורכבים בעצמה, אני מכירה מקרוב לא רק את האנטומיה, אלא גם את האתגר המנטלי הכרוך בכאב. בשנים האחרונות אני מלווה ספורטאים, מתבגרים ומבוגרים בתהליכי שיקום ושיפור ביצועים.
+          שחוותה פציעות ותהליכי שיקום מורכבים בעצמה, אני מכירה מקרוב לא רק את האנטומיה, אלא גם את האתגר
+          המנטלי הכרוך בכאב. בשנים האחרונות אני מלווה ספורטאים, מתבגרים ומבוגרים בתהליכי שיקום ושיפור
+          ביצועים.
         </p>
 
         <!-- Philosophy -->
         <p class="mt-5 leading-[1.85] text-neutral-600">
-          מה שמניע אותי הוא הרגע שבו המטופלים מבינים שהם יכולים לחזור לרוץ, להתאמן, להרים את הילד בלי כאב, או פשוט לקום בבוקר ולהרגיש קל יותר בגוף. אני מאמינה שטיפול הוא הסתכלות על
-          <strong class="font-semibold text-neutral-800">האדם כולו</strong>:
-          על ההרגלים, הנפש, והיכולת של הגוף לרפא את עצמו כשנותנים לו את הכלים והליווי הנכונים.
+          מה שמניע אותי הוא הרגע שבו המטופלים מבינים שהם יכולים לחזור לרוץ, להתאמן, להרים את הילד
+          בלי כאב, או פשוט לקום בבוקר ולהרגיש קל יותר בגוף. אני מאמינה שטיפול הוא הסתכלות על
+          <strong class="font-semibold text-neutral-800">האדם כולו</strong>: על ההרגלים, הנפש,
+          והיכולת של הגוף לרפא את עצמו כשנותנים לו את הכלים והליווי הנכונים.
         </p>
 
         <!-- Credentials — SEO-readable, visually silent -->
@@ -102,8 +99,11 @@ import galAboutPro from '../assets/About example.png';
               stroke-width="2"
               aria-hidden="true"
             >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="7" r="4" stroke-linejoin="round"/>
+              <path
+                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path>
+              <circle cx="12" cy="7" r="4" stroke-linejoin="round"></circle>
             </svg>
             לתיאום ייעוץ ראשוני
           </a>

@@ -6,8 +6,8 @@ import { SITE } from '@data/site';
 ---
 
 <BaseLayout
-  title="מדיניות ביטולים — גל עופרי פיזיותרפיה"
-  description="מדיניות הביטולים של קליניקת גל עופרי לפיזיותרפיה — ביטול או שינוי מועד טיפול, דמי ביטול, ואופן יצירת הקשר."
+  title="מדיניות ביטולים"
+  description="מדיניות הביטולים של קליניקת גל עופרי לפיזיותרפיה: ביטול או שינוי מועד טיפול, דמי ביטול, ואופן יצירת הקשר."
   bodyClass="!pb-0"
 >
   <Nav slot="header" />
@@ -41,8 +41,8 @@ import { SITE } from '@data/site';
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
         <p class="text-sm leading-relaxed text-neutral-700">
           אני מאמינה בקשר אמיתי עם כל מטופל/ת, ובניית לוח טיפולים שמכבד את הצרכים של כולם. מדיניות
-          הביטולים שלי נועדה לאפשר גישה הוגנת לטיפול — גם עבורכם, וגם עבור מטופלים אחרים שנמצאים
-          בכאב ומחכים לתור פנוי.
+          הביטולים שלי נועדה לאפשר גישה הוגנת לטיפול, גם עבורכם וגם עבור מטופלים אחרים שנמצאים בכאב
+          ומחכים לתור פנוי.
         </p>
       </div>
 
@@ -71,8 +71,8 @@ import { SITE } from '@data/site';
                 >
               </span>
               <span class="text-sm"
-                >ביטול עד <strong class="font-semibold text-neutral-800">24 שעות לפני</strong> הטיפול
-                — ללא חיוב, ניתן לקבוע תור חלופי.</span
+                >ביטול עד <strong class="font-semibold text-neutral-800">24 שעות לפני</strong> הטיפול:
+                ללא חיוב, ניתן לקבוע תור חלופי.</span
               >
             </li>
             <li class="flex items-start gap-3">
@@ -97,7 +97,7 @@ import { SITE } from '@data/site';
               <span class="text-sm"
                 >ביטול <strong class="font-semibold text-neutral-800"
                   >פחות מ-24 שעות לפני הטיפול</strong
-                > או אי-הגעה ללא הודעה (no-show) — יחויב <strong
+                > או אי-הגעה ללא הודעה (no-show): יחויב <strong
                   class="font-semibold text-neutral-800">מחיר הטיפול המלא</strong
                 >.</span
               >
@@ -117,7 +117,7 @@ import { SITE } from '@data/site';
         <section>
           <h2 class="mb-3 font-serif text-xl font-bold text-neutral-800">3. חריגים ומצבי חירום</h2>
           <p>
-            אני מבינה שהחיים לא תמיד צפויים — מחלה פתאומית, אירוע משפחתי, או נסיבות חריגות. במקרים
+            אני מבינה שהחיים לא תמיד צפויים: מחלה פתאומית, אירוע משפחתי, או נסיבות חריגות. במקרים
             כאלה, אנא פנו אליי ישירות ונמצא יחד פתרון הוגן. הגישה שלי תמיד אנושית ורגישה להקשר.
           </p>
         </section>
@@ -188,13 +188,15 @@ import { SITE } from '@data/site';
               <a
                 href={`tel:${SITE.phoneE164}`}
                 dir="ltr"
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a>
+                class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a
+              >
             </li>
             <li>
               <strong class="font-semibold text-neutral-800">אימייל:</strong>
               <a
                 href={`mailto:${SITE.email}`}
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a>
+                class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a
+              >
             </li>
           </ul>
         </section>
