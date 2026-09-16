@@ -18,6 +18,8 @@ The site presents Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv, and 
 
 Undecided — not yet confirmed with the practitioner. The existing copy leans on Gal's personal history as a former competitive gymnast who went through injury and rehab herself, and a stated "whole person" philosophy (habits, mind, and the body's own capacity to heal) alongside personalized, ongoing care. The site owner explicitly did not confirm this as the actual competitive differentiator vs. other Tel Aviv clinics — confirm with Gal before treating it as the lead positioning claim.
 
+Price positioning is also unconfirmed — the site's JSON-LD (`SEO.astro`) previously carried a guessed `priceRange: "$$"`; removed until Gal confirms an actual value (this is a public-facing claim Google can surface, not just internal copy).
+
 ## Operating Context
 
 Physical clinic at Bloch 38, Tel Aviv-Yafo. Hours: Mon–Thu 08:00–19:00, Fri 08:00–14:00. Contact channels: phone, WhatsApp, on-site contact form, Instagram.
