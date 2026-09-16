@@ -57,9 +57,17 @@ npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (c
 
 Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`. Keep that prefix convention. Only commit when explicitly asked.
 
+## Security headers (`vercel.json`)
+
+- `vercel.json` sets a strict `Content-Security-Policy` (plus `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`) applied by Vercel to every response.
+- `script-src` is locked to `'self'` plus three SHA-256 hashes — Astro inlines the small per-page `<script type="module">` blocks (Nav's menu toggle, `BaseLayout`'s scroll-reveal observer, `Contact`'s form handler) directly into the HTML instead of emitting external files, so a plain `'self'` would block them.
+- **If you edit the inline `<script>` in `Nav.astro`, `BaseLayout.astro`, or `Contact.astro`, the browser will silently block it in production** (CSP violation, swallowed unless devtools console is open) because its hash changed. After such an edit, run `npm run build`, recompute the three hashes (`grep -o '<script type="module">.*</script>' dist/index.html` piped through a sha256/base64 step, or reuse the one-off Puppeteer check from the security review), and update the `script-src` value in `vercel.json` to match.
+- `style-src` keeps `'unsafe-inline'` because of the one inline `style="backdrop-filter:..."` in `Contact.astro`; everything else on the site is external CSS via Tailwind, so this is the only relaxation from a fully strict policy.
+
 ## Known issues
 
 - **The contact form does not actually send anywhere yet.** `Contact.astro` posts to Web3Forms (`https://api.web3forms.com/submit`), but the hidden `access_key` field is still the literal placeholder `YOUR_WEB3FORMS_ACCESS_KEY` — every real submission currently fails silently into the error state (which does point people to WhatsApp as a fallback, but the "leave your details" flow itself reaches nobody). Needs a real Web3Forms access key (Gal or Dan signs up at web3forms.com with an email, gets a free key) pasted into `Contact.astro:230` before this form can be trusted to capture real leads.
+- **The production domain isn't connected yet — this is expected, not a bug.** `SITE.url` (`@data/site`) is hardcoded to `https://www.galofri-physio.co.il`, which every canonical/OG/JSON-LD tag derives from — but the domain is registered and *not yet pointed at Vercel* (confirmed 2026-09-16: real WHOIS status "registered but isn't pointed at a website"). The actual live site during development is `https://gal-physio.vercel.app`. This means canonical URLs, `og:image`, and JSON-LD `@id`/`url` currently point at a domain that doesn't resolve — social share previews of the live dev URL won't show the OG image correctly until either the real domain is connected (update DNS in Vercel's project settings) or `SITE.url` is temporarily pointed at the Vercel URL. Don't "fix" this by silently changing `SITE.url` — it's already set correctly for the intended final domain; just don't be surprised when og:image checks against the live URL fail before launch.
 
 ## Boundaries
 
