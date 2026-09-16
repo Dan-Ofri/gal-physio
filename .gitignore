@@ -1,6 +1,7 @@
 # build output
 dist/
 .output/
+screenshots/*.png
 
 # generated types
 .astro/
