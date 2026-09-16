@@ -30,3 +30,12 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Impeccable design skill — ephemeral session/journal state, not source
+.impeccable/
+
+# Installed Claude Code skills/agents — vendored from external repos, reinstall via
+# `npx impeccable install` and `npx skills@latest experimental_install` (skills-lock.json)
+.claude/skills/
+.claude/agents/
+.agents/
