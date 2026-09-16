@@ -1,0 +1,211 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { SITE } from '@data/site';
+
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+const faqs: FaqItem[] = [
+  {
+    id: 'booking',
+    question: 'איך קובעים תור לטיפול ראשון?',
+    answer: 'אפשר לקבוע תור בטלפון, בוואטסאפ, או דרך טופס יצירת הקשר באתר — כל דרך שנוחה לכם.',
+  },
+  {
+    id: 'referral',
+    question: 'האם צריך הפניה מרופא כדי לקבוע תור?',
+    answer: 'לא. אפשר לקבוע תור ולהגיע ישירות, ללא צורך בהפניה מרופא.',
+  },
+  {
+    id: 'insurance',
+    question: 'האם הטיפולים מוכרים על ידי קופות החולים, ויש החזר כספי?',
+    answer:
+      'הקליניקה פועלת בתשלום פרטי בלבד, ואינה עובדת ישירות מול קופות החולים. אם יש לכם ביטוח משלים, מומלץ לבדוק מול קופת החולים שלכם אם קיימת אפשרות להחזר עבור טיפול פרטי.',
+  },
+  {
+    id: 'specialties',
+    question: 'באילו תחומים גל מתמחה?',
+    answer:
+      'שיקום אורתופדי (כאבי גב, צוואר ומפרקים, ושיקום לאחר פציעות או ניתוחים), שיקום ספורטאים ושיפור ביצועים, ופיזיותרפיה מניעתית ותחזוקת הגוף.',
+  },
+  {
+    id: 'cancellation',
+    question: 'מה מדיניות הביטולים?',
+    answer:
+      'ניתן לבטל או לשנות מועד טיפול עד 24 שעות מראש ללא חיוב. ביטול מאוחר יותר או אי-הגעה ללא הודעה יחויבו במחיר הטיפול המלא. לפרטים המלאים, ראו את מדיניות הביטולים.',
+  },
+  {
+    id: 'cost',
+    question: 'כמה עולה טיפול?',
+    answer:
+      'העלות משתנה בהתאם לסוג הטיפול ולצרכים האישיים שלכם — מוזמנים ליצור קשר לפרטים ולהתאמה אישית.',
+  },
+  {
+    id: 'accessibility',
+    question: 'האם הקליניקה נגישה לאנשים עם מוגבלות תנועה?',
+    answer:
+      'הכניסה לקליניקה כוללת מדרגות, והיא אינה נגישה במלואה כרגע למוגבלות תנועה. אם יש לכם צורך מיוחד, אנא צרו קשר מראש ונבחן יחד את האפשרויות המתאימות.',
+  },
+  {
+    id: 'privacy',
+    question: 'האם הפרטים שאני משתף/ת בטופס יצירת הקשר חסויים?',
+    answer:
+      'כן. הפרטים נשמרים בפרטיות מלאה ואינם מועברים לצד שלישי. לפרטים המלאים ראו את מדיניות הפרטיות.',
+  },
+  {
+    id: 'hours',
+    question: 'מתי אפשר להגיע לטיפול?',
+    answer: 'ימים ב’–ה’ 08:00–19:00, יום ו’ 08:00–14:00.',
+  },
+];
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.answer,
+    },
+  })),
+};
+---
+
+<BaseLayout
+  title="שאלות נפוצות — גל עופרי פיזיותרפיה"
+  description="תשובות לשאלות הנפוצות ביותר על קביעת תור, מדיניות ביטולים, תחומי התמחות, נגישות ותשלום בקליניקת גל עופרי לפיזיותרפיה בתל אביב."
+  bodyClass="!pb-0"
+>
+  <Nav slot="header" />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+
+  <section class="section-padding bg-neutral-50">
+    <div class="container-prose max-w-3xl">
+      <!-- Back link -->
+      <a
+        href="/"
+        class="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+        aria-label="חזרה לעמוד הבית"
+      >
+        <svg
+          class="h-4 w-4 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"
+          ></polyline>
+        </svg>
+        חזרה לעמוד הבית
+      </a>
+
+      <h1 class="font-serif text-3xl font-bold text-teal-700 md:text-4xl">שאלות נפוצות</h1>
+      <p class="mt-2 text-sm text-neutral-500">עודכן לאחרונה: ספטמבר 2026</p>
+
+      <!-- Intro callout -->
+      <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
+        <p class="text-sm leading-relaxed text-neutral-700">
+          ריכזתי כאן תשובות לשאלות שאני נשאלת הכי הרבה. לא מצאתם את מה שחיפשתם? אתם מוזמנים
+          <a
+            href={SITE.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="font-semibold text-teal-700 underline-offset-2 hover:underline"
+            >לשלוח לי הודעה בוואטסאפ</a
+          >
+          או <a
+            href={`tel:${SITE.phoneE164}`}
+            dir="ltr"
+            class="font-semibold text-teal-700 underline-offset-2 hover:underline">להתקשר</a
+          > ישירות.
+        </p>
+      </div>
+
+      <!-- FAQ accordion -->
+      <div class="mt-10 space-y-3" role="list" aria-label="שאלות נפוצות">
+        {
+          faqs.map((item) => (
+            <details
+              class="group rounded-2xl bg-white ring-1 ring-neutral-200 open:ring-teal-200"
+              role="listitem"
+            >
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-serif text-base font-bold text-neutral-800 marker:content-none [&::-webkit-details-marker]:hidden">
+                {item.question}
+                <svg
+                  class="h-5 w-5 shrink-0 text-teal-600 transition-transform duration-200 group-open:rotate-45"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </summary>
+              <p class="px-6 pb-5 text-sm leading-relaxed text-neutral-600">
+                {item.id === 'cancellation' ? (
+                  <>
+                    ניתן לבטל או לשנות מועד טיפול עד 24 שעות מראש ללא חיוב. ביטול מאוחר יותר או
+                    אי-הגעה ללא הודעה יחויבו במחיר הטיפול המלא. לפרטים המלאים, ראו את{' '}
+                    <a
+                      href="/cancellation"
+                      class="font-medium text-teal-700 underline-offset-2 hover:underline"
+                    >
+                      מדיניות הביטולים
+                    </a>
+                    .
+                  </>
+                ) : item.id === 'privacy' ? (
+                  <>
+                    כן. הפרטים נשמרים בפרטיות מלאה ואינם מועברים לצד שלישי. לפרטים המלאים ראו את{' '}
+                    <a
+                      href="/privacy"
+                      class="font-medium text-teal-700 underline-offset-2 hover:underline"
+                    >
+                      מדיניות הפרטיות
+                    </a>
+                    .
+                  </>
+                ) : (
+                  item.answer
+                )}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+
+      <!-- Back to home CTA -->
+      <div class="mt-12 flex justify-center border-t border-neutral-200 pt-10">
+        <a href="/" class="btn-primary" aria-label="חזרה לעמוד הבית של גל עופרי פיזיותרפיה">
+          <svg
+            class="h-4 w-4 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          חזרה לעמוד הבית
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
