@@ -3,6 +3,12 @@ dist/
 .output/
 screenshots/*.png
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # generated types
 .astro/
 
