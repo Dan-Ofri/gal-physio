@@ -2,6 +2,10 @@
 
 Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Astro 5 + Tailwind v4 + TypeScript, fully Hebrew, RTL. Static, no backend, no CMS — content lives in code.
 
+## Mobile-first priority
+
+**Confirmed with the site owner: most visitors arrive on a phone.** Mobile is not a secondary breakpoint checked after desktop — it is the primary experience. This applies to every layer: layout and spacing, tap target size, copy length, image weight/loading strategy, animation cost on lower-end devices, and the contact form's usability with an on-screen keyboard open. When reviewing or building any UI, check mobile first. `screenshots/capture.mjs` currently only captures a 1440×900 desktop viewport — when doing visual QA on anything user-facing, also check a narrow viewport (resize the dev server browser, or extend the script) rather than relying on the desktop screenshot alone.
+
 ## Stack & structure
 
 - **Astro 5** (`.astro` components/pages), **Tailwind v4** via `@tailwindcss/vite` (config lives in `src/styles/global.css` under `@theme`, not a `tailwind.config.js`), strict TypeScript.
@@ -46,12 +50,17 @@ npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (c
 `screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#testimonials`, `#contact`, `footer[aria-label]`), and screenshots each at 1440×900 into `screenshots/*.png`. Good for a quick static full-page desktop check.
 
 - After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done.
-- `screenshots/` is git-ignored and excluded from Claude's own context via `.claudeignore` — it's a scratch/output folder, not source.
+- `capture.mjs`/`quote_shot.mjs` are tracked source (real tooling); the PNGs they generate (`screenshots/*.png`) are git-ignored output, and excluded from Claude's own context via `.claudeignore`.
 - For interactive iteration on a specific section's design (not just a static check), prefer Impeccable's `live` mode over extending `capture.mjs` — it already does real-browser, HMR-backed variant iteration; don't reinvent that in the Puppeteer script.
+- Desktop-only right now (1440×900) — see "Mobile-first priority" above; don't treat a desktop-only screenshot pass as sufficient QA.
 
 ## Git conventions
 
 Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`. Keep that prefix convention. Only commit when explicitly asked.
+
+## Known issues
+
+- **The contact form does not actually send anywhere yet.** `Contact.astro` posts to Web3Forms (`https://api.web3forms.com/submit`), but the hidden `access_key` field is still the literal placeholder `YOUR_WEB3FORMS_ACCESS_KEY` — every real submission currently fails silently into the error state (which does point people to WhatsApp as a fallback, but the "leave your details" flow itself reaches nobody). Needs a real Web3Forms access key (Gal or Dan signs up at web3forms.com with an email, gets a free key) pasted into `Contact.astro:230` before this form can be trusted to capture real leads.
 
 ## Boundaries
 

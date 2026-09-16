@@ -22,9 +22,13 @@ Undecided — not yet confirmed with the practitioner. The existing copy leans o
 
 Physical clinic at Bloch 38, Tel Aviv-Yafo. Hours: Mon–Thu 08:00–19:00, Fri 08:00–14:00. Contact channels: phone, WhatsApp, on-site contact form, Instagram.
 
+**Mobile is the primary device.** The site owner confirmed most visitors arrive on a phone. Mobile is not a secondary breakpoint to check after desktop — it is the primary experience every design/UX decision should be evaluated against first (layout, tap targets, load performance, copy length, form usability, animation cost on lower-end devices).
+
 ## Capabilities and Constraints
 
 Static site (Astro), no backend/CMS — content updates require code changes. No online booking; conversion happens through manual contact (phone/WhatsApp/form).
+
+**The contact form is not live yet** — it posts to Web3Forms but with a placeholder access key, so real submissions currently fail (see `CLAUDE.md` → Known issues). Until a real key is configured, phone and WhatsApp are the only contact channels that actually reach Gal.
 
 ## Brand Commitments
 
@@ -39,6 +43,7 @@ Real photos of Gal and the clinic (being integrated, `src/assets/`). Service con
 - Care framed around the whole person, not just the symptom — keep this tone consistent in new copy.
 - Ongoing personal guidance through a rehab process, not a one-off treatment.
 - Broad audience, not a single niche — avoid narrowing the voice to speak only to athletes or only to older patients.
+- **Mobile-first, in every sense** — most visitors are on a phone. Any new UI, layout, or interaction should be designed and reviewed on a mobile viewport first, then checked on desktop, not the other way around.
 
 ## Accessibility & Inclusion
 
