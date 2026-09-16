@@ -4,7 +4,7 @@ Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Ast
 
 ## Mobile-first priority
 
-**Confirmed with the site owner: most visitors arrive on a phone.** Mobile is not a secondary breakpoint checked after desktop — it is the primary experience. This applies to every layer: layout and spacing, tap target size, copy length, image weight/loading strategy, animation cost on lower-end devices, and the contact form's usability with an on-screen keyboard open. When reviewing or building any UI, check mobile first. `screenshots/capture.mjs` currently only captures a 1440×900 desktop viewport — when doing visual QA on anything user-facing, also check a narrow viewport (resize the dev server browser, or extend the script) rather than relying on the desktop screenshot alone.
+**Confirmed with the site owner: most visitors arrive on a phone.** Mobile is not a secondary breakpoint checked after desktop — it is the primary experience. This applies to every layer: layout and spacing, tap target size, copy length, image weight/loading strategy, animation cost on lower-end devices, and the contact form's usability with an on-screen keyboard open. When reviewing or building any UI, check mobile first. `screenshots/capture.mjs` captures **mobile by default, before desktop** (390×844, iPhone-class viewport, run first in the script's loop) — always look at the `mobile-*.png` files, not just `desktop-*.png`.
 
 ## Stack & structure
 
@@ -47,12 +47,11 @@ npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (c
 
 ## Visual QA
 
-`screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#testimonials`, `#contact`, `footer[aria-label]`), and screenshots each at 1440×900 into `screenshots/*.png`. Good for a quick static full-page desktop check.
+`screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#testimonials`, `#contact`, `footer[aria-label]`), and screenshots each at two viewports — **mobile (390×844) first, then desktop (1440×900)** — into `screenshots/mobile-*.png` and `screenshots/desktop-*.png`.
 
-- After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done.
+- After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done — check `mobile-*` first per the mobile-first priority above, not just `desktop-*`.
 - `capture.mjs`/`quote_shot.mjs` are tracked source (real tooling); the PNGs they generate (`screenshots/*.png`) are git-ignored output, and excluded from Claude's own context via `.claudeignore`.
 - For interactive iteration on a specific section's design (not just a static check), prefer Impeccable's `live` mode over extending `capture.mjs` — it already does real-browser, HMR-backed variant iteration; don't reinvent that in the Puppeteer script.
-- Desktop-only right now (1440×900) — see "Mobile-first priority" above; don't treat a desktop-only screenshot pass as sufficient QA.
 
 ## Git conventions
 
