@@ -1,6 +1,6 @@
 # 002 — Introduce shared easing tokens and stop hand-typing curves
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: ff7f096
 - **Severity**: LOW
 - **Category**: Cohesion & tokens / Easing & duration
@@ -29,7 +29,9 @@ Separately, `src/components/Nav.astro` already has a good, deliberate custom cur
 
 ```css
 /* src/components/Nav.astro:197, 224-225, 232-234 — current, three occurrences of the same literal */
-transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+transition:
+  transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+  opacity 200ms ease;
 ```
 
 ## Target
@@ -42,9 +44,14 @@ Add three named easing tokens to the existing `@theme` block, then point every o
   /* ...existing tokens unchanged... */
 
   /* ── Motion — shared easing curves ── */
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);        /* strong ease-out — entrances/exits */
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);    /* strong ease-in-out — on-screen movement */
-  --ease-drawer: cubic-bezier(0.16, 1, 0.3, 1);      /* this site's existing menu/drawer curve, now shared */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* strong ease-out — entrances/exits */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* strong ease-in-out — on-screen movement */
+  --ease-drawer: cubic-bezier(
+    0.16,
+    1,
+    0.3,
+    1
+  ); /* this site's existing menu/drawer curve, now shared */
 }
 ```
 
@@ -63,7 +70,9 @@ transition:
 
 ```css
 /* Nav.astro:197 — target */
-transition: transform 300ms var(--ease-drawer), opacity 200ms ease;
+transition:
+  transform 300ms var(--ease-drawer),
+  opacity 200ms ease;
 ```
 
 ```css
@@ -71,7 +80,7 @@ transition: transform 300ms var(--ease-drawer), opacity 200ms ease;
 transition:
   opacity 300ms var(--ease-drawer),
   transform 300ms var(--ease-drawer),
-  visibility 0ms linear 300ms;   /* keep the visibility line's own timing unchanged in each block */
+  visibility 0ms linear 300ms; /* keep the visibility line's own timing unchanged in each block */
 ```
 
 ## Repo conventions to follow

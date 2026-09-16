@@ -1,6 +1,6 @@
 # 005 — Add real press feedback to the primary/secondary buttons
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: ff7f096
 - **Severity**: LOW (missed opportunity)
 - **Category**: Missed opportunities / Physicality
@@ -13,7 +13,9 @@
 /* src/styles/global.css:155-181 — current, relevant lines only */
 .btn-primary {
   /* ... */
-  transition: box-shadow 200ms ease, transform 150ms ease;
+  transition:
+    box-shadow 200ms ease,
+    transform 150ms ease;
   /* ... */
 }
 .btn-primary:hover {
@@ -29,7 +31,11 @@
 /* global.css:182-204 — current, relevant lines only */
 .btn-secondary {
   /* ... */
-  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease,
+    transform 150ms ease;
   /* ... */
 }
 .btn-secondary:hover {

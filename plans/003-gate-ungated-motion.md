@@ -1,6 +1,6 @@
 # 003 — Gate remaining motion behind `prefers-reduced-motion`
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: ff7f096
 - **Severity**: MEDIUM
 - **Category**: Accessibility
@@ -14,7 +14,12 @@
 
 ```astro
 <!-- src/components/Hero.astro:112 — current -->
-<svg class="h-5 w-5 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="h-5 w-5 animate-bounce"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"></svg>
 ```
 
 2. `src/components/Nav.astro`'s `<style>` block (lines 178-237) defines the hamburger→X rotation and the mobile-menu overlay's translate+scale entrance/exit, and contains no `@media (prefers-reduced-motion: reduce)` block at all — this motion currently always runs regardless of the user's OS setting.
@@ -25,7 +30,12 @@
 
 ```astro
 <!-- Hero.astro:112 — target -->
-<svg class="h-5 w-5 animate-bounce motion-reduce:animate-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<svg
+  class="h-5 w-5 animate-bounce motion-reduce:animate-none"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"></svg>
 ```
 
 2. Add a reduced-motion block to `Nav.astro`'s `<style>` that removes the movement (rotation, translate, scale) but keeps the opacity/visibility change so the menu still visibly opens and closes — same "keep opacity, drop transform" pattern already used in `global.css:100-108`:

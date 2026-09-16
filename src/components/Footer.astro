@@ -4,10 +4,10 @@ import { SITE } from '@data/site';
 const year = new Date().getFullYear();
 
 const navLinks = [
-  { href: '#services',     label: 'שירותים' },
-  { href: '#about',        label: 'אודות' },
+  { href: '#services', label: 'שירותים' },
+  { href: '#about', label: 'אודות' },
   { href: '#testimonials', label: 'המלצות' },
-  { href: '#contact',      label: 'צור קשר' },
+  { href: '#contact', label: 'צור קשר' },
 ];
 
 const socialLinks = [
@@ -27,15 +27,10 @@ const socialLinks = [
 ];
 ---
 
-<footer
-  class="border-t-2 border-teal-200 bg-teal-50 pb-16 lg:pb-0"
-  aria-label="כותרת תחתונה"
->
+<footer class="border-t-2 border-teal-200 bg-teal-50 pb-16 lg:pb-0" aria-label="כותרת תחתונה">
   <div class="container-prose py-12 md:py-16">
-
     <!-- Top grid: brand | nav | contact -->
     <div class="grid gap-10 md:grid-cols-3 md:gap-6">
-
       <!-- Brand -->
       <div>
         <a
@@ -44,7 +39,10 @@ const socialLinks = [
           class="group inline-flex flex-col items-start"
         >
           <div class="leading-tight">
-            <span class="block font-serif text-[17px] font-semibold text-neutral-900 transition-colors group-hover:text-teal-700">גל עופרי</span>
+            <span
+              class="block font-serif text-[17px] font-semibold text-neutral-900 transition-colors group-hover:text-teal-700"
+              >גל עופרי</span
+            >
             <span class="block text-[11px] font-medium text-teal-600">פיזיותרפיה ושיקום</span>
           </div>
         </a>
@@ -55,67 +53,62 @@ const socialLinks = [
 
       <!-- Nav + Contact: side-by-side on mobile, direct grid children on desktop -->
       <div class="grid grid-cols-2 gap-6 md:contents">
+        <!-- Navigation links -->
+        <nav aria-label="ניווט תחתון">
+          <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">ניווט</p>
+          <ul class="space-y-2.5">
+            {
+              navLinks.map(({ href, label }) => (
+                <li>
+                  <a
+                    href={href}
+                    class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
 
-      <!-- Navigation links -->
-      <nav aria-label="ניווט תחתון">
-        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">
-          ניווט
-        </p>
-        <ul class="space-y-2.5">
-          {navLinks.map(({ href, label }) => (
+        <!-- Contact details -->
+        <div>
+          <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">יצירת קשר</p>
+          <ul class="space-y-2.5" aria-label="פרטי יצירת קשר">
             <li>
               <a
-                href={href}
+                href={`tel:${SITE.phoneE164}`}
+                dir="ltr"
                 class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                aria-label={`חייגו: ${SITE.phone}`}
               >
-                {label}
+                {SITE.phone}
               </a>
             </li>
-          ))}
-        </ul>
-      </nav>
-
-      <!-- Contact details -->
-      <div>
-        <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">
-          יצירת קשר
-        </p>
-        <ul class="space-y-2.5" aria-label="פרטי יצירת קשר">
-          <li>
-            <a
-              href={`tel:${SITE.phoneE164}`}
-              dir="ltr"
-              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
-              aria-label={`חייגו: ${SITE.phone}`}
-            >
-              {SITE.phone}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`mailto:${SITE.email}`}
-              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
-              aria-label={`שלחו אימייל: ${SITE.email}`}
-            >
-              {SITE.email}
-            </a>
-          </li>
-          <li>
-            <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
-              aria-label={`פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`}
-            >
-              {SITE.address.street}, {SITE.address.cityHebrew}
-            </a>
-          </li>
-        </ul>
-      </div>
-
+            <li>
+              <a
+                href={`mailto:${SITE.email}`}
+                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                aria-label={`שלחו אימייל: ${SITE.email}`}
+              >
+                {SITE.email}
+              </a>
+            </li>
+            <li>
+              <a
+                href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                aria-label={`פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`}
+              >
+                {SITE.address.street}, {SITE.address.cityHebrew}
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>{/* /nav+contact wrapper */}
-
     </div>
 
     <!-- Divider -->
@@ -128,39 +121,55 @@ const socialLinks = [
           © {year} גל עופרי — פיזיותרפיסטית מוסמכת
         </p>
         <nav aria-label="קישורי מדיניות ונגישות" class="flex gap-5">
-          <a href="/privacy" class="text-xs text-neutral-400 transition-colors hover:text-neutral-700">מדיניות פרטיות</a>
-          <a href="/cancellation" class="text-xs text-neutral-400 transition-colors hover:text-neutral-700">מדיניות ביטולים</a>
-          <a href="/accessibility" class="text-xs text-neutral-400 transition-colors hover:text-neutral-700">הצהרת נגישות</a>
+          <a
+            href="/privacy"
+            class="text-xs text-neutral-400 transition-colors hover:text-neutral-700"
+            >מדיניות פרטיות</a
+          >
+          <a
+            href="/cancellation"
+            class="text-xs text-neutral-400 transition-colors hover:text-neutral-700"
+            >מדיניות ביטולים</a
+          >
+          <a
+            href="/accessibility"
+            class="text-xs text-neutral-400 transition-colors hover:text-neutral-700"
+            >הצהרת נגישות</a
+          >
         </nav>
       </div>
 
       <!-- Social icons -->
       <div class="flex items-center gap-3" role="list" aria-label="קישורי רשתות חברתיות">
-        {socialLinks.map((social) => (
-          <div role="listitem">
-            <a
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={social.label}
-              class="flex h-8 w-8 items-center justify-center rounded-full border border-teal-200 text-neutral-500 transition-all duration-200 hover:border-teal-400 hover:text-teal-600"
-            >
-              <svg
-                class="h-4 w-4"
-                viewBox="0 0 24 24"
-                fill={social.fill ? 'currentColor' : 'none'}
-                stroke={social.fill ? 'none' : 'currentColor'}
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-                set:html={social.iconPath.split(' M').map((d, i) => `<path d="${i === 0 ? d : 'M' + d}"/>`).join('')}
-              />
-            </a>
-          </div>
-        ))}
+        {
+          socialLinks.map((social) => (
+            <div role="listitem">
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                class="flex h-8 w-8 items-center justify-center rounded-full border border-teal-200 text-neutral-500 transition-colors duration-200 hover:border-teal-400 hover:text-teal-600"
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill={social.fill ? 'currentColor' : 'none'}
+                  stroke={social.fill ? 'none' : 'currentColor'}
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={social.iconPath
+                    .split(' M')
+                    .map((d, i) => `<path d="${i === 0 ? d : 'M' + d}"/>`)
+                    .join('')}
+                />
+              </a>
+            </div>
+          ))
+        }
       </div>
     </div>
-
   </div>
 </footer>

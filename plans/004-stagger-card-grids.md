@@ -1,6 +1,6 @@
 # 004 — Stagger the Services and Testimonials card entrances
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: ff7f096
 - **Severity**: LOW (missed opportunity — additive, not corrective)
 - **Category**: Missed opportunities / Cohesion
@@ -48,6 +48,10 @@ A new `.stagger-children` utility in `global.css` that, combined with the sectio
 .reveal-init .stagger-children > * {
   opacity: 0;
   transform: translateY(20px);
+}
+.reveal-in .stagger-children > * {
+  opacity: 1;
+  transform: none;
 }
 .reveal-in .stagger-children > *:nth-child(1) { transition-delay: 0ms; }
 .reveal-in .stagger-children > *:nth-child(2) { transition-delay: 70ms; }

@@ -85,14 +85,14 @@ const services: Service[] = [
 
     <!-- Service cards -->
     <div
-      class="mt-10 grid gap-6 md:grid-cols-3"
+      class="mt-10 grid gap-6 md:grid-cols-3 stagger-children"
       role="list"
       aria-label="שירותי הפיזיותרפיה שלי"
     >
       {services.map((service) => (
         <article
           role="listitem"
-          class="group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-neutral-200 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:ring-teal-200/70 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.08)]"
+          class="group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-neutral-200 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:ring-teal-200/70 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.08)]"
         >
           <!-- Photo -->
           <div class="overflow-hidden">

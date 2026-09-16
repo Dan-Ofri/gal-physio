@@ -1,6 +1,6 @@
 # 006 — Stagger the mobile nav menu links on open
 
-- **Status**: TODO
+- **Status**: DONE
 - **Commit**: ff7f096
 - **Severity**: LOW (missed opportunity)
 - **Category**: Missed opportunities / Cohesion
@@ -15,14 +15,16 @@
   aria-label="תפריט ניווט נייד"
   class="flex flex-1 flex-col items-center justify-center gap-2 px-6"
 >
-  {links.map(({ href, label }) => (
-    <a
-      href={href}
-      class="w-full rounded-2xl py-4 text-center text-xl font-semibold text-neutral-700 transition-[background-color,color,transform] duration-150 hover:bg-neutral-100 hover:text-teal-700 active:scale-[0.97]"
-    >
-      {label}
-    </a>
-  ))}
+  {
+    links.map(({ href, label }) => (
+      <a
+        href={href}
+        class="w-full rounded-2xl py-4 text-center text-xl font-semibold text-neutral-700 transition-[background-color,color,transform] duration-150 hover:bg-neutral-100 hover:text-teal-700 active:scale-[0.97]"
+      >
+        {label}
+      </a>
+    ))
+  }
 </nav>
 ```
 
@@ -50,10 +52,18 @@ Add link-level opacity+translateY entrance motion, staggered on open, to `Nav.as
   opacity: 1;
   transform: translateY(0);
 }
-#mobile-menu[data-open='true'] nav a:nth-child(1) { transition-delay: 80ms; }
-#mobile-menu[data-open='true'] nav a:nth-child(2) { transition-delay: 120ms; }
-#mobile-menu[data-open='true'] nav a:nth-child(3) { transition-delay: 160ms; }
-#mobile-menu[data-open='true'] nav a:nth-child(4) { transition-delay: 200ms; }
+#mobile-menu[data-open='true'] nav a:nth-child(1) {
+  transition-delay: 80ms;
+}
+#mobile-menu[data-open='true'] nav a:nth-child(2) {
+  transition-delay: 120ms;
+}
+#mobile-menu[data-open='true'] nav a:nth-child(3) {
+  transition-delay: 160ms;
+}
+#mobile-menu[data-open='true'] nav a:nth-child(4) {
+  transition-delay: 200ms;
+}
 
 @media (prefers-reduced-motion: reduce) {
   #mobile-menu nav a {

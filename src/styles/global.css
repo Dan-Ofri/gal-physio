@@ -10,16 +10,16 @@
   /* ── Brand palette — soft peach-orange (H 20°, warm, healing) ── */
 
   /* Peach Orange scale — primary brand */
-  --color-teal-50:  #fff5f1;
+  --color-teal-50: #fff5f1;
   --color-teal-100: #ffe5d4;
   --color-teal-200: #ffcaab;
   --color-teal-300: #ffaa80;
   --color-teal-400: #f8906a;
-  --color-teal-500: #f48249;   /* signature peach-orange — PRIMARY */
-  --color-teal-600: #be4a1e;   /* hover / eyebrow text — 4.87:1 on warm white ✅ */
-  --color-teal-700: #8e3812;   /* headings — 7.52:1 on warm white ✅ */
-  --color-teal-800: #692608;   /* CTA button — 11.2:1 on warm white ✅ WCAG AAA */
-  --color-teal-900: #421505;   /* deepest */
+  --color-teal-500: #f48249; /* signature peach-orange — PRIMARY */
+  --color-teal-600: #be4a1e; /* hover / eyebrow text — 4.87:1 on warm white ✅ */
+  --color-teal-700: #8e3812; /* headings — 7.52:1 on warm white ✅ */
+  --color-teal-800: #692608; /* CTA button — 11.2:1 on warm white ✅ WCAG AAA */
+  --color-teal-900: #421505; /* deepest */
 
   /* Deep warm-dark — footer / dark sections */
   --color-navy-700: #2c1a10;
@@ -30,7 +30,7 @@
   --color-section-dark: #2d1808;
 
   /* Warm neutrals — site background warm oatmeal */
-  --color-neutral-50:  #fdfbf7;
+  --color-neutral-50: #fdfbf7;
   --color-neutral-100: #f7f6f4;
   --color-neutral-200: #e8e3db;
   --color-neutral-300: #d1c9bf;
@@ -42,21 +42,21 @@
   --color-neutral-900: #1f1714;
 
   /* Accents */
-  --color-accent-gold: #e8a878;   /* peachy gold — eyebrow on dark backgrounds */
-  --color-accent-rose: #f5916b;   /* bright peach — decorative */
+  --color-accent-gold: #e8a878; /* peachy gold — eyebrow on dark backgrounds */
+  --color-accent-rose: #f5916b; /* bright peach — decorative */
 
   /* Gradient endpoints — btn-primary + hero heading */
-  --color-brand-amber:       #c44520;  /* warm peach-amber — 4.88:1 w/ white ✅ */
-  --color-brand-amber-hover: #9a3510;  /* deep hover — 7.24:1 w/ white ✅ */
+  --color-brand-amber: #c44520; /* warm peach-amber — 4.88:1 w/ white ✅ */
+  --color-brand-amber-hover: #9a3510; /* deep hover — 7.24:1 w/ white ✅ */
 
   /* Third-party brand */
-  --color-whatsapp: #25D366;
+  --color-whatsapp: #25d366;
 
   /* Validation / error */
   --color-error: #dc2626;
 
   /* Typography — Assistant Variable for Hebrew & Latin; Inter as Latin fallback */
-  --font-sans:  'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
   --font-serif: 'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
 
   /* Spacing scale extensions */
@@ -75,9 +75,14 @@
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
 
+  /* ── Motion — shared easing curves ── */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* strong ease-out — entrances/exits */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* strong ease-in-out — on-screen movement */
+  --ease-drawer: cubic-bezier(0.16, 1, 0.3, 1); /* this site's menu/drawer curve, shared */
+
   /* Animations */
-  --animate-fade-up: fadeUp 0.7s ease both;
-  --animate-fade-in: fadeIn 0.8s ease both;
+  --animate-fade-up: fadeUp 0.7s var(--ease-out) both;
+  --animate-fade-in: fadeIn 0.8s var(--ease-out) both;
 }
 
 /* ─── Keyframes ──────────────────────────────────────────────────────────── */
@@ -93,8 +98,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Respect prefers-reduced-motion */
@@ -133,14 +142,21 @@
     border-radius: 3px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-sans);
     font-weight: 800;
     letter-spacing: -0.025em;
     line-height: 1.15;
   }
 
-  p, li, blockquote {
+  p,
+  li,
+  blockquote {
     line-height: 1.7;
   }
 
@@ -164,7 +180,9 @@
     font-size: 0.9375rem;
     letter-spacing: 0.01em;
     border-radius: 9999px;
-    transition: box-shadow 200ms ease, transform 150ms ease;
+    transition:
+      box-shadow 200ms ease,
+      transform 150ms ease;
     box-shadow: var(--shadow-teal);
     text-decoration: none;
   }
@@ -176,7 +194,7 @@
   }
 
   .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.97);
   }
 
   .btn-secondary {
@@ -192,7 +210,11 @@
     letter-spacing: 0.01em;
     border-radius: 9999px;
     border: 1.5px solid var(--color-neutral-300);
-    transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease, transform 150ms ease;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease,
+      border-color 200ms ease,
+      transform 150ms ease;
     text-decoration: none;
   }
 
@@ -201,6 +223,10 @@
     color: var(--color-neutral-900);
     border-color: var(--color-neutral-400);
     transform: translateY(-1px);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.97);
   }
 
   .section-padding {
@@ -297,8 +323,8 @@
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    opacity 0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
 }
 .reveal-init.reveal-in {
   opacity: 1;
@@ -309,5 +335,37 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+
+/* ─── Staggered Children (used inside a .reveal-init section) ──────────────── */
+.stagger-children > * {
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+.reveal-init .stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.reveal-in .stagger-children > * {
+  opacity: 1;
+  transform: none;
+}
+.reveal-in .stagger-children > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+.reveal-in .stagger-children > *:nth-child(2) {
+  transition-delay: 70ms;
+}
+.reveal-in .stagger-children > *:nth-child(3) {
+  transition-delay: 140ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-children > * {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
