@@ -27,7 +27,7 @@ const contactItems = [
     label: 'מיקום',
     value: `${SITE.address.street}, ${SITE.address.cityHebrew}`,
     href: `https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`,
-    ariaLabel: `פתח מפה — ${SITE.address.street}, ${SITE.address.cityHebrew}`,
+    ariaLabel: `פתח מפה: ${SITE.address.street}, ${SITE.address.cityHebrew}`,
     iconPath: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
   },
 ];
@@ -174,7 +174,7 @@ const contactItems = [
           השאירו פרטים ואחזור אליכם בהקדם
         </h3>
         <p class="mt-1.5 text-sm text-neutral-600">
-          ספרו לי על הכאב שלכם — ונמצא יחד את הפתרון הנכון.
+          ספרו לי על הכאב שלכם, ונמצא יחד את הפתרון הנכון.
         </p>
 
         <!-- Success state (hidden until form submit) -->
@@ -197,7 +197,7 @@ const contactItems = [
           </div>
           <h3 class="font-serif text-xl font-bold text-neutral-900">הפנייה נשלחה!</h3>
           <p class="mt-2 text-sm leading-relaxed text-neutral-600">
-            נחזור אליכם תוך יום עסקים אחד.<br />לתגובה מהירה יותר — שלחו הודעה בוואטסאפ.
+            נחזור אליכם תוך יום עסקים אחד.<br />לתגובה מהירה יותר, שלחו הודעה בוואטסאפ.
           </p>
           <a
             href={SITE.whatsappUrl}
@@ -228,7 +228,7 @@ const contactItems = [
 
         <form id="contact-form" novalidate aria-label="טופס יצירת קשר" class="mt-6 space-y-5">
           <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-          <input type="hidden" name="subject" value="פנייה חדשה מהאתר — גל עופרי פיזיותרפיה" />
+          <input type="hidden" name="subject" value="פנייה חדשה מהאתר: גל עופרי פיזיותרפיה" />
           <!-- Honeypot: invisible to real visitors, catches basic form-filling bots. Web3Forms rejects submissions where this is checked. -->
           <input
             type="checkbox"
@@ -413,7 +413,7 @@ const contactItems = [
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: accessKey,
-          subject: 'פנייה חדשה מהאתר — גל עופרי פיזיותרפיה',
+          subject: 'פנייה חדשה מהאתר: גל עופרי פיזיותרפיה',
           name,
           phone,
           message,
