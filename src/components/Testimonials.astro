@@ -57,6 +57,14 @@ const testimonials: Testimonial[] = [
       <p class="mt-4 leading-relaxed text-neutral-600">
         לכל אחד ואחת יש את הקצב והדרך שלהם. הנה כמה רגעים מהתהליכים שעברנו יחד.
       </p>
+      <a
+        href="https://www.google.com/search?kgmid=/g/11ynf97pzh"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-teal-700 underline-offset-2 transition-colors hover:text-teal-800 hover:underline"
+      >
+        ראו עוד ביקורות ב-Google
+      </a>
     </div>
 
     <!-- Testimonial cards: horizontal snap carousel on mobile (one card + a peek of
@@ -76,6 +84,7 @@ const testimonials: Testimonial[] = [
         {
           testimonials.map((t) => (
             <article
+              id={`testimonial-card-${t.id}`}
               role="listitem"
               class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] md:w-auto md:shrink"
               aria-label={`המלצה מ-${t.author}`}
@@ -91,7 +100,20 @@ const testimonials: Testimonial[] = [
                 >
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
-                <p class="line-clamp-6 text-sm leading-relaxed text-neutral-600">{t.text}</p>
+                <div class="relative">
+                  <p
+                    class="quote-scroll text-sm leading-relaxed text-neutral-600 md:h-32 md:overflow-y-auto md:pe-2"
+                    role="group"
+                    tabindex="0"
+                    aria-label="טקסט ההמלצה, ניתן לגלילה"
+                  >
+                    {t.text}
+                  </p>
+                  <div
+                    class="quote-fade pointer-events-none absolute inset-x-0 bottom-0 hidden h-7 bg-gradient-to-t from-neutral-50 to-transparent"
+                    aria-hidden="true"
+                  />
+                </div>
               </blockquote>
 
               {/* Divider */}
@@ -125,5 +147,75 @@ const testimonials: Testimonial[] = [
         }
       </div>
     </div>
+
+    <!-- Pagination dots — mobile carousel only, synced to the visible card -->
+    <div class="mt-5 flex justify-center gap-2 md:hidden" aria-hidden="true">
+      {
+        testimonials.map((t) => (
+          <span
+            class="testimonial-dot h-2 w-2 rounded-full bg-neutral-300 transition-colors duration-200"
+            data-dot-for={`testimonial-card-${t.id}`}
+          />
+        ))
+      }
+    </div>
   </div>
 </section>
+
+<style>
+  .quote-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-teal-200) transparent;
+  }
+  .quote-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .quote-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .quote-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--color-teal-200);
+    border-radius: 9999px;
+  }
+  .testimonial-dot[data-active='true'] {
+    background-color: var(--color-teal-600);
+    width: 1.25rem;
+  }
+</style>
+
+<script>
+  const track = document.querySelector('#testimonials [role="group"]') as HTMLElement | null;
+  const dots = document.querySelectorAll<HTMLElement>('.testimonial-dot');
+  if (track && dots.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const dot = document.querySelector<HTMLElement>(
+            `.testimonial-dot[data-dot-for="${entry.target.id}"]`
+          );
+          if (dot) dot.dataset.active = entry.isIntersecting ? 'true' : 'false';
+        });
+      },
+      { root: track, threshold: 0.6 }
+    );
+    document.querySelectorAll('#testimonials article[id^="testimonial-card-"]').forEach((el) => {
+      observer.observe(el);
+    });
+  }
+
+  // Fade hint: only shown when a card's quote is actually clipped (desktop's
+  // fixed-height cards), and hidden again once scrolled to the real bottom —
+  // native scrollbars aren't reliably visible enough on their own (OS/browser
+  // dependent) to signal there's more to read.
+  document.querySelectorAll<HTMLElement>('.quote-scroll').forEach((el) => {
+    const fade = el.nextElementSibling as HTMLElement | null;
+    if (!fade) return;
+    const sync = () => {
+      const hasMore = el.scrollHeight - el.clientHeight - el.scrollTop > 2;
+      fade.classList.toggle('hidden', !hasMore);
+    };
+    sync();
+    el.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+  });
+</script>
