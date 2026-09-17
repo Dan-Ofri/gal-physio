@@ -130,7 +130,7 @@ import clinicHero from '../assets/hero-ref.png';
     <div class="flex flex-col items-center gap-1.5 text-neutral-600">
       <span class="text-[10px] font-medium tracking-[0.2em] uppercase">גלול</span>
       <svg
-        class="h-5 w-5 animate-bounce motion-reduce:animate-none"
+        class="scroll-hint-icon h-5 w-5"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -141,3 +141,24 @@ import clinicHero from '../assets/hero-ref.png';
     </div>
   </div>
 </section>
+
+<style>
+  /* Smooth exponential drift, not a bounce — real objects don't ricochet. */
+  @keyframes scroll-hint-drift {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+  .scroll-hint-icon {
+    animation: scroll-hint-drift 1.8s var(--ease-in-out) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint-icon {
+      animation: none;
+    }
+  }
+</style>
