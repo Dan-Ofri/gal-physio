@@ -21,14 +21,14 @@ npm run dev      # http://localhost:4321
 
 ## Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start the dev server |
-| `npm run build` | Production build to `dist/` |
-| `npm run preview` | Preview the production build locally |
-| `npm run lint` / `npm run lint:fix` | ESLint (Astro + jsx-a11y rules) |
-| `npm run format` / `npm run format:check` | Prettier (incl. Tailwind class sorting) |
-| `node screenshots/capture.mjs` | Screenshot every section against a running dev server, for visual review |
+| Command                                   | Description                                                              |
+| ----------------------------------------- | ------------------------------------------------------------------------ |
+| `npm run dev`                             | Start the dev server                                                     |
+| `npm run build`                           | Production build to `dist/`                                              |
+| `npm run preview`                         | Preview the production build locally                                     |
+| `npm run lint` / `npm run lint:fix`       | ESLint (Astro + jsx-a11y rules)                                          |
+| `npm run format` / `npm run format:check` | Prettier (incl. Tailwind class sorting)                                  |
+| `node screenshots/capture.mjs`            | Screenshot every section against a running dev server, for visual review |
 
 ## Deployment
 

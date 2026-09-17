@@ -33,7 +33,7 @@ const { bodyClass, ...seoProps } = Astro.props;
     <!-- Skip navigation for screen readers and keyboard users -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:start-4 focus:z-[60] focus:rounded-lg focus:bg-teal-800 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+      class="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-teal-800 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
     >
       דלג לתוכן הראשי
     </a>
@@ -55,20 +55,19 @@ const { bodyClass, ...seoProps } = Astro.props;
     <script>
       // Scroll-reveal: fade-in-up for all sections except hero
       const observer = new IntersectionObserver(
-        (entries) => entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('reveal-in');
-            observer.unobserve(e.target);
-          }
-        }),
+        (entries) =>
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('reveal-in');
+              observer.unobserve(e.target);
+            }
+          }),
         { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
       );
-      document
-        .querySelectorAll('section:not(#hero)')
-        .forEach((el) => {
-          el.classList.add('reveal-init');
-          observer.observe(el);
-        });
+      document.querySelectorAll('section:not(#hero)').forEach((el) => {
+        el.classList.add('reveal-init');
+        observer.observe(el);
+      });
     </script>
   </body>
 </html>

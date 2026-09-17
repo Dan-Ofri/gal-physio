@@ -24,10 +24,25 @@ export default [
     },
   },
   {
+    files: ['screenshots/**/*.mjs'],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+    },
+  },
+  {
     files: ['**/*.astro'],
     plugins: { 'jsx-a11y': pluginJsxA11y },
+    settings: {
+      'jsx-a11y': {
+        attributes: { for: ['for', 'htmlFor'] },
+      },
+    },
     rules: {
       ...pluginJsxA11y.configs.recommended.rules,
+      // role="group" is allowed to carry tabindex: the one legitimate case is a
+      // scrollable container (WCAG 2.1.1 / axe "scrollable-region-focusable"),
+      // which has no interactive ARIA role of its own.
+      'jsx-a11y/no-noninteractive-tabindex': ['error', { roles: ['group'] }],
     },
   },
   {
