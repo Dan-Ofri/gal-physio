@@ -273,7 +273,8 @@
     border: none;
     border-bottom: 1.5px solid var(--color-neutral-200);
     border-radius: 0;
-    font-size: 0.9375rem;
+    /* 16px minimum: iOS Safari zooms the page on focus below this. */
+    font-size: 1rem;
     font-family: var(--font-sans);
     color: var(--color-neutral-800);
     appearance: none;
@@ -308,7 +309,7 @@
     position: absolute;
     inset-inline-start: 0;
     top: 0.75rem;
-    font-size: 0.9375rem;
+    font-size: 1rem;
     color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
     pointer-events: none;
     transition:
