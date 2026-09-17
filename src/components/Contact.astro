@@ -240,8 +240,7 @@ const contactItems = [
           />
 
           <!-- Name -->
-          <div>
-            <label for="contact-name" class="form-label">שם מלא</label>
+          <div class="form-field">
             <input
               type="text"
               id="contact-name"
@@ -249,14 +248,15 @@ const contactItems = [
               autocomplete="name"
               required
               aria-required="true"
+              placeholder=" "
               class="form-input"
             />
+            <label for="contact-name" class="form-float-label">שם מלא</label>
             <p class="form-error hidden" id="name-error" role="alert"></p>
           </div>
 
           <!-- Phone -->
-          <div>
-            <label for="contact-phone" class="form-label">מספר טלפון</label>
+          <div class="form-field">
             <input
               type="tel"
               id="contact-phone"
@@ -265,8 +265,10 @@ const contactItems = [
               required
               aria-required="true"
               dir="ltr"
+              placeholder=" "
               class="form-input text-start"
             />
+            <label for="contact-phone" class="form-float-label">מספר טלפון</label>
             <p class="form-error hidden" id="phone-error" role="alert"></p>
           </div>
 
