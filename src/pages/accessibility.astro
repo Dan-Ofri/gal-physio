@@ -35,7 +35,7 @@ import { SITE } from '@data/site';
       </a>
 
       <h1 class="font-serif text-3xl font-bold text-teal-700 md:text-4xl">הצהרת נגישות</h1>
-      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: מאי 2026</p>
+      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: ספטמבר 2026</p>
 
       <!-- Intro callout -->
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
@@ -71,7 +71,8 @@ import { SITE } from '@data/site';
                 <li>כותרות מסודרות בהיררכיה ברורה (H1–H3) בכל עמוד</li>
                 <li>
                   HTML סמנטי עם <code class="rounded bg-neutral-100 px-1 text-xs"
-                    >lang="he" dir="rtl"</code>
+                    >lang="he" dir="rtl"</code
+                  >
                 </li>
               </ul>
             </div>
@@ -80,8 +81,8 @@ import { SITE } from '@data/site';
               <p class="mb-2 text-sm font-semibold text-neutral-800">קוראי מסך</p>
               <ul class="list-inside list-disc space-y-2 text-sm">
                 <li>
-                  תאימות לקוראי מסך (NVDA, VoiceOver, TalkBack): ARIA labels ו-landmark roles לאורך
-                  כל האתר
+                  בנייה לפי כללי ARIA landmark roles ותוויות נגישות לאורך כל האתר, לתמיכה בקוראי מסך
+                  נפוצים (כגון NVDA, VoiceOver, TalkBack)
                 </li>
                 <li>תיאורי alt לכל התמונות</li>
                 <li>
@@ -93,7 +94,8 @@ import { SITE } from '@data/site';
                   הודעות שגיאה בטפסים עם <code class="rounded bg-neutral-100 px-1 text-xs"
                     >aria-live</code
                   >, <code class="rounded bg-neutral-100 px-1 text-xs">aria-invalid</code>, ו-<code
-                    class="rounded bg-neutral-100 px-1 text-xs">aria-describedby</code>
+                    class="rounded bg-neutral-100 px-1 text-xs">aria-describedby</code
+                  >
                 </li>
                 <li>
                   תפריט נייד עם <code class="rounded bg-neutral-100 px-1 text-xs"
@@ -128,8 +130,10 @@ import { SITE } from '@data/site';
             3. דפדפנים וטכנולוגיות נתמכות
           </h2>
           <p>
-            האתר נבדק בדפדפנים (Chrome, Firefox, Safari, Edge) בגרסאות עדכניות, הן במחשב שולחני והן
-            במכשירים ניידים. הבדיקה כללה קורא מסך NVDA על Windows ו-VoiceOver על macOS ו-iOS.
+            האתר נבדק אוטומטית בכל עמודיו באמצעות כלי בדיקת נגישות (axe-core), הן בתצוגת מחשב שולחני
+            והן בתצוגת מכשיר נייד, ונבנה מלכתחילה לעבודה תקינה בדפדפנים עדכניים (Chrome, Firefox,
+            Safari, Edge). בדיקה ידנית מלאה עם קוראי מסך (כגון NVDA, VoiceOver) טרם בוצעה; אם נתקלתם
+            בקושי בשימוש עם קורא מסך, נשמח שתדווחו לנו בהתאם לפרטים בסעיף 5.
           </p>
         </section>
 
@@ -152,14 +156,16 @@ import { SITE } from '@data/site';
               <strong class="font-semibold text-neutral-800">אימייל:</strong>
               <a
                 href={`mailto:${SITE.email}`}
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a>
+                class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a
+              >
             </li>
             <li>
               <strong class="font-semibold text-neutral-800">טלפון:</strong>
               <a
                 href={`tel:${SITE.phoneE164}`}
                 dir="ltr"
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a>
+                class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a
+              >
             </li>
           </ul>
           <p class="mt-4 text-sm text-neutral-600">
@@ -175,9 +181,9 @@ import { SITE } from '@data/site';
           <p>
             הגורם האחראי לנגישות: <strong class="font-semibold text-neutral-800">גל עופרי</strong>,
             פיזיותרפיסטית מוסמכת.<br />
-            תאריך בדיקת נגישות אחרון: <strong class="font-semibold text-neutral-800"
-              >מאי 2026</strong
-            >.<br />
+            תאריך בדיקת נגישות אוטומטית אחרונה: <strong class="font-semibold text-neutral-800"
+              >ספטמבר 2026</strong
+            >. בדיקה ידנית מקיפה עם קורא מסך טרם בוצעה.<br />
             הצהרה זו הוכנה בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג–2013.
           </p>
         </section>
