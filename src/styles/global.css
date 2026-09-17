@@ -50,7 +50,8 @@
   --color-brand-amber-hover: #9a3510; /* deep hover — 7.24:1 w/ white ✅ */
 
   /* Third-party brand */
-  --color-whatsapp: #25d366;
+  --color-whatsapp: #25d366; /* brand fill only — 1.98:1 on white, never for text */
+  --color-whatsapp-ink: #0b7c3d; /* WhatsApp text/icon — 5.30:1 on white ✅ */
 
   /* Validation / error */
   --color-error: #dc2626;
@@ -118,8 +119,10 @@
 
 /* ─── Base Styles ────────────────────────────────────────────────────────── */
 @layer base {
-  :root {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      scroll-behavior: smooth;
+    }
   }
 
   html {
@@ -283,7 +286,12 @@
 
   .form-input:focus {
     outline: none;
-    border-bottom-color: var(--color-teal-600);
+    border-bottom-color: var(--color-teal-600); /* 4.85:1 on white ✅ */
+    box-shadow: 0 1.5px 0 0 var(--color-teal-600);
+  }
+
+  .form-input[aria-invalid='true']:focus {
+    box-shadow: 0 1.5px 0 0 var(--color-error);
   }
 
   .form-input::placeholder {

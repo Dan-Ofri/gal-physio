@@ -13,7 +13,6 @@ interface Service {
   imagePosition: string;
   title: string;
   description: string;
-  keywords: readonly string[];
 }
 
 const services: Service[] = [
@@ -25,7 +24,6 @@ const services: Service[] = [
     title: 'שיקום אורתופדי',
     description:
       'טיפול בכאבי גב, צוואר ומפרקים, וליווי מקצועי בתהליכי שיקום לאחר פציעות או ניתוחים, לחזרה מלאה ובטוחה לשגרה.',
-    keywords: ['שיקום אורתופדי', 'כאב גב', 'כאב צוואר', 'שיקום מפרקים', 'שיקום לאחר ניתוח'],
   },
   {
     id: 'sports-rehab',
@@ -35,7 +33,6 @@ const services: Service[] = [
     title: 'שיקום ספורטאים ושיפור ביצועים',
     description:
       'אבחון פציעות ספורט, שיפור טכניקת תנועה ובניית תוכנית חזרה מדורגת לאימונים ולתחרות, תוך מניעת פציעות חוזרות.',
-    keywords: ['שיקום ספורט', 'פציעות ספורט', 'שיפור ביצועים ספורטיביים', 'פיזיותרפיה לספורטאים'],
   },
   {
     id: 'preventive',
@@ -45,7 +42,6 @@ const services: Service[] = [
     title: 'פיזיותרפיה מניעתית ותחזוקת הגוף',
     description:
       'שיפור היציבה, איזון עומסים יומיומיים ובניית חוסן גופני ארוך טווח באמצעות תרגול מותאם אישית לצרכים שלך.',
-    keywords: ['פיזיותרפיה מניעתית', 'שיפור יציבה', 'חוסן גופני', 'תרגול מותאם אישית'],
   },
 ];
 ---
@@ -70,9 +66,7 @@ const services: Service[] = [
   <div class="container-prose relative z-10">
     <!-- Section header -->
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">
-        השירותים שלי
-      </p>
+      <p class="text-xs font-semibold tracking-wide text-teal-600">השירותים שלי</p>
       <h2
         id="services-heading"
         class="mt-3 font-serif text-3xl font-bold text-teal-700 md:text-4xl"
@@ -117,11 +111,6 @@ const services: Service[] = [
               <p class="mt-3 flex-1 text-sm leading-relaxed text-neutral-600">
                 {service.description}
               </p>
-              <ul class="sr-only" aria-hidden="true">
-                {service.keywords.map((k) => (
-                  <li>{k}</li>
-                ))}
-              </ul>
             </div>
           </article>
         ))

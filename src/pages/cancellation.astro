@@ -17,7 +17,7 @@ import { SITE } from '@data/site';
       <!-- Back link -->
       <a
         href="/"
-        class="mb-8 inline-flex items-center gap-1.5 text-sm font-medium text-teal-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+        class="mb-6 inline-flex items-center gap-1.5 py-2 text-sm font-medium text-teal-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
         aria-label="חזרה לעמוד הבית"
       >
         <svg
@@ -148,7 +148,8 @@ import { SITE } from '@data/site';
                 <a
                   href={`tel:${SITE.phoneE164}`}
                   dir="ltr"
-                  class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a
+                  class="inline-block py-1.5 text-teal-700 underline-offset-2 hover:underline"
+                  >{SITE.phone}</a
                 >
               </span>
             </li>
@@ -169,7 +170,8 @@ import { SITE } from '@data/site';
                   href={SITE.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-teal-700 underline-offset-2 hover:underline">שלחו הודעה</a
+                  class="inline-block py-1.5 text-teal-700 underline-offset-2 hover:underline"
+                  >שלחו הודעה</a
                 >
               </span>
             </li>
@@ -188,14 +190,16 @@ import { SITE } from '@data/site';
               <a
                 href={`tel:${SITE.phoneE164}`}
                 dir="ltr"
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.phone}</a
+                class="inline-block py-1.5 text-teal-700 underline-offset-2 hover:underline"
+                >{SITE.phone}</a
               >
             </li>
             <li>
               <strong class="font-semibold text-neutral-800">אימייל:</strong>
               <a
                 href={`mailto:${SITE.email}`}
-                class="text-teal-700 underline-offset-2 hover:underline">{SITE.email}</a
+                class="inline-block py-1.5 text-teal-700 underline-offset-2 hover:underline"
+                >{SITE.email}</a
               >
             </li>
           </ul>

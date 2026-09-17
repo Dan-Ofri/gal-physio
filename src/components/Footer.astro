@@ -60,13 +60,13 @@ const socialLinks = [
         <!-- Navigation links -->
         <nav aria-label="ניווט תחתון">
           <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">ניווט</p>
-          <ul class="space-y-2.5">
+          <ul class="space-y-1">
             {
               navLinks.map(({ href, label }) => (
                 <li>
                   <a
                     href={href}
-                    class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                    class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
                   >
                     {label}
                   </a>
@@ -79,12 +79,12 @@ const socialLinks = [
         <!-- Contact details -->
         <div>
           <p class="mb-4 text-xs font-bold tracking-wide text-neutral-700">יצירת קשר</p>
-          <ul class="space-y-2.5" aria-label="פרטי יצירת קשר">
+          <ul class="space-y-1" aria-label="פרטי יצירת קשר">
             <li>
               <a
                 href={`tel:${SITE.phoneE164}`}
                 dir="ltr"
-                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
                 aria-label={`חייגו: ${SITE.phone}`}
               >
                 {SITE.phone}
@@ -93,7 +93,7 @@ const socialLinks = [
             <li>
               <a
                 href={`mailto:${SITE.email}`}
-                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
                 aria-label={`שלחו אימייל: ${SITE.email}`}
               >
                 {SITE.email}
@@ -104,7 +104,7 @@ const socialLinks = [
                 href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
                 aria-label={`פתח מפה: ${SITE.address.street}, ${SITE.address.cityHebrew}`}
               >
                 {SITE.address.street}, {SITE.address.cityHebrew}
@@ -121,26 +121,29 @@ const socialLinks = [
     <!-- Bottom bar: copyright + policy links + social icons -->
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
       <div class="flex flex-col items-center gap-2 sm:items-start">
-        <p class="text-sm text-neutral-600" aria-label={`זכויות יוצרים ${year}`}>
-          © {year} גל עופרי, פיזיותרפיסטית מוסמכת
-        </p>
-        <nav aria-label="קישורי מדיניות ונגישות" class="flex gap-5">
+        <p class="text-sm text-neutral-600">© {year} גל עופרי, פיזיותרפיסטית מוסמכת</p>
+        <nav
+          aria-label="קישורי מדיניות ונגישות"
+          class="flex flex-wrap justify-center gap-x-5 gap-y-1 sm:justify-start"
+        >
           <a
             href="/privacy"
-            class="text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
             >מדיניות פרטיות</a
           >
           <a
             href="/cancellation"
-            class="text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
             >מדיניות ביטולים</a
           >
           <a
             href="/accessibility"
-            class="text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
             >הצהרת נגישות</a
           >
-          <a href="/faq" class="text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+          <a
+            href="/faq"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
             >שאלות נפוצות</a
           >
         </nav>
