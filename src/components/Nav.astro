@@ -19,7 +19,7 @@ const links = [
     <button
       id="nav-toggle"
       type="button"
-      class="flex h-10 w-10 shrink-0 items-center justify-center text-neutral-700 transition-colors hover:text-teal-600 lg:hidden"
+      class="flex h-11 w-11 shrink-0 items-center justify-center text-neutral-700 transition-colors hover:text-teal-600 lg:hidden"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="פתח תפריט ניווט"
@@ -62,7 +62,7 @@ const links = [
     <a
       id="nav-cal-btn"
       href="#contact"
-      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-teal-200 text-teal-600 transition-colors hover:border-teal-300 hover:bg-teal-50 active:bg-teal-100 lg:hidden"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-teal-200 text-teal-600 transition-colors hover:border-teal-300 hover:bg-teal-50 active:bg-teal-100 lg:hidden"
       aria-label="לקביעת תור"
     >
       <svg
@@ -118,7 +118,7 @@ const links = [
         href={SITE.whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="hover:text-whatsapp flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition-colors"
+        class="hover:text-whatsapp flex h-11 w-11 items-center justify-center rounded-full text-neutral-700 transition-colors"
         aria-label="שלחו הודעה לגל עופרי בוואטסאפ"
       >
         <svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -141,11 +141,11 @@ const links = [
 <!-- ── Mobile Menu Overlay ── -->
 <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
   <!-- Top bar: close (right in RTL), logo (center), spacer (left) -->
-  <div class="container-prose grid grid-cols-[2.5rem_1fr_2.5rem] items-center gap-3 py-4">
+  <div class="container-prose grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-3 py-4">
     <button
       id="nav-close-btn"
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-xl text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-800"
+      class="flex h-11 w-11 items-center justify-center rounded-xl text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-800"
       aria-label="סגור תפריט ניווט"
     >
       <svg
@@ -210,7 +210,7 @@ const links = [
     </a>
     <a
       href={`tel:${SITE.phoneE164}`}
-      class="flex items-center justify-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-700"
+      class="flex items-center justify-center gap-2 text-sm text-neutral-700 transition-colors hover:text-neutral-800"
       aria-label={`חייג: ${SITE.phone}`}
     >
       <svg

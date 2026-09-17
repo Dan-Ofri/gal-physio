@@ -286,7 +286,7 @@
   }
 
   .form-input::placeholder {
-    color: var(--color-neutral-500);
+    color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
   }
 
   .form-input[aria-invalid='true'] {
