@@ -1,6 +1,20 @@
-/* Fonts */
+/* Fonts — Assistant for UI and running text, Frank Ruhl Libre for headings.
+   Inter was dropped: Assistant already covers Latin, and Inter shipped seven
+   subsets (Cyrillic, Greek, Vietnamese) that this site can never render. */
 @import '@fontsource-variable/assistant';
-@import '@fontsource-variable/inter';
+
+/* Frank Ruhl Libre, Hebrew subset only — declared by hand because fontsource
+   ships one stylesheet for all subsets. Headings on this site are Hebrew; the
+   Latin file is 44KB and the H1's comma alone would make LCP wait for it. */
+@font-face {
+  font-family: 'Frank Ruhl Libre Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 900;
+  src: url('@fontsource-variable/frank-ruhl-libre/files/frank-ruhl-libre-hebrew-wght-normal.woff2')
+    format('woff2-variations');
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
 
 /* Tailwind v4 entry point */
 @import 'tailwindcss';
@@ -42,7 +56,11 @@
   --color-neutral-900: #1f1714;
 
   /* Accents */
-  --color-accent-gold: #e8a878; /* peachy gold — eyebrow on dark backgrounds */
+  /* Peachy gold — text on the dark photo sections. Lightened from #e8a878,
+     which only cleared 4.5:1 once the overlay reached 75% and left the photo
+     behind it invisible. 4.92:1 against a 70% overlay over the brightest part
+     of a photo, so the overlay can lift and the image can actually read. */
+  --color-accent-gold: #f0bd9a;
   --color-accent-rose: #f5916b; /* bright peach — decorative */
 
   /* Gradient endpoints — btn-primary + hero heading */
@@ -53,12 +71,18 @@
   --color-whatsapp: #25d366; /* brand fill only — 1.98:1 on white, never for text */
   --color-whatsapp-ink: #0b7c3d; /* WhatsApp text/icon — 5.30:1 on white ✅ */
 
+  /* Rating stars — these carry information, so WCAG 1.4.11 applies and the
+     signature peach (#f48249) only reaches 2.50:1 on the card. */
+  --color-rating: #d4600d; /* 3.71:1 on warm white ✅ */
+
   /* Validation / error */
   --color-error: #dc2626;
 
-  /* Typography — Assistant Variable for Hebrew & Latin; Inter as Latin fallback */
-  --font-sans: 'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Assistant Variable', 'Inter Variable', system-ui, -apple-system, sans-serif;
+  /* Typography — two real voices, not one family aliased twice.
+     Assistant: humanist sans, Hebrew + Latin, for UI and running text.
+     Frank Ruhl Libre: the classic Hebrew serif, for headings only. */
+  --font-sans: 'Assistant Variable', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Frank Ruhl Libre Variable', 'David Libre', Georgia, serif;
 
   /* Spacing scale extensions */
   --spacing-18: 4.5rem;
@@ -151,10 +175,10 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    letter-spacing: -0.025em;
-    line-height: 1.15;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.2;
   }
 
   p,

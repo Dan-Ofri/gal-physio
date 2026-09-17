@@ -31,7 +31,12 @@ export default defineConfig({
     // foreground, as webServer requires.
     command: 'npm run build && npm run preview',
     url: 'http://localhost:4321',
-    reuseExistingServer: !process.env.CI,
+    // Only reuse a server we can verify is the production build. A stray
+    // `npm run dev` on this port otherwise hijacks the whole suite: the tests
+    // silently run against the dev server instead of `astro build`, which both
+    // skips what actually ships and makes the run flaky under parallel workers.
+    // Set PW_REUSE_SERVER=1 to opt back in when you know what is listening.
+    reuseExistingServer: !process.env.CI && !!process.env.PW_REUSE_SERVER,
     timeout: 60_000,
     env: { ASTRO_PREVIEW_BACKGROUND: '1' },
   },
