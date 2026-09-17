@@ -29,7 +29,22 @@ export const SITE = {
     longitude: 34.7818,
   },
 
-  openingHours: ['Mo-Th 08:00-19:00', 'Fr 08:00-14:00'],
+  // Single source: the JSON-LD, the contact panel and the FAQ all derive from
+  // this. `days` feeds Schema.org, `daysHebrew` is what visitors read.
+  openingHours: [
+    {
+      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      daysHebrew: 'ימים ב׳–ה׳',
+      opens: '08:00',
+      closes: '19:00',
+    },
+    {
+      days: ['Friday'],
+      daysHebrew: 'יום ו׳',
+      opens: '08:00',
+      closes: '14:00',
+    },
+  ],
 
   // ── Social ────────────────────────────────────────────────────────────────
   social: {

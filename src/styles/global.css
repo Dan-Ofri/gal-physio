@@ -56,7 +56,11 @@
   --color-neutral-900: #1f1714;
 
   /* Accents */
-  --color-accent-gold: #e8a878; /* peachy gold — eyebrow on dark backgrounds */
+  /* Peachy gold — text on the dark photo sections. Lightened from #e8a878,
+     which only cleared 4.5:1 once the overlay reached 75% and left the photo
+     behind it invisible. 4.92:1 against a 70% overlay over the brightest part
+     of a photo, so the overlay can lift and the image can actually read. */
+  --color-accent-gold: #f0bd9a;
   --color-accent-rose: #f5916b; /* bright peach — decorative */
 
   /* Gradient endpoints — btn-primary + hero heading */
@@ -66,6 +70,10 @@
   /* Third-party brand */
   --color-whatsapp: #25d366; /* brand fill only — 1.98:1 on white, never for text */
   --color-whatsapp-ink: #0b7c3d; /* WhatsApp text/icon — 5.30:1 on white ✅ */
+
+  /* Rating stars — these carry information, so WCAG 1.4.11 applies and the
+     signature peach (#f48249) only reaches 2.50:1 on the card. */
+  --color-rating: #d4600d; /* 3.71:1 on warm white ✅ */
 
   /* Validation / error */
   --color-error: #dc2626;

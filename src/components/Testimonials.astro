@@ -87,12 +87,26 @@ const testimonials: Testimonial[] = [
               class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] md:w-auto md:shrink"
               aria-label={`המלצה מ-${t.author}`}
             >
+              {/* Rating — every one of these Google reviews is 5 stars */}
+              <div class="flex items-center gap-0.5" role="img" aria-label="דירוג: 5 מתוך 5 כוכבים">
+                {[0, 1, 2, 3, 4].map(() => (
+                  <svg
+                    class="text-rating h-4 w-4"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1.99 5.79L10 14.78l-5.2 2.73.99-5.79-4.21-4.1 5.82-.85L10 1.5z" />
+                  </svg>
+                ))}
+              </div>
+
               {/* Blockquote */}
-              <blockquote class="mt-5 flex-1">
+              <blockquote class="mt-4 flex-1">
                 {/* Decorative opening quote mark */}
                 <svg
                   aria-hidden="true"
-                  class="text-accent-gold/60 group-hover:text-accent-gold/80 mb-3 h-6 w-6 transition-colors duration-300"
+                  class="mb-3 h-6 w-6 text-teal-200 transition-colors duration-300 group-hover:text-teal-300"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >

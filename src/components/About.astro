@@ -26,7 +26,9 @@ import galAboutPro from '../assets/About example.png';
               src={galAboutPro}
               alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
               width={480}
-              height={560}
+              height={480}
+              widths={[400, 600, 800, 1100]}
+              sizes="(min-width: 1024px) 480px, 90vw"
               loading="lazy"
               class="block aspect-square w-full object-cover object-top"
             />
@@ -79,11 +81,35 @@ import galAboutPro from '../assets/About example.png';
           והיכולת של הגוף לרפא את עצמו כשנותנים לו את הכלים והליווי הנכונים.
         </p>
 
-        <!-- Credentials — SEO-readable, visually silent -->
-        <ul class="sr-only" aria-label="כישורים ורקע מקצועי של גל עופרי">
-          <li>פיזיותרפיסטית מוסמכת B.P.T</li>
-          <li>בוגרת החוג לפיזיותרפיה</li>
-          <li>לשעבר מתעמלת תחרותית</li>
+        <!--
+          Credentials. These used to be sr-only: on a healthcare page the
+          qualifications are the trust signal, not metadata, so they are visible
+          now and still read as a list.
+        -->
+        <ul class="mt-7 flex flex-wrap gap-2" aria-label="כישורים ורקע מקצועי של גל עופרי">
+          {
+            ['פיזיותרפיסטית מוסמכת B.P.T', 'בוגרת החוג לפיזיותרפיה', 'לשעבר מתעמלת תחרותית'].map(
+              (item) => (
+                <li class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-700 ring-1 ring-teal-100">
+                  <svg
+                    class="h-3.5 w-3.5 shrink-0"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    aria-hidden="true"
+                  >
+                    <polyline
+                      points="20 6 9 17 4 12"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  {item}
+                </li>
+              )
+            )
+          }
         </ul>
 
         <!-- CTA -->
