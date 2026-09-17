@@ -45,9 +45,7 @@ const testimonials: Testimonial[] = [
   <div class="container-prose">
     <!-- Section header -->
     <div class="mx-auto max-w-2xl text-center">
-      <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">
-        מה אומרים המטופלים
-      </p>
+      <p class="text-xs font-semibold tracking-wide text-teal-600">מה אומרים המטופלים</p>
       <h2
         id="testimonials-heading"
         class="mt-3 font-serif text-3xl font-bold text-teal-700 md:text-4xl"
@@ -61,7 +59,7 @@ const testimonials: Testimonial[] = [
         href="https://www.google.com/search?kgmid=/g/11ynf97pzh"
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-teal-700 underline-offset-2 transition-colors hover:text-teal-800 hover:underline"
+        class="mt-3 inline-flex items-center gap-1.5 py-1.5 text-sm font-medium text-teal-700 underline-offset-2 transition-colors hover:text-teal-800 hover:underline"
       >
         ראו עוד ביקורות ב-Google
       </a>
@@ -135,10 +133,8 @@ const testimonials: Testimonial[] = [
                   <p class="text-xs text-neutral-600">{t.postedOn} · Google</p>
                 </div>
                 {/* Service tag */}
-                <span
-                  class="ms-auto shrink-0 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700"
-                  aria-label={`שירות: ${t.service}`}
-                >
+                <span class="ms-auto shrink-0 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700">
+                  <span class="sr-only">שירות: </span>
                   {t.service}
                 </span>
               </footer>
@@ -153,7 +149,7 @@ const testimonials: Testimonial[] = [
       {
         testimonials.map((t) => (
           <span
-            class="testimonial-dot h-2 w-2 rounded-full bg-neutral-300 transition-colors duration-200"
+            class="testimonial-dot h-2 w-2 rounded-full bg-neutral-500 transition-colors duration-200"
             data-dot-for={`testimonial-card-${t.id}`}
           />
         ))
