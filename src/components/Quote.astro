@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import { SITE } from '@data/site';
 import quoteBg from '../assets/quote-bg.png';
 ---
 
@@ -19,7 +20,7 @@ import quoteBg from '../assets/quote-bg.png';
   </div>
 
   <div class="container-prose relative z-10">
-    <blockquote cite="https://gal-physio.vercel.app/">
+    <blockquote cite={SITE.url}>
       <p
         class="mx-auto max-w-3xl text-center font-serif text-2xl leading-relaxed font-medium text-white md:text-4xl md:leading-[1.5]"
       >
