@@ -1,58 +1,48 @@
 ---
+// Real reviews, copied verbatim from the clinic's Google Business Profile
+// (5.0 avg, 6 reviews as of 2026-09). Only fields with real source data are
+// kept — no invented role/location. `postedOn` is a fixed "Month Year" string
+// (when it was actually posted), not a relative "X months ago" — it never
+// needs updating and is never wrong.
 interface Testimonial {
   id: number;
   text: string;
   author: string;
-  role: string;
   initials: string;
   service: string;
-  location: string;
-  date: string;
+  postedOn: string;
 }
 
-// Note for client: please verify/update location and date fields with actual patient data
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    text: 'כספורטאי, היה לי חשוב למצוא מישהי שמבינה את הרצון לחזור למגרש. גל בנתה לי תוכנית הדרגתית ומקצועית שהחזירה לי את הביטחון בתנועה.',
-    author: 'רן כ.',
-    role: 'רץ אמן, גיל 32',
-    initials: 'רכ',
-    service: 'שיקום ספורט',
-    location: 'תל אביב',
-    date: 'ינואר 2026',
+    text: 'אני רוצה להודות מכל הלב לגל עופרי, פיזיותרפיסטית מקצועית, מסורה ואכפתית ברמה יוצאת דופן. הגעתי אליה עם קרע בגיד אכילס, מצב לא פשוט שדרש טיפול מדויק, סבלנות והתמדה. היא ליוותה אותי לאורך כל הדרך במסירות רבה, רגישות וידע מקצועי מרשים. בזכות היחס האישי, ההכוונה המדויקת וההשקעה האמיתית שלה, הצלחתי להשתקם ולהחלים בצורה הטובה ביותר. ממליצה עליה בחום לכל מי שזקוק לטיפול פיזיותרפי ברמה הגבוהה ביותר, לא רק מקצועית, אלא גם אנושית. תודה רבה לך גל על הכל! 🙏',
+    author: 'שמחה מ.',
+    initials: 'שמ',
+    service: 'שיקום אורתופדי',
+    postedOn: 'מאי 2026',
   },
   {
     id: 2,
-    text: 'הגעתי עם כאב כרוני שהגביל אותי ביומיום. הגישה של גל הייתה שונה – היא הקשיבה, הסבירה כל שלב ונתנה לי כלים אמיתיים להתמודד עם העומס.',
-    author: 'מיכל א.',
-    role: 'מנהלת שיווק, גיל 45',
-    initials: 'מא',
+    text: 'פיזיותרפיסטית מקצועית, מסורה ובעלת ידע רחב. כבר מהמפגש הראשון הרגשתי שאני בידיים טובות – מקשיבה, מסבירה בסבלנות ובונה תוכנית טיפול מותאמת אישית. לאורך כל הדרך גל הייתה קשובה, אכפתית ומעודדת, והטיפולים הביאו לשיפור משמעותי בכאבים ובתפקוד. ממליץ בחום לכל מי שמחפש פיזיותרפיסטית רצינית, נעימה ויעילה באמת',
+    author: 'ראם ב.',
+    initials: 'רב',
     service: 'טיפול בכאב',
-    location: 'גבעתיים',
-    date: 'מרץ 2026',
+    postedOn: 'דצמבר 2025',
   },
   {
     id: 3,
-    text: 'הגענו עם הבת שלנו אחרי פציעה באימונים. המקצועיות של גל יחד עם הגישה המרגיעה שלה לבני נוער עשו את כל ההבדל. היום היא חוזרת להתאמן בחיוך.',
-    author: 'שרה מ.',
-    role: 'אמא של מטופלת',
-    initials: 'שמ',
-    service: 'ליווי בני נוער',
-    location: 'תל אביב',
-    date: 'פברואר 2026',
+    text: 'אלופה !! שירות מדהים, עזרה לי ממש בפציעת סקי שסחבתי הרבה זמן, מקצוענית עם יחס אישי מאוד טוב. ממליצה מאוד!!!!',
+    author: 'יובל ב.',
+    initials: 'יב',
+    service: 'שיקום ספורט',
+    postedOn: 'מאי 2026',
   },
 ];
-
 ---
 
-<section
-  id="testimonials"
-  aria-labelledby="testimonials-heading"
-  class="section-padding bg-white"
->
+<section id="testimonials" aria-labelledby="testimonials-heading" class="section-padding bg-white">
   <div class="container-prose">
-
     <!-- Section header -->
     <div class="mx-auto max-w-2xl text-center">
       <p class="text-xs font-semibold tracking-wide text-teal-600" aria-hidden="true">
@@ -69,82 +59,71 @@ const testimonials: Testimonial[] = [
       </p>
     </div>
 
-    <!-- Testimonial cards grid -->
+    <!-- Testimonial cards: horizontal snap carousel on mobile (one card + a peek of
+         the next, keeps the section from dominating the scroll), plain 3-col grid
+         from md up where there's no vertical-space problem to solve. -->
     <div
-      class="mt-14 grid gap-6 md:grid-cols-3 stagger-children"
-      role="list"
-      aria-label="המלצות מטופלים"
+      class="stagger-children mt-14 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] md:overflow-visible [&::-webkit-scrollbar]:hidden"
+      role="group"
+      tabindex="0"
+      aria-label="המלצות מטופלים, גללו לצפייה בעוד המלצות"
     >
-      {testimonials.map((t) => (
-        <article
-          role="listitem"
-          class="group flex flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-card-hover hover:ring-teal-100"
-          aria-label={`המלצה מ-${t.author}`}
-        >
-          <!-- Blockquote -->
-          <blockquote class="mt-5 flex-1">
-            <!-- Decorative opening quote mark -->
-            <svg
-              aria-hidden="true"
-              class="mb-3 h-6 w-6 text-accent-gold/60 transition-colors duration-300 group-hover:text-accent-gold/80"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-            </svg>
-            <p class="text-sm leading-relaxed text-neutral-600">
-              {t.text}
-            </p>
-          </blockquote>
-
-          <!-- Divider -->
-          <div aria-hidden="true" class="my-6 h-px bg-neutral-200/70"></div>
-
-          <!-- Author -->
-          <footer class="flex items-center gap-3">
-            <!-- Avatar with initials -->
-            <div
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-700"
-              aria-hidden="true"
-            >
-              {t.initials}
-            </div>
-            <div class="min-w-0">
-              <cite class="block text-sm font-semibold not-italic text-neutral-800">
-                {t.author}
-              </cite>
-              <p class="text-xs text-neutral-600">{t.role} · {t.location} · {t.date}</p>
-            </div>
-            <!-- Service tag -->
-            <span
-              class="ms-auto shrink-0 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700"
-              aria-label={`שירות: ${t.service}`}
-            >
-              {t.service}
-            </span>
-          </footer>
-        </article>
-      ))}
-    </div>
-
-    <!-- Third-party verification -->
-    <div class="mt-10 text-center">
-      <a
-        href="https://www.google.com/search?sca_esv=10decd1eceb7e98c&biw=1745&bih=828&sxsrf=ANbL-n4azQoAQNp7u-ZD1Yt9khoxt2HeJA:1778185893343&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOdvlaNK8fXtHhgMv2s_aw2sm1SSSnN3w_fQRhX5Exvz7WsruAvVdAM_Zw5GnH91sHHDPvMDWKFTuOkHGcWadGOTR3IXPS4hkURRnygF8Ykto1S-roa6fbm40PGclz5mdL9kFzX-joMbubqjsXab7ZQA10g9a&q=%D7%92%D7%9C+%D7%A2%D7%95%D7%A4%D7%A8%D7%99+-+%D7%A4%D7%99%D7%96%D7%99%D7%95%D7%AA%D7%A8%D7%A4%D7%99%D7%A1%D7%98%D7%99%D7%AA+%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%95%D7%AA&sa=X&ved=2ahUKEwi7vZHUgqiUAxWkwAIHHSKbI1kQ0bkNegQIJRAF"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-700"
-        aria-label="ראו את כל הביקורות ב-Google"
+      <div
+        class="flex snap-x snap-mandatory gap-5 md:grid md:snap-none md:grid-cols-3 md:gap-6"
+        role="list"
+        aria-label="המלצות מטופלים"
       >
-        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
-        ראו ביקורות ב-Google
-      </a>
-    </div>
+        {
+          testimonials.map((t) => (
+            <article
+              role="listitem"
+              class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] md:w-auto md:shrink"
+              aria-label={`המלצה מ-${t.author}`}
+            >
+              {/* Blockquote */}
+              <blockquote class="mt-5 flex-1">
+                {/* Decorative opening quote mark */}
+                <svg
+                  aria-hidden="true"
+                  class="text-accent-gold/60 group-hover:text-accent-gold/80 mb-3 h-6 w-6 transition-colors duration-300"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <p class="line-clamp-6 text-sm leading-relaxed text-neutral-600">{t.text}</p>
+              </blockquote>
 
+              {/* Divider */}
+              <div aria-hidden="true" class="my-6 h-px bg-neutral-200/70" />
+
+              {/* Author */}
+              <footer class="flex items-center gap-3">
+                {/* Avatar with initials */}
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-700"
+                  aria-hidden="true"
+                >
+                  {t.initials}
+                </div>
+                <div class="min-w-0">
+                  <cite class="block text-sm font-semibold text-neutral-800 not-italic">
+                    {t.author}
+                  </cite>
+                  <p class="text-xs text-neutral-600">{t.postedOn} · Google</p>
+                </div>
+                {/* Service tag */}
+                <span
+                  class="ms-auto shrink-0 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700"
+                  aria-label={`שירות: ${t.service}`}
+                >
+                  {t.service}
+                </span>
+              </footer>
+            </article>
+          ))
+        }
+      </div>
+    </div>
   </div>
 </section>
