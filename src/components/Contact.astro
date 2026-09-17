@@ -227,7 +227,7 @@ const contactItems = [
         </div>
 
         <form id="contact-form" novalidate aria-label="טופס יצירת קשר" class="mt-6 space-y-5">
-          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="access_key" value="49897137-159e-46be-ad04-79aaf78b0595" />
           <input type="hidden" name="subject" value="פנייה חדשה מהאתר: גל עופרי פיזיותרפיה" />
           <!-- Honeypot: invisible to real visitors, catches basic form-filling bots. Web3Forms rejects submissions where this is checked. -->
           <input
@@ -241,7 +241,7 @@ const contactItems = [
 
           <!-- Name -->
           <div>
-            <label for="contact-name" class="sr-only">שם מלא</label>
+            <label for="contact-name" class="form-label">שם מלא</label>
             <input
               type="text"
               id="contact-name"
@@ -249,7 +249,6 @@ const contactItems = [
               autocomplete="name"
               required
               aria-required="true"
-              placeholder="שם מלא"
               class="form-input"
             />
             <p class="form-error hidden" id="name-error" role="alert"></p>
@@ -257,7 +256,7 @@ const contactItems = [
 
           <!-- Phone -->
           <div>
-            <label for="contact-phone" class="sr-only">מספר טלפון</label>
+            <label for="contact-phone" class="form-label">מספר טלפון</label>
             <input
               type="tel"
               id="contact-phone"
@@ -265,16 +264,15 @@ const contactItems = [
               autocomplete="tel"
               required
               aria-required="true"
-              placeholder="מספר טלפון"
               dir="ltr"
-              class="form-input text-start placeholder:text-right"
+              class="form-input text-start"
             />
             <p class="form-error hidden" id="phone-error" role="alert"></p>
           </div>
 
           <!-- Message -->
           <div>
-            <label for="contact-message" class="sr-only">הודעה</label>
+            <label for="contact-message" class="form-label">הודעה</label>
             <textarea
               id="contact-message"
               name="message"
