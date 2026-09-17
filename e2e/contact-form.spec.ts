@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
 
-// The Web3Forms endpoint is a real third-party API (and its access_key is
-// still a placeholder — see CLAUDE.md "Known issues"). Tests never hit it
-// live; they intercept the request so validation/success/error UI can be
-// verified deterministically and offline.
+// The Web3Forms endpoint is a real third-party API and the access_key is live.
+// Tests never hit it: they intercept the request so validation/success/error UI
+// can be verified deterministically, offline, and without mailing Gal.
 test.describe('Contact form', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');

@@ -342,8 +342,16 @@ const links = [
   const toggle = document.getElementById('nav-toggle')!;
   const closeBtn = document.getElementById('nav-close-btn')!;
   const menu = document.getElementById('mobile-menu')!;
-  const mainEl = document.getElementById('main-content')!;
-  const footerEl = document.querySelector('footer')!;
+
+  // Inert everything at the top level except the dialog itself. Naming the
+  // elements individually kept leaking: `querySelector('footer')` matched the
+  // sr-only <footer> inside Quote's blockquote rather than the site footer, and
+  // the sticky mobile action bar is a body child too, so Tab walked straight out
+  // of an aria-modal dialog. This also covers anything added beside them later.
+  const backdropEls = () =>
+    [...document.body.children].filter(
+      (el) => el !== menu && el.tagName !== 'SCRIPT'
+    ) as HTMLElement[];
 
   // ── Scroll → frosted glass ──
   const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 20);
@@ -357,8 +365,7 @@ const links = [
     toggle.setAttribute('aria-label', 'סגור תפריט ניווט');
     document.body.style.overflow = 'hidden';
     header.classList.add('menu-open');
-    mainEl.setAttribute('inert', '');
-    footerEl.setAttribute('inert', '');
+    backdropEls().forEach((el) => el.setAttribute('inert', ''));
     (menu.querySelector('a') as HTMLElement | null)?.focus();
   };
 
@@ -368,8 +375,9 @@ const links = [
     toggle.setAttribute('aria-label', 'פתח תפריט ניווט');
     document.body.style.overflow = '';
     header.classList.remove('menu-open');
-    mainEl.removeAttribute('inert');
-    footerEl.removeAttribute('inert');
+    // Un-inert before focusing: the toggle lives inside the header, which is
+    // itself inert while the menu is open.
+    backdropEls().forEach((el) => el.removeAttribute('inert'));
     toggle.focus();
   };
 
@@ -378,6 +386,8 @@ const links = [
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
   document.getElementById('nav-cal-btn')?.addEventListener('click', closeMenu);
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+    // Only when the menu is actually open — otherwise Escape anywhere on the page
+    // (e.g. while typing in the contact form) would yank focus to the toggle.
+    if (e.key === 'Escape' && menu.dataset.open === 'true') closeMenu();
   });
 </script>
