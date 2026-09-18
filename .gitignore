@@ -50,3 +50,4 @@ pnpm-debug.log*
 .claude/skills/
 .claude/agents/
 .agents/
+screenshots/comps/
