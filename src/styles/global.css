@@ -228,10 +228,20 @@
     text-decoration: none;
   }
 
-  .btn-primary:hover {
-    background: linear-gradient(to left, var(--color-teal-900), var(--color-brand-amber-hover));
-    box-shadow: 0 6px 32px -4px rgb(190 74 30 / 0.35);
-    transform: translateY(-1px);
+  /* Gated, like every Tailwind `hover:` utility on the site already is. A
+     phone has no hover, but it fires :hover on tap and holds it until you tap
+     somewhere else - so the two buttons written by hand here were the only
+     things on the page that stayed darkened and lifted after being pressed,
+     all the way through the anchor jump that followed. Verified with
+     hover:none / pointer:coarse emulated: both stuck, every Tailwind hover
+     did not. :active stays ungated on purpose - the 0.97 press is the
+     feedback a touch device should get. */
+  @media (hover: hover) {
+    .btn-primary:hover {
+      background: linear-gradient(to left, var(--color-teal-900), var(--color-brand-amber-hover));
+      box-shadow: 0 6px 32px -4px rgb(190 74 30 / 0.35);
+      transform: translateY(-1px);
+    }
   }
 
   .btn-primary:active {
@@ -259,11 +269,13 @@
     text-decoration: none;
   }
 
-  .btn-secondary:hover {
-    background-color: var(--color-neutral-100);
-    color: var(--color-neutral-900);
-    border-color: var(--color-neutral-400);
-    transform: translateY(-1px);
+  @media (hover: hover) {
+    .btn-secondary:hover {
+      background-color: var(--color-neutral-100);
+      color: var(--color-neutral-900);
+      border-color: var(--color-neutral-400);
+      transform: translateY(-1px);
+    }
   }
 
   .btn-secondary:active {
