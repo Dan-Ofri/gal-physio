@@ -109,7 +109,7 @@ import clinicHero from '../assets/hero-ref.png';
 
         <!-- Photo frame -->
         <figure
-          class="shadow-card-hover relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/80"
+          class="hero-photo-frame shadow-card-hover relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/80"
         >
           <!--
             No height on purpose. Setting both width and height makes Astro's
@@ -158,6 +158,26 @@ import clinicHero from '../assets/hero-ref.png';
 </section>
 
 <style>
+  /* A 16px webp of the photo itself, inlined, standing in until the real file
+     arrives. Without it the frame renders as an empty ringed box for about a
+     second on a slow connection - the photo lands at ~1230ms while the text is
+     painted well before - and that empty box is the largest thing on the screen
+     while it lasts, so it is what the entrance actually looks like.
+
+     236 bytes, no extra request, and the browser smooths it on upscale.
+     background-position has to track the img object-position or the stand-in
+     jumps when the real photo paints over it.
+
+     Deliberately NOT a fade on the <img>: opacity below 1 at first paint takes
+     the photo out of LCP entirely, which is the trap recorded in CLAUDE.md. The
+     img stays fully opaque and the blur is simply covered. */
+  .hero-photo-frame {
+    background-image: url('data:image/webp;base64,UklGRuQAAABXRUJQVlA4INgAAACwBACdASoQAB0APsFOoEqnpCMhsAgA8BgJZgCdMoAlwEfqsDouxtjF3xHb0YAAAP74L+izuIjkZ9yrstpJvP7J5uNEuCERiZ3isRn+knUJg6Gf8t27RZmCwjiOJl4DDtWKmu+yTru/+HI7VyUyXHTYNR5etH3Q3x3Mu/J+zjp+qWjAgn1T6se9as3sfKX5259q+wltIteAjE2pn/KIFCxXdNlmGOf8cpNrZRCONQzuegrbZLJtPcgcqK1ly98PMizT9/rQ2+oKc/zm/oYwDjhcPThxZMIfIAA=');
+    background-size: cover;
+    background-position: center 18%;
+    background-repeat: no-repeat;
+  }
+
   /* Smooth exponential drift, not a bounce — real objects don't ricochet. */
   @keyframes scroll-hint-drift {
     0%,
