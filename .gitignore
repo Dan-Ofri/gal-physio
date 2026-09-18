@@ -5,6 +5,7 @@ dist/
 # scripts are tracked source; the images they produce never are.
 screenshots/**/*.png
 screenshots/**/*.jpg
+screenshots/**/*.svg
 
 # Playwright
 /test-results/
