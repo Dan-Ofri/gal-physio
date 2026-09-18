@@ -22,11 +22,20 @@ import galAboutPro from '../assets/About example.png';
           <figure
             class="shadow-card relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/60"
           >
+            <!--
+              position="top": the source is a tall portrait (1536x2752). With
+              both width and height set, Astro's sharp service crops it square
+              at build time with fit: cover / position: centre, which sliced the
+              top of her head off. The object-top class below never got a say -
+              the file it receives is already square. Anchor the build-time crop
+              to the top instead.
+            -->
             <Image
               src={galAboutPro}
               alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
               width={480}
               height={480}
+              position="top"
               widths={[400, 600, 800, 1100]}
               sizes="(min-width: 1024px) 480px, 90vw"
               loading="lazy"
