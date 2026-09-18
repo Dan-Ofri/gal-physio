@@ -29,14 +29,14 @@ already fits, reuse it rather than inventing a near-duplicate.
 
 ## Current folders
 
-| folder | what is in it |
-| --- | --- |
-| `header/` | header and mobile-menu work: glass states, menu background candidates, transition frames, sticky-bar opacity sweeps |
-| `logo/` | logo colourways and the full-vs-compact lockup comparison |
-| `pal/` | brand palette exploration (clean, eucalyptus, quiet, sage, slate, teal) |
-| `sheet/` | early full-page design sheets |
-| `comps/` | annotated design comps, including their source HTML |
-| `archive/` | renders kept only because deleting someone else's work is not mine to do |
+| folder     | what is in it                                                                                                       |
+| ---------- | ------------------------------------------------------------------------------------------------------------------- |
+| `header/`  | header and mobile-menu work: glass states, menu background candidates, transition frames, sticky-bar opacity sweeps |
+| `logo/`    | logo colourways and the full-vs-compact lockup comparison                                                           |
+| `pal/`     | brand palette exploration (clean, eucalyptus, quiet, sage, slate, teal)                                             |
+| `sheet/`   | early full-page design sheets                                                                                       |
+| `comps/`   | annotated design comps, including their source HTML                                                                 |
+| `archive/` | renders kept only because deleting someone else's work is not mine to do                                            |
 
 ## Working scripts
 

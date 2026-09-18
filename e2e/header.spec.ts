@@ -155,6 +155,67 @@ test.describe('Header', () => {
     await expect(toggle, 'focus was not returned to the toggle').toBeFocused();
   });
 
+  test('the header keeps its glass while the menu opens over it', async ({ page, isMobile }) => {
+    test.skip(!isMobile, 'desktop has no hamburger menu');
+    await page.goto('/');
+
+    await page.evaluate(() => window.scrollTo({ top: 900, behavior: 'instant' }));
+    const header = page.locator('#site-header');
+    await expect(header).toHaveClass(/is-scrolled/);
+
+    // Pinning <body> to lock scrolling drops the document's scroll height, so
+    // window.scrollY reads 0 while the reader has not moved. The scroll handler
+    // took that literally and removed `is-scrolled` one frame into the opening
+    // fade; because backdrop-filter is not transitioned, the glass snapped off
+    // in a single frame and the raw page content flashed through the header
+    // while the overlay was still half transparent. Sample the whole fade.
+    const samples = await page.evaluate(async () => {
+      const h = document.getElementById('site-header')!;
+      const out: { t: number; scrolled: boolean; blur: string }[] = [];
+      const t0 = performance.now();
+      // A timer, not requestAnimationFrame. Headless WebKit throttles rAF to
+      // as little as one callback in 500ms when it is not really compositing,
+      // which made this assert almost nothing. What is being asserted is that
+      // the glass never drops at any point across the fade — wall-clock
+      // coverage, not frame accuracy — so a timer is both more reliable and
+      // the more honest instrument.
+      const sample = () => {
+        const cs = getComputedStyle(h) as CSSStyleDeclaration & { webkitBackdropFilter?: string };
+        out.push({
+          t: Math.round(performance.now() - t0),
+          scrolled: h.classList.contains('is-scrolled'),
+          blur: [cs.backdropFilter, cs.webkitBackdropFilter].filter(Boolean).join(' | '),
+        });
+      };
+      const id = setInterval(sample, 20);
+      sample();
+      document.getElementById('nav-toggle')!.click();
+      await new Promise((r) => setTimeout(r, 500));
+      clearInterval(id);
+      sample();
+      return out;
+    });
+
+    // The overlay's fade is 300ms, so the samples have to span at least that
+    // much or they are not covering the window this test is about.
+    expect(samples[samples.length - 1].t, 'sampling did not span the fade').toBeGreaterThan(300);
+    expect(samples.length, 'no samples taken').toBeGreaterThan(5);
+    expect(
+      samples.filter((s) => !s.scrolled).length,
+      'the header dropped is-scrolled while the menu was opening'
+    ).toBe(0);
+    expect(
+      samples.filter((s) => !/blur\(\s*[1-9]/.test(s.blur)).length,
+      'the header lost its blur while the menu was opening'
+    ).toBe(0);
+
+    // And the reader's real position comes back on close.
+    await page.locator('#nav-close-btn').click();
+    await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'false');
+    await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 4000 }).toBe(900);
+    await expect(header).toHaveClass(/is-scrolled/);
+  });
+
   test('every header control keeps a visible focus ring', async ({ page, isMobile }) => {
     await page.goto('/');
     const controls = isMobile

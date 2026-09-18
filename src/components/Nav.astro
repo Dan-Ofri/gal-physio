@@ -414,12 +414,24 @@ const links = [
     () => header.classList.toggle('is-scrolled', window.scrollY > 20),
   ];
   let ticking = false;
+  // Frozen while the menu holds the scroll lock. Pinning <body> with
+  // position:fixed drops the document's scroll height, so `window.scrollY`
+  // reads 0 even though the reader has not moved — and the handler above then
+  // stripped `is-scrolled` one frame into the opening fade. backdrop-filter is
+  // not transitioned, so the glass snapped from blur(20px) to none while the
+  // overlay was still ~30% transparent, flashing the raw page content through
+  // the header. The reader's real position is stashed in `lockedAt`; nothing
+  // derived from scrolling may change until it is given back.
+  let scrollFrozen = false;
   const runScroll = () => {
-    if (ticking) return;
+    if (ticking || scrollFrozen) return;
     ticking = true;
     requestAnimationFrame(() => {
-      onScroll.forEach((fn) => fn());
       ticking = false;
+      // Re-checked here too: a tick queued before the lock would otherwise
+      // land after it, with scrollY already collapsed.
+      if (scrollFrozen) return;
+      onScroll.forEach((fn) => fn());
     });
   };
   window.addEventListener('scroll', runScroll, { passive: true });
@@ -433,6 +445,7 @@ const links = [
   let lockedAt = 0;
   const lockScroll = () => {
     lockedAt = window.scrollY;
+    scrollFrozen = true;
     document.body.style.position = 'fixed';
     document.body.style.top = `-${lockedAt}px`;
     document.body.style.insetInline = '0';
@@ -447,6 +460,11 @@ const links = [
     // scrollTo would animate the restore and fight the anchor jump that
     // follows when the menu was closed by tapping a link.
     window.scrollTo({ top: lockedAt, behavior: 'instant' });
+    // Only once the position is actually back. Unfreezing any earlier would
+    // hand the handlers the same bogus 0 the freeze exists to hide, and the
+    // restore's own scroll event is not guaranteed, so re-run them directly.
+    scrollFrozen = false;
+    onScroll.forEach((fn) => fn());
   };
 
   // ── Menu helpers ──
