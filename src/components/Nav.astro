@@ -573,6 +573,9 @@ const links = [
   };
 
   // ── Menu helpers ──
+  // Handle for the deferred open work, so closing can cancel it.
+  let deferred = 0;
+
   const openMenu = () => {
     menu.dataset.open = 'true';
     toggle.setAttribute('aria-expanded', 'true');
@@ -585,13 +588,27 @@ const links = [
     // and inert touches every top-level element, and both used to land on the
     // opening frame, which is the one frame that has to be smooth. Deferring
     // them by a frame lets the fade start first.
-    requestAnimationFrame(() => {
+    deferred = requestAnimationFrame(() => {
+      deferred = 0;
+      // The menu can already be shut by the time this frame runs - Escape or a
+      // second tap on the toggle both get there first - and applying the lock
+      // afterwards pinned <body> and inerted the header on a closed menu. The
+      // page was then unscrollable with a dead header, and whatever had focus
+      // was inside the newly inert subtree, so focus fell to <body>. That is
+      // what the "flaky" keyboard test had been reporting all along.
+      if (menu.dataset.open !== 'true') return;
       lockScroll();
       backdropEls().forEach((el) => el.setAttribute('inert', ''));
     });
   };
 
   const closeMenu = () => {
+    // Cancel the open's deferred work before anything else; if it is still
+    // queued it would otherwise re-lock and re-inert a menu that is now closed.
+    if (deferred) {
+      cancelAnimationFrame(deferred);
+      deferred = 0;
+    }
     menu.dataset.open = 'false';
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'פתח תפריט ניווט');
@@ -599,15 +616,6 @@ const links = [
     // Un-inert before focusing: the toggle lives inside the header, which is
     // itself inert while the menu is open.
     backdropEls().forEach((el) => el.removeAttribute('inert'));
-    // …and then force a style flush before focusing. Removing the attribute does
-    // not make the element focusable again until styles are recalculated, so in
-    // WebKit focus() in this same task is accepted and silently dropped: the menu
-    // closes, activeElement falls back to <body>, and a keyboard user loses their
-    // place in the page. It reproduced on roughly one Mobile Safari run in three,
-    // which is why it read as a flaky test rather than the bug it is. Reading a
-    // layout property forces the recalc synchronously, so the focus below lands
-    // on every engine.
-    void toggle.offsetWidth;
     toggle.focus();
   };
 
