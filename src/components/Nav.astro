@@ -9,17 +9,13 @@ const links = [
 ];
 ---
 
-<header
-  id="site-header"
-  class="fixed inset-x-0 top-0 z-50 transition-[background-color,backdrop-filter,box-shadow] duration-500 ease-out"
-  aria-label="כותרת אתר"
->
+<header id="site-header" class="fixed inset-x-0 top-0 z-50" aria-label="כותרת אתר">
   <div class="container-prose flex items-center py-2 md:py-3 lg:justify-between">
     <!-- Mobile: hamburger (right=start in RTL); hidden on desktop -->
     <button
       id="nav-toggle"
       type="button"
-      class="flex h-11 w-11 shrink-0 items-center justify-center text-neutral-700 transition-colors hover:text-teal-600 lg:hidden"
+      class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-teal-600 active:bg-neutral-200 lg:hidden"
       aria-expanded="false"
       aria-controls="mobile-menu"
       aria-label="פתח תפריט ניווט"
@@ -32,12 +28,9 @@ const links = [
         stroke-width="2"
         aria-hidden="true"
       >
-        <line class="menu-bar" id="bar-top" x1="4" y1="7" x2="20" y2="7" stroke-linecap="round"
-        ></line>
-        <line class="menu-bar" id="bar-mid" x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"
-        ></line>
-        <line class="menu-bar" id="bar-bot" x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"
-        ></line>
+        <line x1="4" y1="7" x2="20" y2="7" stroke-linecap="round"></line>
+        <line x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"></line>
+        <line x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"></line>
       </svg>
     </button>
 
@@ -48,13 +41,7 @@ const links = [
         aria-label={`${SITE.name}: עמוד הבית`}
         class="shrink-0 transition-opacity hover:opacity-85"
       >
-        <img
-          src="/logo.svg"
-          alt="גל עופרי פיזיותרפיה, לוגו"
-          class="h-14 w-auto md:h-16"
-          width="870"
-          height="890"
-        />
+        <img src="/logo.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="890" />
       </a>
     </div>
 
@@ -84,7 +71,7 @@ const links = [
         links.map(({ href, label }) => (
           <a
             href={href}
-            class="rounded-lg px-5 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
+            class="relative rounded-lg px-5 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
           >
             {label}
           </a>
@@ -140,8 +127,11 @@ const links = [
 
 <!-- ── Mobile Menu Overlay ── -->
 <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="תפריט ניווט">
-  <!-- Top bar: close (right in RTL), logo (center), spacer (left) -->
-  <div class="container-prose grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-3 py-4">
+  <!-- Top bar: close (right in RTL), logo (center), spacer (left).
+       Padding and logo size mirror the header's exactly, so opening the menu
+       cross-fades the hamburger into this X in place instead of shifting the
+       logo. Keep the two in sync if either changes. -->
+  <div class="container-prose grid grid-cols-[2.75rem_1fr_2.75rem] items-center gap-3 py-2 md:py-3">
     <button
       id="nav-close-btn"
       type="button"
@@ -160,13 +150,7 @@ const links = [
       </svg>
     </button>
     <a href="/" aria-label={`${SITE.name}: עמוד הבית`} class="flex justify-center">
-      <img
-        src="/logo.svg"
-        alt="גל עופרי פיזיותרפיה, לוגו"
-        class="h-12 w-auto"
-        width="870"
-        height="890"
-      />
+      <img src="/logo.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="890" />
     </a>
     <div aria-hidden="true"></div>
   </div>
@@ -232,38 +216,59 @@ const links = [
 </div>
 
 <style>
-  /* ── Header scroll state ── */
+  /* ── Header scroll state ──
+     The header is transparent at rest so the hero's blurred colour washes run
+     continuously underneath it. Painting a solid --color-neutral-50 here used
+     to clip that wash at the header's bottom edge, which read as a hard seam
+     across the full width (measured: #FDFBF7 at 70px, #FEF2EA at 72px).
+
+     The glass lives on a ::before rather than on the header itself because
+     `backdrop-filter: none → blur(20px)` does not interpolate — it snaps.
+     Fading a pre-blurred layer's opacity is both smooth and compositor-only. */
   #site-header {
-    background: var(--color-neutral-50);
+    padding-top: env(safe-area-inset-top, 0px);
   }
-  #site-header.is-scrolled {
-    background: color-mix(in srgb, var(--color-neutral-50) 82%, transparent);
+  #site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* behind the header's own content, inside its stacking context */
+    background-color: color-mix(in srgb, var(--color-neutral-50) 82%, transparent);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow:
       inset 0 1px 0 0 rgb(255 255 255 / 0.6),
       0 1px 32px -8px rgb(0 0 0 / 0.08);
+    opacity: 0;
+    transition: opacity 350ms var(--ease-out);
   }
-  #site-header.menu-open {
-    box-shadow: 0 4px 24px -4px rgb(0 0 0 / 0.12);
+  #site-header.is-scrolled::before {
+    opacity: 1;
   }
 
-  /* ── Hamburger → X animation ── */
-  .menu-bar {
-    transform-box: stroke-box;
-    transform-origin: center;
-    transition:
-      transform 300ms var(--ease-drawer),
-      opacity 200ms ease;
+  /* ── Active section ──
+     Driven by the scroll-spy observer below, which sets data-current +
+     aria-current on the matching link in both navs. */
+  #site-header nav a::after {
+    content: '';
+    position: absolute;
+    inset-inline: 1.25rem; /* matches the links' px-5 */
+    bottom: 0.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transition: transform 250ms var(--ease-out);
   }
-  #nav-toggle[aria-expanded='true'] #bar-top {
-    transform: translateY(5px) rotate(45deg);
+  #site-header nav a[data-current] {
+    color: var(--color-teal-700); /* 5.86:1 on warm white ✅ */
   }
-  #nav-toggle[aria-expanded='true'] #bar-mid {
-    opacity: 0;
+  #site-header nav a[data-current]::after {
+    transform: scaleX(1);
   }
-  #nav-toggle[aria-expanded='true'] #bar-bot {
-    transform: translateY(-5px) rotate(-45deg);
+  #mobile-menu nav a[data-current] {
+    color: var(--color-teal-700); /* 5.86:1 on warm white ✅ */
+    background-color: var(--color-teal-50);
   }
 
   /* ── Mobile menu overlay — animated entrance/exit ── */
@@ -272,7 +277,12 @@ const links = [
     flex-direction: column;
     position: fixed;
     inset: 0;
-    z-index: 40;
+    /* Above the header (z-50), not below it. At z-40 the header painted over
+       this overlay's own top bar, so its close button and logo rendered zero
+       pixels — verified by hiding the bar and getting a byte-identical shot —
+       while the header showed a second, differently-sized copy of both. */
+    z-index: 60;
+    padding-top: env(safe-area-inset-top, 0px);
     background: color-mix(in srgb, var(--color-neutral-50) 98%, transparent);
     backdrop-filter: blur(24px) saturate(160%);
     -webkit-backdrop-filter: blur(24px) saturate(160%);
@@ -322,7 +332,8 @@ const links = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .menu-bar {
+    #site-header::before,
+    #site-header nav a::after {
       transition: none !important;
     }
     #mobile-menu {
@@ -354,27 +365,61 @@ const links = [
     ) as HTMLElement[];
 
   // ── Scroll → frosted glass ──
-  const syncHeader = () => header.classList.toggle('is-scrolled', window.scrollY > 20);
+  // rAF-guarded so a fast scroll on a low-end phone queues at most one class
+  // write per frame instead of one per scroll event.
+  let ticking = false;
+  const syncHeader = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      header.classList.toggle('is-scrolled', window.scrollY > 20);
+      ticking = false;
+    });
+  };
   window.addEventListener('scroll', syncHeader, { passive: true });
-  syncHeader();
+  header.classList.toggle('is-scrolled', window.scrollY > 20);
+
+  // ── Scroll lock ──
+  // `overflow: hidden` on <body> does not stop background scrolling in iOS
+  // Safari; pinning the body with position:fixed does. That drops the page to
+  // the top, so the offset is stashed and restored on unlock.
+  let lockedAt = 0;
+  const lockScroll = () => {
+    lockedAt = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedAt}px`;
+    document.body.style.insetInline = '0';
+    document.body.style.overflow = 'hidden';
+  };
+  const unlockScroll = () => {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.insetInline = '';
+    document.body.style.overflow = '';
+    // 'instant' matters: :root has scroll-behavior:smooth, so a plain
+    // scrollTo would animate the restore and fight the anchor jump that
+    // follows when the menu was closed by tapping a link.
+    window.scrollTo({ top: lockedAt, behavior: 'instant' });
+  };
 
   // ── Menu helpers ──
   const openMenu = () => {
     menu.dataset.open = 'true';
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'סגור תפריט ניווט');
-    document.body.style.overflow = 'hidden';
-    header.classList.add('menu-open');
+    lockScroll();
     backdropEls().forEach((el) => el.setAttribute('inert', ''));
-    (menu.querySelector('a') as HTMLElement | null)?.focus();
+    // The close button, not `menu.querySelector('a')` — that matched the logo
+    // link, so opening the nav ringed a link back to the current page. It only
+    // looked harmless while the header was painting over this whole bar.
+    closeBtn.focus();
   };
 
   const closeMenu = () => {
     menu.dataset.open = 'false';
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-label', 'פתח תפריט ניווט');
-    document.body.style.overflow = '';
-    header.classList.remove('menu-open');
+    unlockScroll();
     // Un-inert before focusing: the toggle lives inside the header, which is
     // itself inert while the menu is open.
     backdropEls().forEach((el) => el.removeAttribute('inert'));
@@ -390,4 +435,49 @@ const links = [
     // (e.g. while typing in the contact form) would yank focus to the toggle.
     if (e.key === 'Escape' && menu.dataset.open === 'true') closeMenu();
   });
+
+  // ── Scroll spy: mark the section the reader is actually in ──
+  const sectionLinks = [
+    ...document.querySelectorAll<HTMLAnchorElement>(
+      '#site-header nav a[href^="#"], #mobile-menu nav a[href^="#"]'
+    ),
+  ];
+  // Document order, not link order — the nav lists אודות before שירותים while
+  // the page puts #services first, and the spy has to pick the topmost match.
+  const spied = [...new Set(sectionLinks.map((a) => a.hash.slice(1)))]
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null)
+    .sort((a, b) => a.offsetTop - b.offsetTop);
+
+  if (spied.length) {
+    const inBand = new Set<string>();
+    let currentId = '';
+
+    const paint = () => {
+      const next = spied.find((el) => inBand.has(el.id))?.id ?? '';
+      if (next === currentId) return;
+      currentId = next;
+      sectionLinks.forEach((a) => {
+        const on = a.hash.slice(1) === next;
+        a.toggleAttribute('data-current', on);
+        if (on) a.setAttribute('aria-current', 'true');
+        else a.removeAttribute('aria-current');
+      });
+    };
+
+    // A band across the middle of the viewport rather than the whole of it:
+    // with the full viewport, two adjacent sections are almost always both
+    // intersecting and the marker flickers between them.
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) inBand.add(e.target.id);
+          else inBand.delete(e.target.id);
+        });
+        paint();
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    );
+    spied.forEach((el) => spy.observe(el));
+  }
 </script>

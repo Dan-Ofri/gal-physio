@@ -162,6 +162,20 @@
     line-height: 1.7;
   }
 
+  /* Suppress the grey/blue flash Chrome on Android paints over a tapped
+     control. Every interactive element here already has its own :active
+     state, so this removes a duplicate, uncontrollable highlight rather
+     than removing the only press feedback. */
+  a,
+  button,
+  [role='button'],
+  input,
+  select,
+  textarea,
+  label {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   /* Focus styles — always visible, never outline:none */
   :focus-visible {
     outline: 2px solid var(--color-teal-600);

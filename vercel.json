@@ -6,7 +6,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'self'; script-src 'self' 'sha256-dpepFquMnINY34EhrGeXxE4vihaLYkF3WCbpwdYOVs4=' 'sha256-26iIrJCVi/R2Yx7oS24UAnQ01sQ4KanWnPiiE+KvHws=' 'sha256-nwwyKfU35xrV4aDddDpxnXUTvIDJU+JcNOyucmYy7LI=' 'sha256-ltDXuFLgZeuXuJTj4PlLKG09UhysTO1LVAtHMMAwmrU='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.web3forms.com; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'self'; script-src 'self' 'sha256-s3bWaRDgR9KOQrOhs08otGbisve2TcB91tYU0Am+Uok=' 'sha256-26iIrJCVi/R2Yx7oS24UAnQ01sQ4KanWnPiiE+KvHws=' 'sha256-nwwyKfU35xrV4aDddDpxnXUTvIDJU+JcNOyucmYy7LI=' 'sha256-ltDXuFLgZeuXuJTj4PlLKG09UhysTO1LVAtHMMAwmrU='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.web3forms.com; form-action 'self'; frame-ancestors 'none'; object-src 'none'; upgrade-insecure-requests"
         },
         {
           "key": "X-Content-Type-Options",
