@@ -16,6 +16,7 @@ Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Ast
 
 ## Design system (`src/styles/global.css`)
 
+- **Typography is a pair, not one family**: `--font-sans` (Assistant) for UI and running text, `--font-heading` (Rubik) for every heading. Both are self-hosted via fontsource. Rubik is loaded **Hebrew-subset only**, with a hand-written `@font-face` in `global.css` rather than the package's stylesheet — the H1's comma is a Latin-range character, so importing every subset made LCP wait on a Latin font file to render one glyph. Latin digits and punctuation in headings fall back to the sans stack on purpose. Don't "fix" this by switching to the package's default `@import`, and re-measure before adding a font `preload`: preloading helped only once the Latin file was gone, and hurt before that.
 - Brand palette is **peach-orange** (`--color-teal-*` is the primary scale — the name is legacy, it is not teal). Warm neutrals (`--color-neutral-*`), dark warm-brown for footer/dark sections (`--color-navy-*`, `--color-section-dark`), gradient CTA colors (`--color-brand-amber*`).
 - Every text color choice in this file has a WCAG contrast ratio commented next to it (e.g. `7.52:1 on warm white ✅`). When introducing a new text/background pairing, verify contrast and comment it the same way — don't guess.
 - Reusable primitives already exist: `.btn-primary`, `.btn-secondary`, `.section-padding`, `.container-prose`, `.form-input`/`.form-label`/`.form-error`. Reuse these instead of rebuilding button/section styles inline.
@@ -60,8 +61,8 @@ Commit subjects follow Conventional Commits style already used in history: `feat
 ## Security headers (`vercel.json`)
 
 - `vercel.json` sets a strict `Content-Security-Policy` (plus `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`) applied by Vercel to every response.
-- `script-src` is locked to `'self'` plus three SHA-256 hashes — Astro inlines the small per-page `<script type="module">` blocks (Nav's menu toggle, `BaseLayout`'s scroll-reveal observer, `Contact`'s form handler) directly into the HTML instead of emitting external files, so a plain `'self'` would block them.
-- **If you edit the inline `<script>` in `Nav.astro`, `BaseLayout.astro`, or `Contact.astro`, the browser will silently block it in production** (CSP violation, swallowed unless devtools console is open) because its hash changed. After such an edit, run `npm run build`, recompute the three hashes (`grep -o '<script type="module">.*</script>' dist/index.html` piped through a sha256/base64 step, or reuse the one-off Puppeteer check from the security review), and update the `script-src` value in `vercel.json` to match.
+- `script-src` is locked to `'self'` plus four SHA-256 hashes — Astro inlines the small per-page `<script type="module">` blocks (Nav's menu toggle, `BaseLayout`'s scroll-reveal observer, `Contact`'s form handler, `Testimonials`' carousel dots) directly into the HTML instead of emitting external files, so a plain `'self'` would block them.
+- **If you edit the inline `<script>` in `Nav.astro`, `BaseLayout.astro`, `Contact.astro`, or `Testimonials.astro`, the browser will silently block it in production** (CSP violation, swallowed unless devtools console is open) because its hash changed. After such an edit, run `npm run build`, recompute the three hashes (`grep -o '<script type="module">.*</script>' dist/index.html` piped through a sha256/base64 step, or reuse the one-off Puppeteer check from the security review), and update the `script-src` value in `vercel.json` to match.
 - `style-src` keeps `'unsafe-inline'` because of the one inline `style="backdrop-filter:..."` in `Contact.astro`; everything else on the site is external CSS via Tailwind, so this is the only relaxation from a fully strict policy.
 
 ## Known issues
@@ -72,4 +73,4 @@ Commit subjects follow Conventional Commits style already used in history: `feat
 ## Boundaries
 
 - Don't add a CMS, backend, or client-side framework (React/Vue/etc.) to solve something Astro + vanilla JS already handles — this site is intentionally static and dependency-light (check `package.json` before reaching for a new library).
-- Don't rename `--color-teal-*` tokens site-wide as a "cleanup" — it's a large, unrequested diff; note the misnomer instead if it comes up.
+- Don't rename `--color-teal-*` tokens site-wide as a "cleanup" — it's a large, unrequested diff; note the misnomer instead if it comes up. (`--font-serif` → `--font-heading` was renamed in Sep 2026, but only because the heading face was being replaced anyway and the old name would have described a sans as a serif — a second misnomer rather than one removed.)
