@@ -21,6 +21,25 @@ export default defineConfig({
       name: 'Desktop Chrome',
       use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } },
     },
+    // Firefox and desktop WebKit run the header spec only. They are here for
+    // the glass in particular: `backdrop-filter` is the one property on this
+    // site whose vendor prefixing the minifier can silently collapse, and a
+    // Chromium-only suite cannot see that — Firefox takes only the unprefixed
+    // spelling, Safari below 18 only the -webkit- one. Pointing them at the
+    // whole suite instead costs a contact-form failure on most local runs: a
+    // different test each time, passing when that file runs on its own, i.e.
+    // worker contention at 100 tests rather than a defect. Widening these two
+    // means fixing that first.
+    {
+      name: 'Desktop Firefox',
+      testMatch: /header\.spec\.ts/,
+      use: { ...devices['Desktop Firefox'], viewport: { width: 1440, height: 900 } },
+    },
+    {
+      name: 'Desktop Safari',
+      testMatch: /header\.spec\.ts/,
+      use: { ...devices['Desktop Safari'], viewport: { width: 1440, height: 900 } },
+    },
   ],
   webServer: {
     // Test the production build, not the dev server — dev's HMR/watcher adds
