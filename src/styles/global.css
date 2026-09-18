@@ -361,7 +361,8 @@
     transition:
       top 150ms ease,
       font-size 150ms ease,
-      color 150ms ease;
+      color 150ms ease,
+      opacity 150ms ease;
   }
 
   .form-input:focus ~ .form-float-label,
@@ -381,25 +382,32 @@
     color: var(--color-error); /* 4.83:1 on white ✅ */
   }
 
-  /* The textarea keeps its hint, but only once the label has lifted out of the
-     way - otherwise the two sit on top of each other while the field is empty. */
-  .form-field textarea.form-input::placeholder {
-    color: transparent;
-  }
+  /* At rest this field shows its prompt rather than the word "הודעה". The
+     resting state is the one that has to earn the tap, and "ספרו לי קצת על הכאב
+     או הצורך שלכם" both invites and tells the reader what to write, which the
+     category name does not. Someone unsure what belongs in a message to a
+     physiotherapist is exactly who this field is for.
 
-  .form-field textarea.form-input:focus::placeholder {
+     The <label> stays "הודעה" and stays the accessible name - the prompt is only
+     ever a placeholder, never the label. It lifts into view the moment the field
+     is focused or filled, so the field is never left labelled by a placeholder
+     alone, which is the usual cost of this pattern and the reason not to just
+     delete the label. Screen readers read "הודעה" throughout, and a speech-input
+     user is not being shown one name and having another one registered. */
+  .form-field textarea.form-input::placeholder {
     color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
   }
 
-  /* A textarea's label must sit on its first line, not be centred against a
-     three-row box. */
+  /* A textarea's label sits on its first line, not centred against a 3-row box. */
   .form-field textarea.form-input ~ .form-float-label {
     top: 1.375rem;
+    opacity: 0;
   }
 
   .form-field textarea.form-input:focus ~ .form-float-label,
   .form-field textarea.form-input:not(:placeholder-shown) ~ .form-float-label {
     top: -0.0625rem;
+    opacity: 1;
   }
 
   .form-error {
