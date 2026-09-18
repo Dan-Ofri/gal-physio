@@ -520,6 +520,31 @@
   }
 }
 
+/* Lifts a small text link to a 44px touch target without changing anything you
+   can see: an invisible pseudo-element, centred on the link and spanning its
+   width, takes the tap. WCAG 2.5.8 puts the floor at 24px; Apple and Android both
+   ask for 44 and 48, and on a site where most visitors arrive on a phone the
+   phone number is not a link to be stingy with - it was 20px tall.
+
+   Only safe where a link has no close vertical neighbour, because the grown area
+   would otherwise cover the link above or below it and swallow its taps. The
+   contact panel's rows sit 44px apart and the menu's phone link stands alone, so
+   both are fine. The footer's lists are deliberately not using this: 32px tall
+   and 4px apart, they already clear WCAG, and expanding them would have every
+   link overlapping its neighbour. */
+.tap-target {
+  position: relative;
+}
+
+.tap-target::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  min-block-size: 44px;
+}
+
 @supports (overflow: clip) {
   .clip-inline-only {
     overflow: visible;
