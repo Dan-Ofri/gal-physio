@@ -155,6 +155,49 @@ test.describe('Header', () => {
     await expect(toggle, 'focus was not returned to the toggle').toBeFocused();
   });
 
+  test('closing the menu in the same frame it opened leaves nothing locked', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, 'desktop has no hamburger menu');
+    await page.goto('/');
+
+    // openMenu defers the scroll lock and the inert sweep by a frame, so the
+    // opening fade gets a clean first frame. Close before that frame runs and
+    // the deferred work used to land on an already-closed menu: <body> stayed
+    // pinned with position:fixed and the header stayed inert, so the page could
+    // not be scrolled and the hamburger could not be reached. Escape and a
+    // second tap both get there fast enough to hit it. It surfaced for months
+    // as a flaky focus assertion in the test above rather than as this.
+    const toggle = page.getByRole('button', { name: 'פתח תפריט ניווט' });
+    const menu = page.locator('#mobile-menu');
+
+    for (const close of ['escape', 'closeButton'] as const) {
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(menu).toHaveAttribute('data-open', 'true');
+      // The hamburger itself is covered and inert while the menu is open, so
+      // the two ways a reader actually gets out are Escape and the close button.
+      if (close === 'escape') await page.keyboard.press('Escape');
+      else await page.locator('#nav-close-btn').click();
+      await expect(menu).toHaveAttribute('data-open', 'false');
+
+      await expect
+        .poll(() => page.evaluate(() => document.body.style.position), {
+          message: `closed via ${close}: <body> left pinned, so the page cannot scroll`,
+        })
+        .not.toBe('fixed');
+      expect(
+        await page.evaluate(() => document.getElementById('site-header')!.hasAttribute('inert')),
+        `closed via ${close}: the header was left inert`
+      ).toBe(false);
+      expect(
+        await page.evaluate(() => window.getComputedStyle(document.body).overflow),
+        `closed via ${close}: <body> left with overflow hidden`
+      ).not.toBe('hidden');
+    }
+  });
+
   test('the header keeps its glass while the menu opens over it', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'desktop has no hamburger menu');
     await page.goto('/');
