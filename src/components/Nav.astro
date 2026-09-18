@@ -41,7 +41,7 @@ const links = [
         aria-label={`${SITE.name}: עמוד הבית`}
         class="shrink-0 transition-opacity hover:opacity-85"
       >
-        <img src="/logo.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="890" />
+        <img src="/logo-compact.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="786" />
       </a>
     </div>
 
@@ -150,7 +150,7 @@ const links = [
       </svg>
     </button>
     <a href="/" aria-label={`${SITE.name}: עמוד הבית`} class="flex justify-center">
-      <img src="/logo.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="890" />
+      <img src="/logo-compact.svg" alt="" class="h-14 w-auto md:h-16" width="870" height="786" />
     </a>
     <div aria-hidden="true"></div>
   </div>
@@ -222,11 +222,19 @@ const links = [
      to clip that wash at the header's bottom edge, which read as a hard seam
      across the full width (measured: #FDFBF7 at 70px, #FEF2EA at 72px).
 
-     The blur animates from blur(0px), not from `none`: `none` does not
-     interpolate, so it would snap. Do NOT move this onto a pseudo-element
-     that fades in with `opacity` — an element with opacity forms a backdrop
-     root, and the filter then has nothing behind it to sample, so the glass
-     silently renders as a flat translucent panel. Measured that way round.
+     The blur is applied only in the scrolled state, and therefore snaps
+     rather than ramping. Keeping `backdrop-filter: blur(0px)` on the header
+     at all times is what makes it interpolate, and that was tried: over a
+     scripted full-page scroll at 4x CPU throttling it held the same median
+     and 95th-percentile frame time either way, but produced 2-3 frames over
+     20ms per scroll against none without it, on every run. Small, but it
+     buys only a ramp that the background-colour and shadow transitions
+     already cover. It costs no LCP either way — measured, no difference.
+
+     Do NOT move this onto a pseudo-element that fades in with `opacity` —
+     an element with opacity forms a backdrop root, and the filter then has
+     nothing behind it to sample, so the glass silently renders as a flat
+     translucent panel. Measured that way round too.
 
      The -webkit- spelling lives in its own @supports rule on purpose. Written
      as a second declaration in the same rule — which is how this file had it —
@@ -238,10 +246,8 @@ const links = [
   #site-header {
     padding-top: env(safe-area-inset-top, 0px);
     background-color: transparent;
-    backdrop-filter: blur(0px) saturate(100%);
     transition:
       background-color 350ms var(--ease-out),
-      backdrop-filter 350ms var(--ease-out),
       box-shadow 350ms var(--ease-out);
   }
   #site-header.is-scrolled {
@@ -252,9 +258,6 @@ const links = [
       0 1px 32px -8px rgb(0 0 0 / 0.08);
   }
   @supports (-webkit-backdrop-filter: blur(1px)) {
-    #site-header {
-      -webkit-backdrop-filter: blur(0px) saturate(100%);
-    }
     #site-header.is-scrolled {
       -webkit-backdrop-filter: blur(20px) saturate(180%);
     }
@@ -297,9 +300,12 @@ const links = [
        while the header showed a second, differently-sized copy of both. */
     z-index: 60;
     padding-top: env(safe-area-inset-top, 0px);
-    background: color-mix(in srgb, var(--color-neutral-50) 98%, transparent);
-    backdrop-filter: blur(24px) saturate(160%);
-    /* see the note above #site-header.is-scrolled::before */
+    /* Opaque, with no backdrop-filter. At 98% the blur measured 5/255 against
+       the page behind it — invisible — while still costing a full-screen
+       composited blur for the length of the open animation, which is one of
+       the more expensive things to ask of a low-end phone. Either commit to
+       glass at ~80% and let it read, or drop it; this drops it. */
+    background: var(--color-neutral-50);
 
     visibility: hidden;
     opacity: 0;
@@ -308,11 +314,6 @@ const links = [
       opacity 300ms var(--ease-drawer),
       transform 300ms var(--ease-drawer),
       visibility 0ms linear 300ms;
-  }
-  @supports (-webkit-backdrop-filter: blur(1px)) {
-    #mobile-menu {
-      -webkit-backdrop-filter: blur(24px) saturate(160%);
-    }
   }
   #mobile-menu[data-open='true'] {
     visibility: visible;
