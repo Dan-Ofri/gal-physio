@@ -118,4 +118,37 @@ test.describe('Homepage', () => {
     });
     expect(moved, 'carousel did not scroll').toBeGreaterThan(50);
   });
+
+  // Regression: the dot observer selected `article[id^="testimonial-card-"]`.
+  // When the cards became `<div role="listitem">` to fix a list-role audit, the
+  // selector matched nothing, so the observer watched nothing and every dot
+  // stayed grey and 8px wide forever. Nothing threw, so only looking caught it.
+  test('the pagination dot follows the card on screen', async ({ page }) => {
+    await page.goto('/');
+    const scroller = page.locator('#testimonials [role="group"]').first();
+    await scroller.scrollIntoViewIfNeeded();
+
+    const isCarousel = await scroller.evaluate(
+      (el) => getComputedStyle(el).overflowX !== 'visible'
+    );
+    test.skip(!isCarousel, 'plain grid at this viewport, no dots to sync');
+
+    const activeIndex = async () =>
+      page.evaluate(() =>
+        [...document.querySelectorAll('.testimonial-dot')].findIndex(
+          (d) => (d as HTMLElement).dataset.active === 'true'
+        )
+      );
+
+    await expect.poll(activeIndex, { message: 'no dot active on the first card' }).toBe(0);
+
+    const step = await scroller.evaluate((el) => {
+      const card = el.querySelector('[id^="testimonial-card-"]') as HTMLElement;
+      return card.getBoundingClientRect().width + 20;
+    });
+    await scroller.evaluate((el, s) => (el.scrollLeft = -s), step);
+    await expect
+      .poll(activeIndex, { message: 'the dot did not follow to the second card' })
+      .toBe(1);
+  });
 });

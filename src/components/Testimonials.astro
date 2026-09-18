@@ -80,13 +80,13 @@ const testimonials: Testimonial[] = [
          on both axes — but it must stay off at md, where the scroller turns into a
          plain grid and cards need to paint their hover lift and shadow outside it. -->
     <div
-      class="stagger-children mt-14 overflow-x-auto overscroll-x-contain pb-2 contain-paint [scrollbar-width:none] md:overflow-visible md:contain-none [&::-webkit-scrollbar]:hidden"
+      class="stagger-children mt-14 overflow-x-auto overscroll-x-contain pb-2 contain-paint [scrollbar-width:none] lg:overflow-visible lg:contain-none [&::-webkit-scrollbar]:hidden"
       role="group"
       tabindex="0"
       aria-label="המלצות מטופלים, גללו לצפייה בעוד המלצות"
     >
       <div
-        class="flex snap-x snap-mandatory gap-5 md:grid md:snap-none md:grid-cols-3 md:gap-6"
+        class="flex snap-x snap-mandatory gap-5 lg:grid lg:snap-none lg:grid-cols-3 lg:gap-6"
         role="list"
         aria-label="המלצות מטופלים"
       >
@@ -95,7 +95,7 @@ const testimonials: Testimonial[] = [
             <div
               id={`testimonial-card-${t.id}`}
               role="listitem"
-              class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] md:w-auto md:shrink"
+              class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] lg:w-auto lg:shrink"
               aria-label={`המלצה מ-${t.author}`}
             >
               {/* No star row. The reviews are all 5 stars on Google, but rendering
@@ -117,12 +117,16 @@ const testimonials: Testimonial[] = [
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
                 <div class="relative">
-                  <p
-                    class="quote-scroll h-44 overflow-y-auto pe-2 text-sm leading-relaxed text-neutral-600 md:h-32"
-                    role="group"
-                    tabindex="0"
-                    aria-label="טקסט ההמלצה, ניתן לגלילה"
-                  >
+                  {/* Clamped only from md up, where the three cards share a grid
+                      row and have to agree on a height. Below that they are a
+                      carousel with one card on screen at a time, so the quote
+                      runs at its natural length: the clamp was hiding 165 of
+                      341px of the first review behind a nested vertical scroll
+                      inside a horizontally-snapped card, which is both a thing
+                      readers do not find and a drag that fights the page.
+                      role/tabindex/aria-label are attached by the script below,
+                      and only while the box can actually scroll. */}
+                  <p class="quote-scroll pe-2 text-sm leading-relaxed text-neutral-600 lg:h-32 lg:overflow-y-auto">
                     {t.text}
                   </p>
                   <div
@@ -136,19 +140,36 @@ const testimonials: Testimonial[] = [
               <div aria-hidden="true" class="my-6 h-px bg-neutral-200/70" />
 
               {/* Author */}
-              <footer class="flex items-center gap-3">
-                {/* Avatar with initials */}
-                <div
-                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-700"
-                  aria-hidden="true"
-                >
-                  {t.initials}
-                </div>
-                <div class="min-w-0">
-                  <cite class="block text-sm font-semibold text-neutral-800 not-italic">
-                    {t.author}
-                  </cite>
-                  <p class="text-xs text-neutral-600">{t.postedOn} · Google</p>
+              {/* flex-wrap, not a plain row: the name block cannot shrink past
+                  its longest word ("Google"), and the pill is shrink-0, so at
+                  the md grid's column width the three together needed ~209px of
+                  a 158px card and the pill printed straight over the date.
+                  Wrapping drops the pill to its own line instead; there is room
+                  for one row from lg up, so nothing moves there. */}
+              <footer class="flex flex-wrap items-center gap-3">
+                {/* Avatar and name are one unbreakable unit. Wrapping them as
+                    three loose flex items instead let the avatar orphan onto a
+                    row of its own whenever the date happened to be a little
+                    wider - "דצמבר 2025" did it and "מאי 2026" did not - which
+                    read as a broken card rather than a tight one. */}
+                {/* No min-w-0 anywhere in here: it lets the group collapse past its
+                      own content instead of wrapping, which puts the pill back
+                      on top of the date. Default min-width:auto is what makes
+                      the line break happen at the right moment. */}
+                <div class="flex items-center gap-3">
+                  {/* Avatar with initials */}
+                  <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-700"
+                    aria-hidden="true"
+                  >
+                    {t.initials}
+                  </div>
+                  <div>
+                    <cite class="block text-sm font-semibold text-neutral-800 not-italic">
+                      {t.author}
+                    </cite>
+                    <p class="text-xs text-neutral-600">{t.postedOn} · Google</p>
+                  </div>
                 </div>
                 {/* Service tag */}
                 <span class="ms-auto shrink-0 rounded-full bg-teal-100 px-2.5 py-1 text-xs font-medium text-teal-700">
@@ -163,7 +184,7 @@ const testimonials: Testimonial[] = [
     </div>
 
     <!-- Pagination dots — mobile carousel only, synced to the visible card -->
-    <div class="mt-5 flex justify-center gap-2 md:hidden" aria-hidden="true">
+    <div class="mt-5 flex justify-center gap-2 lg:hidden" aria-hidden="true">
       {
         testimonials.map((t) => (
           <span
@@ -201,18 +222,39 @@ const testimonials: Testimonial[] = [
   const track = document.querySelector('#testimonials [role="group"]') as HTMLElement | null;
   const dots = document.querySelectorAll<HTMLElement>('.testimonial-dot');
   if (track && dots.length) {
+    // One dot lights at a time, and it is the card that is *most* on screen.
+    // Marking every entry that passes a threshold looked right while exactly
+    // one card fitted, but the carousel now runs up to lg, where two cards are
+    // over 60% visible at once and two dots lit together — an indicator that
+    // says "you are here, and also here". Ratios are kept per card and the
+    // largest wins, so there is always exactly one answer.
+    const ratios = new Map<string, number>();
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          const dot = document.querySelector<HTMLElement>(
-            `.testimonial-dot[data-dot-for="${entry.target.id}"]`
-          );
-          if (dot) dot.dataset.active = entry.isIntersecting ? 'true' : 'false';
+        entries.forEach((entry) => ratios.set(entry.target.id, entry.intersectionRatio));
+        let best = '';
+        let bestRatio = 0;
+        ratios.forEach((r, id) => {
+          if (r > bestRatio) {
+            bestRatio = r;
+            best = id;
+          }
+        });
+        dots.forEach((dot) => {
+          dot.dataset.active = dot.dataset.dotFor === best ? 'true' : 'false';
         });
       },
-      { root: track, threshold: 0.6 }
+      // A spread of thresholds, not one: the callback only fires when a
+      // threshold is crossed, so with a single value the ratios map goes stale
+      // between crossings and the wrong card can hold the marker.
+      { root: track, threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
-    document.querySelectorAll('#testimonials article[id^="testimonial-card-"]').forEach((el) => {
+    // Matched on the id alone, never on the tag. These cards were <article>
+    // until the list roles were fixed and they became <div role="listitem">;
+    // an `article[id^=...]` selector then matched nothing, the observer watched
+    // nothing, and the dots sat grey and equal-width for every card with no
+    // error anywhere. Keep this keyed to the id the markup actually promises.
+    document.querySelectorAll('#testimonials [id^="testimonial-card-"]').forEach((el) => {
       observer.observe(el);
     });
   }
@@ -225,8 +267,21 @@ const testimonials: Testimonial[] = [
     const fade = el.nextElementSibling as HTMLElement | null;
     if (!fade) return;
     const sync = () => {
+      const canScroll = el.scrollHeight - el.clientHeight > 2;
       const hasMore = el.scrollHeight - el.clientHeight - el.scrollTop > 2;
       fade.classList.toggle('hidden', !hasMore);
+      // A scrollable region needs a name and a keyboard way in; a box that
+      // fits its text is neither, and leaving the two on would put a focus
+      // stop with nothing to do in the middle of every card.
+      if (canScroll) {
+        el.setAttribute('role', 'group');
+        el.setAttribute('tabindex', '0');
+        el.setAttribute('aria-label', 'טקסט ההמלצה, ניתן לגלילה');
+      } else {
+        el.removeAttribute('role');
+        el.removeAttribute('tabindex');
+        el.removeAttribute('aria-label');
+      }
     };
     sync();
     el.addEventListener('scroll', sync, { passive: true });
