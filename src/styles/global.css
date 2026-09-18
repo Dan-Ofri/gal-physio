@@ -451,3 +451,25 @@
     transform: none !important;
   }
 }
+
+/* A section that washes itself with big blurred discs cannot use plain
+   overflow-hidden. The discs blur far past their own box, so they tint the
+   whole section a few levels off the flat background either side of it, and
+   clipping that tint at the section edge turns the difference into a hard
+   full-width line. Measured on the Hero/About join: 254,248,245 against
+   253,251,247, a 3/255 step - small, but a straight full-width edge is the
+   case the eye is best at, so it reads as a drawn line rather than two shades.
+
+   Clipping only the inline axis lets the tint cross the boundary and fade out
+   on its own, while still keeping the page from ever scrolling sideways, which
+   the carousel note under "Known issues" shows is never far away here.
+
+   Guarded because overflow:clip is Safari 16+. Older WebKit ignores this and
+   keeps the element's own overflow-hidden: the seam shows and the page still
+   cannot scroll sideways, which is the right way round to fail. */
+@supports (overflow: clip) {
+  .clip-inline-only {
+    overflow: visible;
+    overflow-x: clip;
+  }
+}
