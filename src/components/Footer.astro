@@ -62,7 +62,7 @@ const socialLinks = [
                 <li>
                   <a
                     href={href}
-                    class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                    class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline pointer-coarse:py-3"
                   >
                     {label}
                   </a>
@@ -80,7 +80,7 @@ const socialLinks = [
               <a
                 href={`tel:${SITE.phoneE164}`}
                 dir="ltr"
-                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline pointer-coarse:py-3"
                 aria-label={`חייגו: ${SITE.phone}`}
               >
                 {SITE.phone}
@@ -89,7 +89,7 @@ const socialLinks = [
             <li>
               <a
                 href={`mailto:${SITE.email}`}
-                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline pointer-coarse:py-3"
                 aria-label={`שלחו אימייל: ${SITE.email}`}
               >
                 {SITE.email}
@@ -100,7 +100,7 @@ const socialLinks = [
                 href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline"
+                class="inline-block py-1.5 text-sm text-neutral-600 underline-offset-2 transition-colors hover:text-teal-700 hover:underline pointer-coarse:py-3"
                 aria-label={`פתח מפה: ${SITE.address.street}, ${SITE.address.cityHebrew}`}
               >
                 {SITE.address.street}, {SITE.address.cityHebrew}
@@ -124,22 +124,22 @@ const socialLinks = [
         >
           <a
             href="/privacy"
-            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700 pointer-coarse:py-3.5"
             >מדיניות פרטיות</a
           >
           <a
             href="/cancellation"
-            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700 pointer-coarse:py-3.5"
             >מדיניות ביטולים</a
           >
           <a
             href="/accessibility"
-            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700 pointer-coarse:py-3.5"
             >הצהרת נגישות</a
           >
           <a
             href="/faq"
-            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700"
+            class="inline-block py-2 text-xs text-neutral-600 transition-colors hover:text-neutral-700 pointer-coarse:py-3.5"
             >שאלות נפוצות</a
           >
         </nav>
