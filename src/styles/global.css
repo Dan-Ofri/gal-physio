@@ -375,6 +375,33 @@
     color: var(--color-teal-600); /* 4.85:1 on white ✅ */
   }
 
+  /* Error wins over focus, and has to come after it to do so. */
+  .form-input[aria-invalid='true'] ~ .form-float-label,
+  .form-input[aria-invalid='true']:focus ~ .form-float-label {
+    color: var(--color-error); /* 4.83:1 on white ✅ */
+  }
+
+  /* The textarea keeps its hint, but only once the label has lifted out of the
+     way - otherwise the two sit on top of each other while the field is empty. */
+  .form-field textarea.form-input::placeholder {
+    color: transparent;
+  }
+
+  .form-field textarea.form-input:focus::placeholder {
+    color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
+  }
+
+  /* A textarea's label must sit on its first line, not be centred against a
+     three-row box. */
+  .form-field textarea.form-input ~ .form-float-label {
+    top: 1.375rem;
+  }
+
+  .form-field textarea.form-input:focus ~ .form-float-label,
+  .form-field textarea.form-input:not(:placeholder-shown) ~ .form-float-label {
+    top: -0.0625rem;
+  }
+
   .form-error {
     font-size: 0.75rem;
     font-weight: 500;
@@ -467,6 +494,24 @@
    Guarded because overflow:clip is Safari 16+. Older WebKit ignores this and
    keeps the element's own overflow-hidden: the seam shows and the page still
    cannot scroll sideways, which is the right way round to fail. */
+/* The sticky contact bar floats over everything below lg, and nothing reserved
+   room for it: scroll-padding-bottom was auto and <body> had no bottom padding.
+   Anything a scroll lands at the foot of the viewport therefore arrived underneath
+   it - measured on the form's own submit button, 53 of its 53px covered when
+   scrolled to, and 127px once validation errors had pushed it further down. That
+   is every Tab to the button, every anchor jump, and the browser's own scroll when
+   the on-screen keyboard opens.
+
+   scroll-padding-bottom is the right tool rather than padding on <body>: it moves
+   where scrolling comes to rest without adding a gap at the end of the document,
+   which measured clean already. 4rem clears the 53px bar; the inset keeps it clear
+   on notched phones too. */
+@media (max-width: 1023px) {
+  :root {
+    scroll-padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 @supports (overflow: clip) {
   .clip-inline-only {
     overflow: visible;
