@@ -322,21 +322,29 @@ const links = [
       var(--color-neutral-50) 60%
     );
 
+    /* Fades, and does not move. It used to open with
+       translateY(-10px) scale(0.985), and the reason for dropping that is
+       visual, not performance: a ten-run A/B found no frame-timing
+       difference either way, so do not re-add it expecting one back.
+
+       The overlay fades in over the header, which stays put underneath at
+       full opacity for the length of the fade. This bar is aligned pixel for
+       pixel with the header and is meant to read as the same header — so
+       while it slid up from 10px high and 1.5% small, the header's logo sat
+       visible beneath the menu's own logo, slightly offset, for the whole
+       300ms. Two near-identical logos drifting past each other. Chrome that
+       is meant to stay put should not slide. */
     visibility: hidden;
     opacity: 0;
-    transform: translateY(-10px) scale(0.985);
     transition:
       opacity 300ms var(--ease-drawer),
-      transform 300ms var(--ease-drawer),
       visibility 0ms linear 300ms;
   }
   #mobile-menu[data-open='true'] {
     visibility: visible;
     opacity: 1;
-    transform: translateY(0) scale(1);
     transition:
       opacity 300ms var(--ease-drawer),
-      transform 300ms var(--ease-drawer),
       visibility 0ms linear 0ms;
   }
 
@@ -446,12 +454,18 @@ const links = [
     menu.dataset.open = 'true';
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'סגור תפריט ניווט');
-    lockScroll();
-    backdropEls().forEach((el) => el.setAttribute('inert', ''));
     // The close button, not `menu.querySelector('a')` — that matched the logo
     // link, so opening the nav ringed a link back to the current page. It only
     // looked harmless while the header was painting over this whole bar.
     closeBtn.focus();
+    // Everything above is cheap. Pinning <body> relayouts the whole document
+    // and inert touches every top-level element, and both used to land on the
+    // opening frame, which is the one frame that has to be smooth. Deferring
+    // them by a frame lets the fade start first.
+    requestAnimationFrame(() => {
+      lockScroll();
+      backdropEls().forEach((el) => el.setAttribute('inert', ''));
+    });
   };
 
   const closeMenu = () => {
