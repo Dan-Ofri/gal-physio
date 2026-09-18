@@ -304,8 +304,23 @@ const links = [
        the page behind it — invisible — while still costing a full-screen
        composited blur for the length of the open animation, which is one of
        the more expensive things to ask of a low-end phone. Either commit to
-       glass at ~80% and let it read, or drop it; this drops it. */
-    background: var(--color-neutral-50);
+       glass at ~80% and let it read, or drop it; this drops it.
+
+       The warm top is not decoration. The header is transparent at rest, so
+       at the top of the page it shows the hero's wash, measured #fef2e9. A
+       flat neutral-50 panel replaced that with #fdfbf7 the moment the menu
+       opened, and the top bar visibly cooled even though it is meant to read
+       as the same header. teal-100 at 50% over neutral-50 computes to
+       #fef2ea, which is that wash, so the bar does not change colour when the
+       menu opens. It resolves to neutral-50 by 60% down, because that is the
+       page's real background everywhere below the hero, and the menu can be
+       opened from any scroll position. teal-50 is the wrong token here: it is
+       pink (#fff5f1) where the hero is amber. */
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-teal-100) 50%, var(--color-neutral-50)) 0%,
+      var(--color-neutral-50) 60%
+    );
 
     visibility: hidden;
     opacity: 0;
