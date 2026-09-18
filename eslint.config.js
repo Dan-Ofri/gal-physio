@@ -20,7 +20,10 @@ export default [
   {
     files: ['playwright.config.ts', 'e2e/**/*.ts'],
     languageOptions: {
-      globals: { ...globals.node },
+      // Node for the test runner itself, browser for the callbacks handed to
+      // `page.evaluate()` — those are serialised and run in the page, so they
+      // legitimately reach for `window`/`document`.
+      globals: { ...globals.node, ...globals.browser },
     },
   },
   {
