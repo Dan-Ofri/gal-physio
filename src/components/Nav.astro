@@ -86,10 +86,17 @@ const links = [
 
     <!-- Desktop Actions; hidden on mobile -->
     <div class="hidden items-center gap-4 lg:flex">
+      {
+        /* neutral-700, matching the links beside it. At neutral-600 this number
+          measured 4.29:1 where the header's frosted glass sits over the dark
+          contact photo - the glass darkens to rgb(221,218,214) there, and the
+          one lighter step was enough to drop it under AA while every nav link
+          beside it stayed between 5.5 and 6.6. */
+      }
       <a
         href={`tel:${SITE.phoneE164}`}
         aria-label={`חייג ל-${SITE.name}: ${SITE.phone}`}
-        class="flex items-center gap-1.5 py-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-800"
+        class="flex items-center gap-1.5 py-1.5 text-sm font-medium text-neutral-700 transition-colors hover:text-neutral-800"
       >
         <svg
           class="h-4 w-4 shrink-0"
