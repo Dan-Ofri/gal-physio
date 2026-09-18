@@ -56,6 +56,8 @@ The six large PNGs behind the hero, about, quote, contact and service cards look
 
 What did work was deleting 55 MB of exact duplicates and unreferenced renders, which left every shipped byte identical. Full-resolution originals of everything removed are in `../GalOfriPhysiotherapy-source-assets/`, outside the repo.
 
+The same applies to `public/`, which is not an archive — every byte in it is served from the CDN at a guessable URL whether or not anything links to it. The header's wordmark was cropped down to `public/logo-compact.svg` in Sep 2026, and the full `public/logo.svg` it came from was moved out to `../GalOfriPhysiotherapy-source-assets/logo.svg` rather than left to ship unreferenced. Restoring it needs no copy of the file, only `git show f244434:public/logo.svg > public/logo.svg`.
+
 ### Setting both `width` and `height` crops at build time, silently
 
 Passing **both** `width` and `height` to `<Image>` makes Astro's sharp service
