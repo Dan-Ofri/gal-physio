@@ -67,9 +67,20 @@ const testimonials: Testimonial[] = [
 
     <!-- Testimonial cards: horizontal snap carousel on mobile (one card + a peek of
          the next, keeps the section from dominating the scroll), plain 3-col grid
-         from md up where there's no vertical-space problem to solve. -->
+         from md up where there's no vertical-space problem to solve.
+
+         `contain-paint` is load-bearing, not an optimisation. Without it this
+         scroller's clipped content still counts towards <html>'s scrollable
+         overflow, so the whole document became 801px wide at a 390px viewport and
+         the page could be swiped sideways into a blank screen — verified in both
+         Chromium and WebKit, so it hit iOS too. Every ancestor reports the correct
+         390px; only the root gets it wrong, and `overflow-x: hidden` on html/body
+         does NOT fix it (tested). Paint containment is the only thing that does.
+         It changes nothing visually here because `overflow-x-auto` already clips
+         on both axes — but it must stay off at md, where the scroller turns into a
+         plain grid and cards need to paint their hover lift and shadow outside it. -->
     <div
-      class="stagger-children mt-14 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:none] md:overflow-visible [&::-webkit-scrollbar]:hidden"
+      class="stagger-children mt-14 overflow-x-auto overscroll-x-contain pb-2 contain-paint [scrollbar-width:none] md:overflow-visible md:contain-none [&::-webkit-scrollbar]:hidden"
       role="group"
       tabindex="0"
       aria-label="המלצות מטופלים, גללו לצפייה בעוד המלצות"

@@ -43,4 +43,82 @@ test.describe('Homepage', () => {
     await skipLink.click();
     await expect(page.locator('#main-content')).toBeFocused();
   });
+
+  // Regression: the testimonials carousel's clipped content used to count
+  // towards <html>'s scrollable overflow, so scrolling down to the reviews made
+  // the whole document 801px wide at a 390px viewport. The page could then be
+  // swiped sideways off its own content into a blank screen. Every ancestor of
+  // the scroller reported the right width — only the root did not — so this has
+  // to be asserted on the document element, and it only appears once the section
+  // has actually been scrolled to.
+  test('the document never becomes horizontally scrollable', async ({ page }) => {
+    await page.goto('/');
+
+    const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
+
+    // Prime every section first. While a section is still mid-reveal it carries
+    // a `transform`, and that transform contains the carousel's overflow — the
+    // document only grows once the transition ends and `transform` goes back to
+    // `none`. Measuring straight after each scroll therefore reported a clean
+    // 390px and made this test silently vacuous, twice. The reveals are one-shot
+    // (`unobserve` after firing), so one unhurried pass down the page settles
+    // every section for good.
+    for (let y = 0; y <= pageHeight; y += 400) {
+      await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
+      await page.waitForTimeout(150);
+    }
+    await page.waitForTimeout(800);
+
+    // Guard the precondition rather than trusting it: if the reveals had not
+    // finished, the sweep below would pass without testing anything.
+    const stillRevealing = await page.evaluate(() =>
+      [...document.querySelectorAll('section')]
+        .filter((s) => getComputedStyle(s).transform !== 'none')
+        .map((s) => s.id || s.className)
+    );
+    expect(stillRevealing, 'sections still mid-reveal — the sweep would be vacuous').toEqual([]);
+
+    for (let y = 0; y <= pageHeight; y += 400) {
+      await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
+
+      const { scrollWidth, clientWidth, panned } = await page.evaluate(() => {
+        // In RTL the overflow sits to the left, so the page pans to a negative
+        // scrollX. Ask the browser to go both ways and see if it moves at all.
+        window.scrollTo({ left: -600, top: window.scrollY, behavior: 'instant' });
+        const left = window.scrollX;
+        window.scrollTo({ left: 600, top: window.scrollY, behavior: 'instant' });
+        const right = window.scrollX;
+        window.scrollTo({ left: 0, top: window.scrollY, behavior: 'instant' });
+        return {
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+          panned: Math.max(Math.abs(left), Math.abs(right)),
+        };
+      });
+
+      expect(scrollWidth, `document overflows horizontally at scrollY=${y}`).toBeLessThanOrEqual(
+        clientWidth
+      );
+      expect(panned, `page pans sideways at scrollY=${y}`).toBeLessThanOrEqual(2);
+    }
+  });
+
+  test('the testimonials carousel still scrolls and snaps', async ({ page }) => {
+    await page.goto('/');
+    const scroller = page.locator('#testimonials [role="group"]').first();
+    await scroller.scrollIntoViewIfNeeded();
+
+    const isCarousel = await scroller.evaluate(
+      (el) => getComputedStyle(el).overflowX !== 'visible'
+    );
+    test.skip(!isCarousel, 'plain grid at this viewport, nothing to scroll');
+
+    const moved = await scroller.evaluate((el) => {
+      el.scrollLeft = -250;
+      const after = el.scrollLeft;
+      el.scrollLeft = 0;
+      return Math.abs(after);
+    });
+    expect(moved, 'carousel did not scroll').toBeGreaterThan(50);
+  });
 });
