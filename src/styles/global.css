@@ -3,15 +3,17 @@
    subsets (Cyrillic, Greek, Vietnamese) that this site can never render. */
 @import '@fontsource-variable/assistant';
 
-/* Frank Ruhl Libre, Hebrew subset only — declared by hand because fontsource
-   ships one stylesheet for all subsets. Headings on this site are Hebrew; the
-   Latin file is 44KB and the H1's comma alone would make LCP wait for it. */
+/* Rubik, Hebrew subset only — declared by hand because fontsource ships one
+   stylesheet covering every subset. Headings here are Hebrew, and the H1's
+   comma alone (a Latin-range character) would otherwise make LCP wait on the
+   Latin file. Latin digits and punctuation in headings fall back to the sans
+   stack, which is indistinguishable at these sizes. */
 @font-face {
-  font-family: 'Frank Ruhl Libre Variable';
+  font-family: 'Rubik Variable';
   font-style: normal;
   font-display: swap;
   font-weight: 300 900;
-  src: url('@fontsource-variable/frank-ruhl-libre/files/frank-ruhl-libre-hebrew-wght-normal.woff2')
+  src: url('@fontsource-variable/rubik/files/rubik-hebrew-wght-normal.woff2')
     format('woff2-variations');
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
 }
@@ -80,9 +82,11 @@
 
   /* Typography — two real voices, not one family aliased twice.
      Assistant: humanist sans, Hebrew + Latin, for UI and running text.
-     Frank Ruhl Libre: the classic Hebrew serif, for headings only. */
+     Rubik: rounded geometric, for headings only. Named --font-heading rather
+     than --font-serif on purpose: the old name would have been a second
+     --color-teal-* style misnomer, since Rubik is a sans. */
   --font-sans: 'Assistant Variable', system-ui, -apple-system, sans-serif;
-  --font-serif: 'Frank Ruhl Libre Variable', 'David Libre', Georgia, serif;
+  --font-heading: 'Rubik Variable', 'Heebo', system-ui, sans-serif;
 
   /* Spacing scale extensions */
   --spacing-18: 4.5rem;
@@ -175,7 +179,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: normal;
     line-height: 1.2;

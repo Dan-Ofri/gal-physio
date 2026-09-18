@@ -4,14 +4,14 @@ import type { Props as SEOProps } from '@components/SEO.astro';
 import '@styles/global.css';
 // Hashed URLs for the two Hebrew subsets, so they can be preloaded. Every
 // visible word here is Hebrew, and the H1 — the LCP element — is set in
-// Frank Ruhl: preloading it means the heading paints final rather than
+// Rubik: preloading it means the heading paints final rather than
 // painting in a fallback and re-firing LCP when the swap lands.
 // Measured (prod build, slow-4G + 4x CPU, median of 5): no preload
-// 1656ms LCP, Assistant only 1504ms, Frank Ruhl only 1148ms, both 1136ms
+// 1656ms LCP, Assistant only 1504ms, heading face only 1148ms, both 1136ms
 // with CLS 0. Worth re-measuring before adding a third — when the Latin
 // serif was still loading, preloading both was the *worst* option.
 import assistantHebrew from '@fontsource-variable/assistant/files/assistant-hebrew-wght-normal.woff2?url';
-import frankRuhlHebrew from '@fontsource-variable/frank-ruhl-libre/files/frank-ruhl-libre-hebrew-wght-normal.woff2?url';
+import headingHebrew from '@fontsource-variable/rubik/files/rubik-hebrew-wght-normal.woff2?url';
 
 export interface Props extends SEOProps {
   bodyClass?: string;
@@ -34,7 +34,7 @@ const { bodyClass, ...seoProps } = Astro.props;
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="preload" href={assistantHebrew} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={frankRuhlHebrew} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={headingHebrew} as="font" type="font/woff2" crossorigin />
 
     <SEO {...seoProps} />
 
