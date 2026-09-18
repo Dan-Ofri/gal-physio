@@ -73,10 +73,6 @@
   --color-whatsapp: #25d366; /* brand fill only — 1.98:1 on white, never for text */
   --color-whatsapp-ink: #0b7c3d; /* WhatsApp text/icon — 5.30:1 on white ✅ */
 
-  /* Rating stars — these carry information, so WCAG 1.4.11 applies and the
-     signature peach (#f48249) only reaches 2.50:1 on the card. */
-  --color-rating: #d4600d; /* 3.71:1 on warm white ✅ */
-
   /* Validation / error */
   --color-error: #dc2626;
 
