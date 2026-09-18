@@ -117,16 +117,27 @@ const testimonials: Testimonial[] = [
                   <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
                 </svg>
                 <div class="relative">
-                  {/* Clamped only from md up, where the three cards share a grid
-                      row and have to agree on a height. Below that they are a
-                      carousel with one card on screen at a time, so the quote
-                      runs at its natural length: the clamp was hiding 165 of
-                      341px of the first review behind a nested vertical scroll
-                      inside a horizontally-snapped card, which is both a thing
-                      readers do not find and a drag that fights the page.
-                      role/tabindex/aria-label are attached by the script below,
-                      and only while the box can actually scroll. */}
-                  <p class="quote-scroll pe-2 text-sm leading-relaxed text-neutral-600 lg:h-32 lg:overflow-y-auto">
+                  {/* Clamped at every width. From lg up the three cards share a
+                      grid row and have to agree on a height; below that the
+                      longest review ran to ~20 lines in a 320px card and the
+                      testimonials section alone took over a screen and a half of
+                      vertical scroll on a phone, which is what the clamp is back
+                      to fix.
+
+                      Two things keep the nested scroll from being the trap it was
+                      the last time this was tried. The mobile box is h-44, not
+                      desktop's h-32 — there is one card on screen, so it can
+                      afford ~8 lines and most of the shorter reviews fit whole
+                      with no scroll at all. And overscroll behaviour is left at
+                      `auto` on purpose: reaching the end of a quote chains
+                      straight into page scroll instead of swallowing the swipe.
+                      Do not add `overscroll-contain` here — it would stop exactly
+                      the chaining that makes this tolerable on a touchscreen.
+
+                      The fade below signals the clipping; role/tabindex/aria-label
+                      are attached by the script, and only while the box can
+                      actually scroll. */}
+                  <p class="quote-scroll h-44 overflow-y-auto pe-2 text-sm leading-relaxed text-neutral-600 lg:h-32">
                     {t.text}
                   </p>
                   <div
@@ -286,5 +297,15 @@ const testimonials: Testimonial[] = [
     sync();
     el.addEventListener('scroll', sync, { passive: true });
     window.addEventListener('resize', sync);
+    // Measure again once the real fonts are in. This module runs at parse time,
+    // when Assistant has not swapped in yet, so the first sync() measures the
+    // fallback face — and the fallback happened to be short enough that all
+    // three quotes "fit" their box. Every card therefore came out with no
+    // tabindex and no role, and then the swap made two of them scrollable with
+    // no keyboard way in: a serious axe `scrollable-region-focusable` failure in
+    // WebKit that is invisible in Chromium, where the swap lands before the
+    // first measurement often enough to hide it. Cheap and idempotent; sync()
+    // sets the same attributes it would have set the first time.
+    if (document.fonts) document.fonts.ready.then(sync);
   });
 </script>
