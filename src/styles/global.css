@@ -193,12 +193,23 @@
     font-weight: 700;
     letter-spacing: normal;
     line-height: 1.2;
+    /* Headings are short enough for the browser to weigh every break at once,
+       which is the only way to stop a two-line heading ending in one word.
+       Measured across 390/768/1024/1280/1440: 24 orphaned last lines on the
+       page before, 7 after, and none of the 7 is a single word. Browsers
+       without it just wrap as they did. */
+    text-wrap: balance;
   }
 
   p,
   li,
   blockquote {
     line-height: 1.7;
+    /* Body copy gets `pretty`, not `balance`: balance evens every line, which
+       is right for a headline and wrong for a paragraph, and browsers cap it
+       at a handful of lines anyway. `pretty` only protects the last line.
+       Short lead paragraphs opt into `text-balance` in the markup instead. */
+    text-wrap: pretty;
   }
 
   img {
