@@ -599,6 +599,15 @@ const links = [
     // Un-inert before focusing: the toggle lives inside the header, which is
     // itself inert while the menu is open.
     backdropEls().forEach((el) => el.removeAttribute('inert'));
+    // …and then force a style flush before focusing. Removing the attribute does
+    // not make the element focusable again until styles are recalculated, so in
+    // WebKit focus() in this same task is accepted and silently dropped: the menu
+    // closes, activeElement falls back to <body>, and a keyboard user loses their
+    // place in the page. It reproduced on roughly one Mobile Safari run in three,
+    // which is why it read as a flaky test rather than the bug it is. Reading a
+    // layout property forces the recalc synchronously, so the focus below lands
+    // on every engine.
+    void toggle.offsetWidth;
     toggle.focus();
   };
 
