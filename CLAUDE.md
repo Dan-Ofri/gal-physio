@@ -56,6 +56,46 @@ The six large PNGs behind the hero, about, quote, contact and service cards look
 
 What did work was deleting 55 MB of exact duplicates and unreferenced renders, which left every shipped byte identical. Full-resolution originals of everything removed are in `../GalOfriPhysiotherapy-source-assets/`, outside the repo.
 
+### Setting both `width` and `height` crops at build time, silently
+
+Passing **both** `width` and `height` to `<Image>` makes Astro's sharp service
+resize with `fit: cover` and `position: centre` (see
+`astro/dist/assets/services/sharp.js`), so the file the browser receives is
+**already cropped to that aspect**. Any `object-position` in the class list then
+has no excess left to position and does nothing. There is no warning: the page
+just quietly shows a centre crop.
+
+This bit twice, because most sources here are tall portraits (1536x2752) pulled
+into square or 4:3 slots:
+
+- `About.astro` asked for `object-top` and got a centre crop that sliced the top
+  of Gal's head off. Fixed with `position="top"`, which is the build-time
+  equivalent of `object-top` (both are 0%).
+- `Hero.astro` asked for `object-[center_18%]`. That one has **no** build-time
+  equivalent - `position` only takes named values (`top`/`centre`/`bottom`, plus
+  `attention`/`entropy`), and 18% is measured against the full image, so the
+  arithmetic only closes if the whole portrait ships. Fixed by dropping `height`
+  so only the width is resized and the browser does the crop, at ~28kB on the
+  largest srcset variant.
+
+Rules of thumb:
+
+- If the class list has an `object-position` other than the default, the shipped
+  image **must not** be pre-cropped to the display aspect - drop `height`.
+- If it is plain `object-center`, `width` + `height` is correct and cheapest,
+  because centre matches sharp's default. That is why Quote, Contact and the
+  service cards are fine as they are.
+- If it is exactly `object-top` or `object-bottom`, keep both and pass the
+  matching `position`.
+- Verify by rendering, not by reading: the dev server applies the same
+  build-time crop, so this cannot be caught in devtools. Screenshot the
+  `<figure>` itself - `screenshots/capture.mjs` anchors to section tops, and on
+  mobile the About and Hero photos sit outside that frame.
+
+The hero and about photos are **placeholders**. When the real ones land, re-check
+this for each: the same `position="top"` that fixes today's About photo will crop
+a differently framed photo just as badly, and the symptom looks identical.
+
 ## Visual QA
 
 `screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#testimonials`, `#contact`, `footer[aria-label]`), and screenshots each at two viewports — **mobile (390×844) first, then desktop (1440×900)** — into `screenshots/mobile-*.png` and `screenshots/desktop-*.png`.
