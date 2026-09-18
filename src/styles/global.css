@@ -421,6 +421,14 @@
     color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
   }
 
+  /* The other two fields answer an error by turning their label red. This one
+     has no visible label at rest - its prompt stands in for one - so without
+     this it was the only field in the form whose error showed as a red
+     underline and a message with nothing red in the field itself. */
+  .form-field textarea.form-input[aria-invalid='true']::placeholder {
+    color: var(--color-error); /* 4.83:1 on white ✅ */
+  }
+
   /* A textarea's label sits on its first line, not centred against a 3-row box. */
   .form-field textarea.form-input ~ .form-float-label {
     top: 1.375rem;
