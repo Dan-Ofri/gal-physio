@@ -9,7 +9,10 @@ import clinicHero from '../assets/hero-ref.png';
   class="relative flex min-h-svh items-center overflow-hidden bg-neutral-50 pt-14 md:pt-6"
 >
   <!-- Subtle warm glow — very low opacity, clinical feel -->
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden select-none">
+  <div
+    aria-hidden="true"
+    class="hero-glow-layer pointer-events-none absolute inset-0 overflow-hidden select-none"
+  >
     <div
       class="absolute -end-40 -top-32 h-[640px] w-[640px] rounded-full bg-teal-100/50 blur-[140px]"
     >
@@ -155,6 +158,29 @@ import clinicHero from '../assets/hero-ref.png';
 </section>
 
 <style>
+  /* The two glow discs are large and heavily blurred, so they wash the whole
+     section a few levels warmer than the flat background that follows it: the
+     hero's last row measured 254,248,245 against About's 253,251,247. Clipping
+     that wash at the section's bottom edge turned the difference into a hard
+     full-width line - a 3/255 step, which is small but sits right where the eye
+     picks up a discontinuity across a wide flat area.
+
+     Clipping only the inline axis lets the wash carry across the boundary and
+     fade out on its own. Measured: step 3 -> 1, and the document stays 390px
+     wide, which is the thing that matters here - the sideways-scroll trap in
+     "Known issues" is one overflow decision away at all times.
+
+     overflow:clip is Safari 16+. Older WebKit ignores this block and keeps the
+     overflow-hidden in the class list, which shows the seam but can never scroll
+     the page sideways. That is the right way round to fail. */
+  @supports (overflow: clip) {
+    #hero,
+    #hero > .hero-glow-layer {
+      overflow: visible;
+      overflow-x: clip;
+    }
+  }
+
   /* Smooth exponential drift, not a bounce — real objects don't ricochet. */
   @keyframes scroll-hint-drift {
     0%,
