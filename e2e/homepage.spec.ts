@@ -54,29 +54,26 @@ test.describe('Homepage', () => {
   test('the document never becomes horizontally scrollable', async ({ page }) => {
     await page.goto('/');
 
-    const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
-
     // Prime every section first. While a section is still mid-reveal it carries
     // a `transform`, and that transform contains the carousel's overflow — the
     // document only grows once the transition ends and `transform` goes back to
-    // `none`. Measuring straight after each scroll therefore reported a clean
-    // 390px and made this test silently vacuous, twice. The reveals are one-shot
-    // (`unobserve` after firing), so one unhurried pass down the page settles
-    // every section for good.
-    for (let y = 0; y <= pageHeight; y += 400) {
-      await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
-      await page.waitForTimeout(150);
+    // `none`. Measuring straight after a scroll therefore reported a clean 390px
+    // and made this test silently vacuous.
+    //
+    // Walk the sections themselves rather than scrolling by pixel offsets: under
+    // parallel workers the stepped scrolls coalesce before the reveal observer
+    // samples them, so a mid-page section could be skipped entirely and never
+    // reveal at all. Waiting on each section's own transform is deterministic.
+    const sections = page.locator('main section');
+    for (let i = 0; i < (await sections.count()); i++) {
+      const section = sections.nth(i);
+      await section.scrollIntoViewIfNeeded();
+      await expect(section, 'section never finished revealing').toHaveCSS('transform', 'none', {
+        timeout: 15_000,
+      });
     }
-    await page.waitForTimeout(800);
 
-    // Guard the precondition rather than trusting it: if the reveals had not
-    // finished, the sweep below would pass without testing anything.
-    const stillRevealing = await page.evaluate(() =>
-      [...document.querySelectorAll('section')]
-        .filter((s) => getComputedStyle(s).transform !== 'none')
-        .map((s) => s.id || s.className)
-    );
-    expect(stillRevealing, 'sections still mid-reveal — the sweep would be vacuous').toEqual([]);
+    const pageHeight = await page.evaluate(() => document.documentElement.scrollHeight);
 
     for (let y = 0; y <= pageHeight; y += 400) {
       await page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' }), y);
