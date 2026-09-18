@@ -21,16 +21,21 @@ const links = [
       aria-label="פתח תפריט ניווט"
     >
       <svg
-        class="h-6 w-6"
+        class="nav-icon h-6 w-6"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
         aria-hidden="true"
       >
-        <line x1="4" y1="7" x2="20" y2="7" stroke-linecap="round"></line>
-        <line x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"></line>
-        <line x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"></line>
+        <g class="nav-icon-top"><line x1="4" y1="7" x2="20" y2="7" stroke-linecap="round"></line></g
+        >
+        <g class="nav-icon-mid"
+          ><line x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"></line></g
+        >
+        <g class="nav-icon-bot"
+          ><line x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"></line></g
+        >
       </svg>
     </button>
 
@@ -139,14 +144,21 @@ const links = [
       aria-label="סגור תפריט ניווט"
     >
       <svg
-        class="h-6 w-6"
-        fill="none"
+        class="nav-icon h-6 w-6"
         viewBox="0 0 24 24"
+        fill="none"
         stroke="currentColor"
         stroke-width="2"
         aria-hidden="true"
       >
-        <path stroke-linecap="round" d="M18 6 6 18M6 6l12 12"></path>
+        <g class="nav-icon-top"><line x1="4" y1="7" x2="20" y2="7" stroke-linecap="round"></line></g
+        >
+        <g class="nav-icon-mid"
+          ><line x1="4" y1="12" x2="20" y2="12" stroke-linecap="round"></line></g
+        >
+        <g class="nav-icon-bot"
+          ><line x1="4" y1="17" x2="20" y2="17" stroke-linecap="round"></line></g
+        >
       </svg>
     </button>
     <a href="/" aria-label={`${SITE.name}: עמוד הבית`} class="flex justify-center">
@@ -374,6 +386,94 @@ const links = [
     transition-delay: 200ms;
   }
 
+  /* ── Hamburger ⇄ X ──
+     One icon, two copies. The header's toggle and the overlay's close button
+     are pixel-aligned twins on two different layers, and the overlay spends
+     300ms fading in over the header — so whatever one of them does, the other
+     has to do at the same time. Animating only the close button would leave
+     the header's three static bars ghosting underneath a morphing X for the
+     whole fade, which is exactly the mush this replaces: before this, the two
+     buttons held unrelated shapes (three lines vs. a two-stroke path) and the
+     "transition" was a plain crossfade, illegible at the halfway point where
+     both sat at 50%.
+
+     Both states are driven by attributes the script already sets — the
+     toggle's aria-expanded and the overlay's data-open — so this is CSS only.
+     No inline script changed, and the CSP hashes in vercel.json still hold.
+
+     Two phases, which is why each bar is wrapped in its own <g>: the line
+     carries the translation and the group carries the rotation, so the two
+     halves of the movement are separate transitionable properties and can be
+     given different delays. Collapsing and rotating at once looks wrong —
+     rendered frame by frame, the bars fan into a pinched '>' for the middle
+     third, because two bars that are still 5px apart but already tilted meet
+     at one end and splay at the other. Collapsing to a single line first and
+     rotating after reads as one object folding, and it is what the X is
+     actually made of. */
+  .nav-icon {
+    /* One number governs the whole morph: each phase lasts this long.
+       Overridable, which is how the morph gets rendered in slow motion. */
+    --nav-icon-phase: 140ms;
+    /* The second phase starts before the first has finished. --ease-drawer is
+       heavily front-loaded — about 93% travelled at 38% of its duration — so
+       back-to-back phases left the collapsed line sitting still for ~85ms
+       before the rotation began, which reads as a stutter rather than as one
+       movement. Starting the rotation at 60% hands off while the collapse is
+       still visibly settling. Total: 224ms, inside the overlay's 300ms fade. */
+    --nav-icon-handoff: calc(var(--nav-icon-phase) * 0.6);
+  }
+  .nav-icon g,
+  .nav-icon line {
+    /* view-box, not the default fill-box: a <line> has a zero-height bounding
+       box, so fill-box would put the origin on the stroke itself and each bar
+       would spin around a different point. view-box pins all three to the
+       viewBox centre, 12 12, which is where the X has to meet. */
+    transform-box: view-box;
+    transform-origin: center;
+  }
+  /* Closing runs the phases in reverse order: unfold, then spread. */
+  .nav-icon g {
+    transition: transform var(--nav-icon-phase) var(--ease-drawer) 0ms;
+  }
+  .nav-icon line {
+    transition:
+      transform var(--nav-icon-phase) var(--ease-drawer) var(--nav-icon-handoff),
+      opacity var(--nav-icon-phase) linear var(--nav-icon-handoff);
+  }
+  /* Opening: collapse, then rotate. */
+  #nav-toggle[aria-expanded='true'] .nav-icon g,
+  #mobile-menu[data-open='true'] .nav-icon g {
+    transition-delay: var(--nav-icon-handoff);
+  }
+  #nav-toggle[aria-expanded='true'] .nav-icon line,
+  #mobile-menu[data-open='true'] .nav-icon line {
+    transition-delay: 0ms;
+  }
+
+  #nav-toggle[aria-expanded='true'] .nav-icon-top,
+  #mobile-menu[data-open='true'] .nav-icon-top {
+    transform: rotate(45deg);
+  }
+  #nav-toggle[aria-expanded='true'] .nav-icon-bot,
+  #mobile-menu[data-open='true'] .nav-icon-bot {
+    transform: rotate(-45deg);
+  }
+  #nav-toggle[aria-expanded='true'] .nav-icon-top line,
+  #mobile-menu[data-open='true'] .nav-icon-top line {
+    transform: translateY(5px);
+  }
+  #nav-toggle[aria-expanded='true'] .nav-icon-bot line,
+  #mobile-menu[data-open='true'] .nav-icon-bot line {
+    transform: translateY(-5px);
+  }
+  /* The middle bar is gone by the time the rotation starts — it leaves during
+     the collapse rather than dissolving behind the closing X. */
+  #nav-toggle[aria-expanded='true'] .nav-icon-mid line,
+  #mobile-menu[data-open='true'] .nav-icon-mid line {
+    opacity: 0;
+    transform: scaleX(0.3);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #site-header,
     #site-header nav a::after {
@@ -387,6 +487,11 @@ const links = [
       transition: none !important;
       opacity: 1 !important;
       transform: none !important;
+    }
+    /* Still becomes an X — it just gets there instantly. */
+    .nav-icon g,
+    .nav-icon line {
+      transition: none !important;
     }
   }
 </style>

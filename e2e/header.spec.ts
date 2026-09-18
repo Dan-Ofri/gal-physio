@@ -216,6 +216,73 @@ test.describe('Header', () => {
     await expect(header).toHaveClass(/is-scrolled/);
   });
 
+  test('both menu icons are the same icon, and both fold into the X', async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, 'the hamburger is display:none on desktop, so it cannot be opened');
+    await page.goto('/');
+
+    // The header's toggle and the overlay's close button sit on two layers,
+    // pixel-aligned, with a 300ms crossfade between them. They only read as
+    // one control if they hold the same shape and move together — which is a
+    // thing an edit to one of them can silently break, since nothing links the
+    // two pieces of markup. They used to hold unrelated shapes (three lines
+    // vs. a two-stroke path) and the crossfade was illegible at the midpoint.
+    const geometry = (sel: string) =>
+      page.evaluate(
+        (s) =>
+          [...document.querySelectorAll(`${s} .nav-icon line`)].map((l) =>
+            ['x1', 'y1', 'x2', 'y2'].map((a) => l.getAttribute(a)).join(',')
+          ),
+        sel
+      );
+
+    const toggleBars = await geometry('#nav-toggle');
+    expect(toggleBars, 'the toggle is not a three-bar icon').toHaveLength(3);
+    expect(await geometry('#nav-close-btn'), 'the two icons have drifted apart').toEqual(
+      toggleBars
+    );
+
+    // Each bar owns a <g> for the rotation and a <line> for the travel, so the
+    // collapse and the turn are separate properties and can be staggered.
+    expect(
+      await page.evaluate(() => document.querySelectorAll('#nav-toggle .nav-icon g > line').length),
+      'the bars are no longer wrapped for the two-phase morph'
+    ).toBe(3);
+
+    // Both must actually reach the X. The transition is switched off first and
+    // the settled value read, rather than polling the animated one: a headless
+    // engine only advances a transition against frames it actually produces,
+    // and when the run is throttled it produces almost none — which shows up
+    // as a transform stuck at its start value for seconds. What is worth
+    // guarding is that the open-state rules still resolve on both icons; the
+    // staggering itself is a design choice, checked by rendering it.
+    await page.addStyleTag({
+      content: '.nav-icon g, .nav-icon line { transition: none !important; }',
+    });
+
+    const rotation = (sel: string) =>
+      page.evaluate((s) => {
+        const el = document.querySelector(`${s} .nav-icon-top`)!;
+        const m = new DOMMatrix(getComputedStyle(el).transform);
+        return Math.round((Math.atan2(m.b, m.a) * 180) / Math.PI);
+      }, sel);
+
+    await page.locator('#nav-toggle').click();
+    await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'true');
+    for (const sel of ['#nav-toggle', '#nav-close-btn']) {
+      expect(await rotation(sel), `${sel} does not fold into the X`).toBe(45);
+    }
+
+    // And back, so the icon is a hamburger again next time it is opened.
+    await page.locator('#nav-close-btn').click();
+    await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'false');
+    for (const sel of ['#nav-toggle', '#nav-close-btn']) {
+      expect(await rotation(sel), `${sel} stayed folded after closing`).toBe(0);
+    }
+  });
+
   test('every header control keeps a visible focus ring', async ({ page, isMobile }) => {
     await page.goto('/');
     const controls = isMobile
