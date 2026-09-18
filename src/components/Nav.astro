@@ -275,13 +275,13 @@ const links = [
     transition: transform 250ms var(--ease-out);
   }
   #site-header nav a[data-current] {
-    color: var(--color-teal-700); /* 5.86:1 on warm white ✅ */
+    color: var(--color-teal-700); /* 7.46:1 on warm white ✅ */
   }
   #site-header nav a[data-current]::after {
     transform: scaleX(1);
   }
   #mobile-menu nav a[data-current] {
-    color: var(--color-teal-700); /* 5.86:1 on warm white ✅ */
+    color: var(--color-teal-700); /* 7.19:1 on teal-50 ✅ */
     background-color: var(--color-teal-50);
   }
 
@@ -386,17 +386,21 @@ const links = [
   // ── Scroll → frosted glass ──
   // rAF-guarded so a fast scroll on a low-end phone queues at most one class
   // write per frame instead of one per scroll event.
+  const onScroll: (() => void)[] = [
+    () => header.classList.toggle('is-scrolled', window.scrollY > 20),
+  ];
   let ticking = false;
-  const syncHeader = () => {
+  const runScroll = () => {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(() => {
-      header.classList.toggle('is-scrolled', window.scrollY > 20);
+      onScroll.forEach((fn) => fn());
       ticking = false;
     });
   };
-  window.addEventListener('scroll', syncHeader, { passive: true });
-  header.classList.toggle('is-scrolled', window.scrollY > 20);
+  window.addEventListener('scroll', runScroll, { passive: true });
+  window.addEventListener('resize', runScroll, { passive: true });
+  onScroll[0]();
 
   // ── Scroll lock ──
   // `overflow: hidden` on <body> does not stop background scrolling in iOS
@@ -469,11 +473,8 @@ const links = [
     .sort((a, b) => a.offsetTop - b.offsetTop);
 
   if (spied.length) {
-    const inBand = new Set<string>();
     let currentId = '';
-
-    const paint = () => {
-      const next = spied.find((el) => inBand.has(el.id))?.id ?? '';
+    const paint = (next: string) => {
       if (next === currentId) return;
       currentId = next;
       sectionLinks.forEach((a) => {
@@ -484,19 +485,20 @@ const links = [
       });
     };
 
-    // A band across the middle of the viewport rather than the whole of it:
-    // with the full viewport, two adjacent sections are almost always both
-    // intersecting and the marker flickers between them.
-    const spy = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) inBand.add(e.target.id);
-          else inBand.delete(e.target.id);
-        });
-        paint();
-      },
-      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
-    );
-    spied.forEach((el) => spy.observe(el));
+    // The last section whose top has crossed a line 45% down the viewport.
+    // An IntersectionObserver over a narrow band was tried first and left
+    // gaps: with a 5%-tall band, the margin between two sections can sit in
+    // it with neither one intersecting, so #testimonials never lit up and
+    // the marker went blank at the foot of the page. Asking "which section
+    // have I scrolled past" always has exactly one answer, and it keeps the
+    // last section marked while the footer is on screen.
+    const pick = () => {
+      const line = window.innerHeight * 0.45;
+      let next = '';
+      for (const el of spied) if (el.getBoundingClientRect().top <= line) next = el.id;
+      paint(next);
+    };
+    onScroll.push(pick);
+    pick();
   }
 </script>
