@@ -92,7 +92,7 @@ const testimonials: Testimonial[] = [
       >
         {
           testimonials.map((t) => (
-            <article
+            <div
               id={`testimonial-card-${t.id}`}
               role="listitem"
               class="group hover:shadow-card-hover flex w-[82%] shrink-0 snap-start flex-col rounded-3xl bg-neutral-50 p-9 ring-1 ring-neutral-100 transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:ring-teal-100 sm:w-[60%] md:w-auto md:shrink"
@@ -156,7 +156,7 @@ const testimonials: Testimonial[] = [
                   {t.service}
                 </span>
               </footer>
-            </article>
+            </div>
           ))
         }
       </div>
