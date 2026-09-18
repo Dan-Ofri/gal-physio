@@ -102,6 +102,7 @@ a differently framed photo just as badly, and the symptom looks identical.
 
 - After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done — check `mobile-*` first per the mobile-first priority above, not just `desktop-*`.
 - `capture.mjs`/`quote_shot.mjs` are tracked source (real tooling); the PNGs they generate (`screenshots/*.png`) are git-ignored output, and excluded from Claude's own context via `.claudeignore`.
+- **The top level of `screenshots/` belongs to `capture.mjs` and nothing else.** Its twelve files are overwritten every run, so that directory never grows. Every other render — variant sweeps, transition frames, candidate comparisons — goes in a subfolder named after what is being investigated (`header/`, `logo/`, `pal/`, `sheet/`, `comps/`). `screenshots/README.md` has the full convention. Ad-hoc measurement scripts are named `.<name>.tmp.mjs` and deleted when done; they had piled up at the top level until Sep 2026.
 - For interactive iteration on a specific section's design (not just a static check), prefer Impeccable's `live` mode over extending `capture.mjs` — it already does real-browser, HMR-backed variant iteration; don't reinvent that in the Puppeteer script.
 
 ## Git conventions
