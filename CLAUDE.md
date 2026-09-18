@@ -46,6 +46,16 @@ npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (c
 - **`frontend-design`** (Anthropic's official `anthropics/skills`) — shorter, principle-based guidance for avoiding templated/generic AI design defaults. Complements Impeccable rather than duplicating it.
 - **Emil Kowalski's animation skills** (`emilkowalski/skills`, 38k★) — installed a curated 7-of-13 subset relevant to this site (not the full pack, to avoid context bloat): `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `emil-design-eng`, `apple-design`, `mobile-native`. Skipped the React/Expo/Swift-specific ones (`ask-sonner`, `animate-expo`, `write-swift`, `pick-ui-library`) since this site has no React. Use `animate` when building new motion, `review-animations`/`improve-animations` to audit what exists (currently `--animate-fade-up`, `--animate-fade-in`, `.reveal-init`/`.reveal-in` in `global.css`), `mobile-native` given this is a mobile-heavy marketing site. Reinstall/update with `npx skills@latest experimental_install` (reads `skills-lock.json`).
 
+## Source images in `src/assets`
+
+The six large PNGs behind the hero, about, quote, contact and service cards look like obvious optimisation targets. They are not — each candidate was measured against what Astro actually ships (`dist/_astro/*.webp`, compared pixel-by-pixel at every generated variant) and every one made things worse:
+
+- **Converting them to WebP degrades the output.** libvips takes a scale-on-load fast path for WebP input, using libwebp's rescaler instead of lanczos3. Forcing a full decode first gives bit-identical output, which proves the cause — but nothing in the source file can opt out of it. Down to 33 dB PSNR on the largest service-card variant. PNG input has no such path.
+- **Downscaling them changes the output and makes the site heavier.** The sources are cropped by `object-cover` to a different aspect than their own, so the source height needed is larger than the widths in `widths={[…]}` imply — naively resizing by width alone silently dropped the largest service-card variant from 1100×825 to 1100×600. Sizing them correctly fixes that, but the extra resampling step still costs 32–43 dB and adds ~8% to shipped bytes.
+- **Recompressing the PNGs losslessly makes them bigger** (9.13 MB vs 8.20 MB for `quote-bg`); they are already better compressed than libvips manages. Note that sharp's `png({ effort: … })` turns on palette quantisation, which is lossy — it looks like a lossless knob and is not.
+
+What did work was deleting 55 MB of exact duplicates and unreferenced renders, which left every shipped byte identical. Full-resolution originals of everything removed are in `../GalOfriPhysiotherapy-source-assets/`, outside the repo.
+
 ## Visual QA
 
 `screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#testimonials`, `#contact`, `footer[aria-label]`), and screenshots each at two viewports — **mobile (390×844) first, then desktop (1440×900)** — into `screenshots/mobile-*.png` and `screenshots/desktop-*.png`.
