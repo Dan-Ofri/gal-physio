@@ -222,28 +222,42 @@ const links = [
      to clip that wash at the header's bottom edge, which read as a hard seam
      across the full width (measured: #FDFBF7 at 70px, #FEF2EA at 72px).
 
-     The glass lives on a ::before rather than on the header itself because
-     `backdrop-filter: none → blur(20px)` does not interpolate — it snaps.
-     Fading a pre-blurred layer's opacity is both smooth and compositor-only. */
+     The blur animates from blur(0px), not from `none`: `none` does not
+     interpolate, so it would snap. Do NOT move this onto a pseudo-element
+     that fades in with `opacity` — an element with opacity forms a backdrop
+     root, and the filter then has nothing behind it to sample, so the glass
+     silently renders as a flat translucent panel. Measured that way round.
+
+     The -webkit- spelling lives in its own @supports rule on purpose. Written
+     as a second declaration in the same rule — which is how this file had it —
+     the build collapses the pair to whichever came last and drops the other,
+     so only -webkit-backdrop-filter shipped and Chrome and Firefox, which need
+     the unprefixed property, rendered no blur at all. Safari below 18 knows
+     only the -webkit- one, so both spellings have to survive minification.
+     Check `grep backdrop-filter dist/_astro/*.css` after touching either. */
   #site-header {
     padding-top: env(safe-area-inset-top, 0px);
+    background-color: transparent;
+    backdrop-filter: blur(0px) saturate(100%);
+    transition:
+      background-color 350ms var(--ease-out),
+      backdrop-filter 350ms var(--ease-out),
+      box-shadow 350ms var(--ease-out);
   }
-  #site-header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1; /* behind the header's own content, inside its stacking context */
+  #site-header.is-scrolled {
     background-color: color-mix(in srgb, var(--color-neutral-50) 82%, transparent);
     backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow:
       inset 0 1px 0 0 rgb(255 255 255 / 0.6),
       0 1px 32px -8px rgb(0 0 0 / 0.08);
-    opacity: 0;
-    transition: opacity 350ms var(--ease-out);
   }
-  #site-header.is-scrolled::before {
-    opacity: 1;
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    #site-header {
+      -webkit-backdrop-filter: blur(0px) saturate(100%);
+    }
+    #site-header.is-scrolled {
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+    }
   }
 
   /* ── Active section ──
@@ -285,7 +299,7 @@ const links = [
     padding-top: env(safe-area-inset-top, 0px);
     background: color-mix(in srgb, var(--color-neutral-50) 98%, transparent);
     backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    /* see the note above #site-header.is-scrolled::before */
 
     visibility: hidden;
     opacity: 0;
@@ -294,6 +308,11 @@ const links = [
       opacity 300ms var(--ease-drawer),
       transform 300ms var(--ease-drawer),
       visibility 0ms linear 300ms;
+  }
+  @supports (-webkit-backdrop-filter: blur(1px)) {
+    #mobile-menu {
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+    }
   }
   #mobile-menu[data-open='true'] {
     visibility: visible;
@@ -332,7 +351,7 @@ const links = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #site-header::before,
+    #site-header,
     #site-header nav a::after {
       transition: none !important;
     }
