@@ -74,7 +74,21 @@ const { bodyClass, ...seoProps } = Astro.props;
               observer.unobserve(e.target);
             }
           }),
-        { threshold: 0.08, rootMargin: '0px 0px -48px 0px' }
+        // Fire while the section is still below the fold, not once it is
+        // already on screen. threshold: 0.08 meant 8% of the section had to be
+        // inside the root before the reveal even started, and on sections this
+        // tall that is a lot: 145px for Services, 109px for About. The -48px
+        // bottom margin delayed it further. Measured over a scroll through the
+        // page, every section spent ~650ms visibly translucent, with up to
+        // 333px of it on screen at opacity 0 - which is what reads as the
+        // section "fading out in front of you".
+        //
+        // threshold 0 plus a root extended 15% of a viewport downwards gives
+        // the 0.65s transition a head start, so the fade is finishing as the
+        // section crosses the fold rather than starting there. 15% and not
+        // more: at 25% the animation always completed off screen, which is the
+        // same as not having one.
+        { threshold: 0, rootMargin: '0px 0px 15% 0px' }
       );
       document.querySelectorAll('section:not(#hero)').forEach((el) => {
         el.classList.add('reveal-init');
