@@ -3,3 +3,8 @@ dist/
 node_modules/
 public/
 plans/
+
+# Throwaway render/measurement scripts (screenshots/README.md). They are
+# deleted when done, so holding them to the repo's format is noise — and a
+# format:check that goes red for one of them is a check you learn to ignore.
+screenshots/**/*.tmp.mjs
