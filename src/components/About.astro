@@ -114,6 +114,7 @@ import galAboutPro from '../assets/About example.png';
             ['פיזיותרפיסטית מוסמכת B.P.T', 'בוגרת החוג לפיזיותרפיה', 'לשעבר מתעמלת תחרותית'].map(
               (item) => (
                 <li class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-700 ring-1 ring-teal-100">
+                  {/* 2.5 at 14px renders 1.46px, on the site's ~1.5px standard; 2 would be a 1.17px hairline. */}
                   <svg
                     class="h-3.5 w-3.5 shrink-0 text-teal-500"
                     viewBox="0 0 24 24"
@@ -150,11 +151,8 @@ import galAboutPro from '../assets/About example.png';
               stroke-width="2"
               aria-hidden="true"
             >
-              <path
-                d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
-                stroke-linecap="round"
-                stroke-linejoin="round"></path>
-              <circle cx="12" cy="7" r="4" stroke-linejoin="round"></circle>
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linejoin="round"></rect>
+              <path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"></path>
             </svg>
             לתיאום ייעוץ ראשוני
           </a>
