@@ -48,7 +48,10 @@ export default defineConfig({
     // (returning immediately), which Playwright's webServer reads as a
     // crash. ASTRO_PREVIEW_BACKGROUND opts out so it stays in the
     // foreground, as webServer requires.
-    command: 'npm run build && npm run preview',
+    // PW_SKIP_BUILD lets a caller that has already run `astro build` (CI does,
+    // as its own step, so a build failure reports as a build failure rather than
+    // as a webServer that exited early) start the preview without rebuilding.
+    command: process.env.PW_SKIP_BUILD ? 'npm run preview' : 'npm run build && npm run preview',
     url: 'http://localhost:4321',
     // Only reuse a server we can verify is the production build. A stray
     // `npm run dev` on this port otherwise hijacks the whole suite: the tests
