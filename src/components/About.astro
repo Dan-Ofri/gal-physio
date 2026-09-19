@@ -3,8 +3,17 @@ import { Image } from 'astro:assets';
 import galAboutPro from '../assets/About example.png';
 ---
 
-<section id="about" aria-labelledby="about-heading" class="section-padding bg-neutral-50">
-  <div class="container-prose">
+<section id="about" aria-labelledby="about-heading" class="section-padding relative bg-neutral-50">
+  <!--
+    relative + content at z-10: the house pattern, see Hero/Services/Quote/Contact.
+    A section left at position:static has its content painted in the in-flow
+    phase, which the whole of every POSITIONED sibling paints on top of - so
+    Hero's blur(120px) disc and Services' blur(64px) disc, neither of which is
+    clipped on the block axis, were landing over this section's text. Being
+    positioned puts this section in the same paint phase as the others, and
+    z-10 on the content lifts it over any halo, which all sit at z-auto.
+  -->
+  <div class="container-prose relative z-10">
     <!--
       Three grid children, not two, because the photo sits in a different place
       at each breakpoint and one element cannot be in two places. On mobile the

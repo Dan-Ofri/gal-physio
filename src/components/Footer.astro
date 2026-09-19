@@ -34,10 +34,11 @@ const socialLinks = [
 
 <footer
   id="site-footer"
-  class="border-t-2 border-teal-200 bg-teal-50 pb-16 lg:pb-0"
+  class="relative border-t-2 border-teal-200 bg-teal-50 pb-16 lg:pb-0"
   aria-label="כותרת תחתונה"
 >
-  <div class="container-prose py-12 md:py-16">
+  <!-- relative + content at z-10, same reason as the sections above it. -->
+  <div class="container-prose relative z-10 py-12 md:py-16">
     <!-- Top grid: brand | nav | contact -->
     <div class="grid gap-10 md:grid-cols-3 md:gap-6">
       <!-- Brand -->
