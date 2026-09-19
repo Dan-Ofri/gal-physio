@@ -543,6 +543,25 @@
   opacity: 1;
   transform: none;
 }
+
+/* The section the URL fragment points at is, by definition, the one the reader
+   was just sent to - so it must never start blanked. A direct load of /#about
+   (or any other anchor) otherwise showed ~530ms of the target fading up from
+   opacity 0 after the browser had already scrolled to it.
+
+   This has to be CSS rather than a measurement in the reveal script: that
+   script runs while the document is still parsing, before the browser applies
+   the fragment scroll, so at that point the target still measures as being
+   below the fold and a getBoundingClientRect() guard never fires. :target is
+   evaluated after the fragment resolves, which is the whole point.
+
+   transition: none matters as much as the opacity - without it the element
+   animates from the .reveal-init values to these, which is the same fade. */
+.reveal-init:target {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
 @media (prefers-reduced-motion: reduce) {
   .reveal-init {
     opacity: 1 !important;
