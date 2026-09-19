@@ -76,3 +76,37 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+
+  # Production deploys are gated on the suite above, not on the push.
+  # `git.deploymentEnabled.main: false` in vercel.json stops Vercel deploying
+  # main on its own, and this job fires the deploy hook once `verify` is green
+  # (`needs:` will not run a job whose dependency failed). Preview deployments
+  # for feature branches are untouched: only main is disabled.
+  #
+  # The alternative, Vercel's Ignored Build Step, does not work here. It runs at
+  # push time, when this workflow has only just been queued, so it would have to
+  # poll for a result from inside a Vercel build — and a build it skips is
+  # canceled outright, with nothing to start it again once CI turns green.
+  deploy:
+    name: Deploy to production
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the Vercel deploy hook
+        env:
+          HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK_URL" ]; then
+            echo "::error::VERCEL_DEPLOY_HOOK_URL is not set. main no longer deploys on push, so nothing would ship. Create a deploy hook for main in the Vercel project's Git settings and add it as a repository secret."
+            exit 1
+          fi
+          # The hook deploys the current tip of main, which is this commit
+          # unless something else landed in the last couple of minutes.
+          status=$(curl -sS -X POST -o hook-response.json -w '%{http_code}' "$HOOK_URL")
+          cat hook-response.json
+          echo
+          if [ "$status" != "200" ] && [ "$status" != "201" ]; then
+            echo "::error::Deploy hook returned HTTP $status"
+            exit 1
+          fi

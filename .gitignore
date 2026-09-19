@@ -51,3 +51,6 @@ pnpm-debug.log*
 .claude/agents/
 .agents/
 screenshots/comps/
+
+.vercel
+.env*
