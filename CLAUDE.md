@@ -115,6 +115,51 @@ a differently framed photo just as badly, and the symptom looks identical.
 
 Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`. Keep that prefix convention. Only commit when explicitly asked.
 
+## CI and deployment (`.github/workflows/ci.yml`)
+
+**Production deploys are gated on CI, and `main` no longer deploys on push.**
+If you push to `main` and nothing appears on Vercel for a few minutes, that is
+the design, not a breakage. `vercel.json` carries
+`git.deploymentEnabled: { "main": false }`, so Vercel's git integration ignores
+pushes to `main`; the workflow's `deploy` job fires the project's
+`ci-production` deploy hook after the `verify` job is green. A red suite means
+no deploy at all. Recover a stuck deploy with Redeploy in the Vercel dashboard,
+or by POSTing the hook. Preview deployments for feature branches are untouched
+— only `main` is disabled.
+
+- The hook URL takes **no auth header**, so anyone holding it can deploy. It
+  lives in the `VERCEL_DEPLOY_HOOK_URL` repository secret and must never be
+  pasted into a file, a commit or a chat. Rotate it from the Vercel project's
+  Git settings if it leaks.
+- Vercel's **Ignored Build Step is the wrong tool here** and was rejected on
+  purpose. It runs at push time, when the workflow has only just been queued,
+  so it would have to poll for a CI result from inside a Vercel build — and a
+  build it skips is canceled outright, with nothing to start it again once CI
+  turns green. Don't "simplify" the deploy job into it.
+- Do not swap `git.deploymentEnabled` for the deprecated `github.enabled`.
+  The latter is documented to stop deploy hooks firing, which would break this
+  chain. `git.deploymentEnabled: false` plus a deploy hook is verified working
+  (observed 2026-09-19: a push to `main` produced no deployment, and the
+  production deployment appeared only after the `deploy` job ran).
+- **The workflow declares a Playwright project per browser; CI has to install
+  every one of them.** `playwright.config.ts` grew a `Desktop Firefox` project
+  in `c90c09d` while CI installed only `chromium webkit`, and every run for the
+  next ten hours failed on `browserType.launch: Executable doesn't exist` —
+  seven tests red, fifty-two green underneath, nobody blocked, so the signal
+  was ignored instead of fixed. If you add a project, add its browser to the
+  install step.
+- CI runs on **every branch push**, not just `main`, so the result arrives
+  before the merge rather than after it. One job, not two: splitting lint/build
+  from e2e made the second job redo checkout and `npm ci` for no benefit.
+- `PW_SKIP_BUILD=1` tells the `webServer` block to run `npm run preview`
+  without rebuilding, because CI already ran `npm run build` as its own step
+  (which keeps a build failure reported as a build failure rather than as a
+  webServer that exited early). Locally, leave it unset.
+- The Playwright browser cache is keyed on the resolved `@playwright/test`
+  version. The cache holds the binaries but **not** the apt packages they link
+  against, so `playwright install-deps` still runs on a cache hit and still
+  costs ~45s. That is why the run is ~2:20 and not ~1:10.
+
 ## Security headers (`vercel.json`)
 
 - `vercel.json` sets a strict `Content-Security-Policy` (plus `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`) applied by Vercel to every response.
