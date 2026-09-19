@@ -56,6 +56,11 @@ jobs:
         env:
           CI: true
           PW_SKIP_BUILD: '1'
+          # The runner points HOME at /github/home, which the container's root
+          # user does not own, and Firefox refuses to launch under a $HOME it
+          # does not own. Playwright prints this exact workaround. Scoped to
+          # this step so the npm cache keeps its usual location.
+          HOME: /root
 
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
