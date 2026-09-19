@@ -22,6 +22,13 @@ jobs:
   verify:
     name: Lint, build, E2E
     runs-on: ubuntu-latest
+    # EXPERIMENT (perf/ci-playwright-container): the browsers and every apt
+    # package they link against are baked into this image, so both the cache
+    # and `install-deps` go away. Whether that wins depends on what pulling a
+    # ~2GB image costs, which is the whole point of the measurement. The tag
+    # must track @playwright/test (1.63.0) exactly.
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
     steps:
       - uses: actions/checkout@v4
 
@@ -38,30 +45,11 @@ jobs:
 
       - run: npm run build
 
-      # Cache the browser binaries, keyed on the Playwright version that
-      # actually resolved — they are tied to it, so a bump must miss the cache.
-      - name: Resolve Playwright version
-        id: playwright
-        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Playwright browsers
-        id: playwright-cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ steps.playwright.outputs.version }}
-
-      # Every browser the config declares a project for. Chromium and WebKit
-      # alone left the four Desktop Firefox header tests failing on every run
-      # since c90c09d, with the rest of the suite green underneath.
-      - name: Install Playwright browsers
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium firefox webkit
-
-      # The cache holds the browsers, not the apt packages they link against.
-      - name: Install Playwright system dependencies
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium firefox webkit
+      # No cache step and no install step: the image already has chromium,
+      # firefox and webkit, and their system dependencies. Guard against the
+      # image drifting away from the declared projects.
+      - name: Confirm the image carries every declared browser
+        run: npx playwright install --dry-run chromium firefox webkit
 
       - name: Run Playwright tests
         run: npm test
