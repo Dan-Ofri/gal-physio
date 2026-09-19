@@ -5,51 +5,23 @@ import galAboutPro from '../assets/About example.png';
 
 <section id="about" aria-labelledby="about-heading" class="section-padding bg-neutral-50">
   <div class="container-prose">
-    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-      <!--
-        Photo: right column in RTL (lg:order-1 = first grid position = right in RTL),
-        bottom on mobile (order-2).
-      -->
-      <div class="order-2 lg:order-1">
-        <div class="relative">
-          <!-- Decorative soft halo -->
-          <div
-            aria-hidden="true"
-            class="absolute -inset-4 rounded-[2.5rem] bg-gradient-to-br from-teal-50/80 to-transparent blur-sm"
-          >
-          </div>
+    <!--
+      Three grid children, not two, because the photo sits in a different place
+      at each breakpoint and one element cannot be in two places. On mobile the
+      natural source order is the reading order: name, face, story, CTA - the
+      face arrives in the first scroll instead of after the CTA. From lg the
+      children are placed explicitly, which rebuilds the two-column layout:
+      photo in column 1 (the right one, since grid columns follow dir="rtl")
+      spanning both rows, heading and body stacked in column 2.
 
-          <figure
-            class="shadow-card relative overflow-hidden rounded-3xl ring-1 ring-neutral-200/60"
-          >
-            <!--
-              position="top": the source is a tall portrait (1536x2752). With
-              both width and height set, Astro's sharp service crops it square
-              at build time with fit: cover / position: centre, which sliced the
-              top of her head off. The object-top class below never got a say -
-              the file it receives is already square. Anchor the build-time crop
-              to the top instead.
-            -->
-            <Image
-              src={galAboutPro}
-              alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
-              width={480}
-              height={480}
-              position="top"
-              widths={[400, 600, 800, 1100]}
-              sizes="(min-width: 1024px) 480px, 90vw"
-              loading="lazy"
-              class="block aspect-square w-full object-cover object-top"
-            />
-          </figure>
-        </div>
-      </div>
-
-      <!--
-        Text: left column in RTL (lg:order-2 = second grid position = left in RTL),
-        top on mobile (order-1).
-      -->
-      <div class="order-1 px-6 text-start lg:order-2 lg:px-0">
+      Row gap is 0 from lg because the heading and the body are one continuous
+      text block there; the body's own mt-5 is the spacing. The mobile px-6 is
+      on the grid rather than on a text column so the photo and the text share
+      the same edge.
+    -->
+    <div class="grid gap-y-8 px-6 lg:grid-cols-2 lg:items-center lg:gap-x-20 lg:gap-y-0 lg:px-0">
+      <!-- Name block: row 1 -->
+      <div class="text-start lg:col-start-2 lg:row-start-1">
         <!-- Eyebrow -->
         <p class="eyebrow text-xs font-semibold tracking-wide text-teal-600">אודות</p>
 
@@ -59,14 +31,52 @@ import galAboutPro from '../assets/About example.png';
           class="font-heading mt-3 text-3xl leading-tight font-bold text-teal-700 md:text-4xl"
         >
           גל עופרי
-          <span class="sr-only">, פיזיותרפיסטית מוסמכת לשיקום ופיזיותרפיה</span>
         </h2>
         <p
           class="heading-rule heading-rule-start mt-2 text-sm font-medium tracking-wide text-teal-700"
         >
-          פיזיותרפיסטית מוסמכת (B.P.T) | מתעמלת תחרותית לשעבר
+          פיזיותרפיסטית מוסמכת (B.P.T){' '}
+          <span
+            aria-hidden="true"
+            class="mx-2 inline-block h-1 w-1 shrink-0 rounded-full bg-teal-500 align-middle"
+          ></span>{' '}
+          מתעמלת תחרותית לשעבר
         </p>
+      </div>
 
+      <!--
+        Photo: row 2 on mobile, the full-height right column from lg.
+
+        position="top": the source is a tall portrait (1536x2752). With both
+        width and height set, Astro's sharp service crops it square at build
+        time with fit: cover / position: centre, which sliced the top of her
+        head off, and object-top never got a say because the file it receives
+        was already square. Anchoring the build crop to the top fixes that.
+
+        The square that ships is still the right thing to ship now that mobile
+        displays 4:3: 1:1 is the taller of the two display aspects, so the file
+        carries excess height for the 4:3 box and object-top has something to
+        work with there. At lg the box is square again and the build-time crop
+        is what is showing.
+      -->
+      <figure
+        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center lg:rounded-3xl"
+      >
+        <Image
+          src={galAboutPro}
+          alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
+          width={480}
+          height={480}
+          position="top"
+          widths={[400, 600, 800, 1100]}
+          sizes="(min-width: 1024px) 496px, calc(100vw - 6rem)"
+          loading="lazy"
+          class="block aspect-[4/3] w-full object-cover object-top lg:aspect-square"
+        />
+      </figure>
+
+      <!-- Story, credentials and CTA: row 3 on mobile, under the name from lg -->
+      <div class="text-start lg:col-start-2 lg:row-start-2">
         <!-- Introduction -->
         <p class="mt-5 leading-[1.85] text-neutral-600">
           נעים מאוד, אני גל עופרי, ו
