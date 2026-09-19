@@ -49,6 +49,19 @@ export default [
     },
   },
   {
-    ignores: ['dist/', '.astro/', 'node_modules/', '.claude/', '.agents/'],
+    // `playwright-report/` and `test-results/` hold generated artifacts —
+    // bundled trace viewer JS, error contexts — that lint as thousands of
+    // browser-global errors. CI never sees them, because lint runs before the
+    // Playwright step creates them; locally they turn `npm run lint` red after
+    // the first test run.
+    ignores: [
+      'dist/',
+      '.astro/',
+      'node_modules/',
+      '.claude/',
+      '.agents/',
+      'playwright-report/',
+      'test-results/',
+    ],
   },
 ];
