@@ -141,13 +141,25 @@ or by POSTing the hook. Preview deployments for feature branches are untouched
   chain. `git.deploymentEnabled: false` plus a deploy hook is verified working
   (observed 2026-09-19: a push to `main` produced no deployment, and the
   production deployment appeared only after the `deploy` job ran).
-- **The workflow declares a Playwright project per browser; CI has to install
+- **Bumping `@playwright/test` means bumping the container tag in the same
+  commit.** The job runs in `mcr.microsoft.com/playwright:v<version>-noble`,
+  pinned by hand, and nothing derives one from the other. If they drift, the
+  installed Playwright asks for a browser revision the image does not carry.
+  The "Confirm the image carries every browser this Playwright wants" step
+  catches it by checking that the paths `playwright install --dry-run` names
+  actually exist — `--dry-run` alone exits 0 either way and cannot catch this.
+- **The workflow declares a Playwright project per browser, and CI has to have
   every one of them.** `playwright.config.ts` grew a `Desktop Firefox` project
   in `c90c09d` while CI installed only `chromium webkit`, and every run for the
   next ten hours failed on `browserType.launch: Executable doesn't exist` —
   seven tests red, fifty-two green underneath, nobody blocked, so the signal
-  was ignored instead of fixed. If you add a project, add its browser to the
-  install step.
+  was ignored instead of fixed. The image now supplies all three, so adding a
+  project is usually free; adding one the image lacks is not.
+- **`HOME` is set to `/root` on the test step, and removing it breaks Firefox
+  only.** The runner points `HOME` at `/github/home`, which the container's
+  root user does not own, and Firefox refuses to launch under a `$HOME` it does
+  not own — the same seven header tests go red, with a different message. It is
+  scoped to that one step so the npm cache keeps its usual location.
 - CI runs on **every branch push**, not just `main`, so the result arrives
   before the merge rather than after it. One job, not two: splitting lint/build
   from e2e made the second job redo checkout and `npm ci` for no benefit.
@@ -155,10 +167,14 @@ or by POSTing the hook. Preview deployments for feature branches are untouched
   without rebuilding, because CI already ran `npm run build` as its own step
   (which keeps a build failure reported as a build failure rather than as a
   webServer that exited early). Locally, leave it unset.
-- The Playwright browser cache is keyed on the resolved `@playwright/test`
-  version. The cache holds the binaries but **not** the apt packages they link
-  against, so `playwright install-deps` still runs on a cache hit and still
-  costs ~45s. That is why the run is ~2:20 and not ~1:10.
+- **Don't reintroduce `actions/cache` for the browsers.** It was there, and the
+  container replaced it. Caching the binaries never helped much: the cache does
+  not hold the apt packages they link against, so `install-deps` still ran on
+  every hit, at 35–59s depending on how the apt mirrors felt that minute. The
+  image carries both, and pulling it costs 24–32s instead. Measured over four
+  cached runs and three container runs: ~2:32 average before, ~2:08 after, and
+  a much narrower spread. Don't expect more than that from this job — most of
+  what is left is the suite itself.
 
 ## Security headers (`vercel.json`)
 

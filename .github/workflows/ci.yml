@@ -47,10 +47,23 @@ jobs:
       - run: npm run build
 
       # No cache step and no install step: the image already has chromium,
-      # firefox and webkit, and their system dependencies. Guard against the
-      # image drifting away from the declared projects.
-      - name: Confirm the image carries every declared browser
-        run: npx playwright install --dry-run chromium firefox webkit
+      # firefox and webkit, and their system dependencies.
+      #
+      # The image tag is pinned by hand to @playwright/test, so the two can
+      # drift apart on a version bump. When they do, the installed Playwright
+      # asks for a browser revision this image does not carry. `--dry-run`
+      # prints the revision it wants and exits 0 whether or not it is there —
+      # it cannot catch this on its own — so check the paths it names.
+      - name: Confirm the image carries every browser this Playwright wants
+        run: |
+          missing=0
+          for dir in $(npx playwright install --dry-run chromium firefox webkit | awk '/Install location:/ {print $3}'); do
+            if [ ! -d "$dir" ]; then
+              echo "::error::$dir is missing. The container image tag in this workflow and @playwright/test in package.json have drifted apart; bump the tag to match."
+              missing=1
+            fi
+          done
+          [ "$missing" -eq 0 ]
 
       - name: Run Playwright tests
         run: npm test
