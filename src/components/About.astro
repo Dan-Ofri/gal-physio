@@ -15,11 +15,13 @@ import galAboutPro from '../assets/About example.png';
       spanning both rows, heading and body stacked in column 2.
 
       Row gap is 0 from lg because the heading and the body are one continuous
-      text block there; the body's own mt-5 is the spacing. The mobile px-6 is
-      on the grid rather than on a text column so the photo and the text share
-      the same edge.
+      text block there; the body's own mt-5 is the spacing.
+
+      No horizontal padding here: container-prose already insets by 1.5rem, and
+      the text column used to add px-6 on top of that, which left this section's
+      copy at 48px while every other section sits at 24px.
     -->
-    <div class="grid gap-y-8 px-6 lg:grid-cols-2 lg:items-center lg:gap-x-20 lg:gap-y-0 lg:px-0">
+    <div class="grid gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-20 lg:gap-y-0">
       <!-- Name block: row 1 -->
       <div class="text-start lg:col-start-2 lg:row-start-1">
         <!-- Eyebrow -->
@@ -69,7 +71,7 @@ import galAboutPro from '../assets/About example.png';
           height={480}
           position="top"
           widths={[400, 600, 800, 1100]}
-          sizes="(min-width: 1024px) 496px, calc(100vw - 6rem)"
+          sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
           class="block aspect-[4/3] w-full object-cover object-top lg:aspect-square"
         />
