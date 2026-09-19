@@ -1,8 +1,15 @@
 # screenshots/
 
 Everything here except the two `.mjs` scripts and this file is generated and
-git-ignored (`screenshots/**/*.png|jpg|svg`). Nothing in here is precious —
+git-ignored (`screenshots/**/*.png|jpg|svg|html`). Nothing in here is precious —
 but it does need to stay findable, which is what this file is for.
+
+**An HTML harness that renders comparisons belongs in its topic folder here,
+never in `public/`.** Every byte of `public/` is served from the CDN at a
+guessable URL whether or not anything links to it, so a local comparison page
+parked there is published to the world — and published broken, since the site's
+CSP pins `font-src` to `'self'` and these pages tend to pull Google Fonts.
+`pal/palettes.html` arrived that way and was moved out.
 
 ## The rule
 
@@ -29,14 +36,14 @@ already fits, reuse it rather than inventing a near-duplicate.
 
 ## Current folders
 
-| folder     | what is in it                                                                                                       |
-| ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| `header/`  | header and mobile-menu work: glass states, menu background candidates, transition frames, sticky-bar opacity sweeps |
-| `logo/`    | logo colourways and the full-vs-compact lockup comparison                                                           |
-| `pal/`     | brand palette exploration (clean, eucalyptus, quiet, sage, slate, teal)                                             |
-| `sheet/`   | early full-page design sheets                                                                                       |
-| `comps/`   | annotated design comps, including their source HTML                                                                 |
-| `archive/` | renders kept only because deleting someone else's work is not mine to do                                            |
+| folder     | what is in it                                                                                                                       |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `header/`  | header and mobile-menu work: glass states, menu background candidates, transition frames, sticky-bar opacity sweeps                 |
+| `logo/`    | logo colourways and the full-vs-compact lockup comparison                                                                           |
+| `pal/`     | brand palette exploration (clean, eucalyptus, quiet, sage, slate, teal), plus `palettes.html`, the page that renders the comparison |
+| `sheet/`   | early full-page design sheets                                                                                                       |
+| `comps/`   | annotated design comps, including their source HTML                                                                                 |
+| `archive/` | renders kept only because deleting someone else's work is not mine to do                                                            |
 
 ## Working scripts
 

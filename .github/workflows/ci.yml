@@ -1,9 +1,10 @@
 name: CI
 
 on:
-  # Every branch, not just main. Merges here go straight to main, which
-  # auto-deploys, so a main-only trigger reported on work that was already
-  # live. Running on the feature branch puts the signal before the merge.
+  # Every branch, not just main. Merges here go straight to main with no PR, so
+  # a main-only trigger reported after the fact, once the work had already
+  # landed. Running on the feature branch puts the signal before the merge.
+  # (Production no longer deploys on that push either — see the deploy job.)
   push:
   pull_request:
     branches: [main]
