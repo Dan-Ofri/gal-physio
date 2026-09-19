@@ -115,6 +115,13 @@ a differently framed photo just as badly, and the symptom looks identical.
 
 Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`. Keep that prefix convention. Only commit when explicitly asked.
 
+**Never `git add -A` or `git add .` — stage the specific files you changed.**
+This working tree routinely holds someone else's half-finished work, and a
+blanket add sweeps it into your commit under your commit message. It happened
+on 2026-09-19: a CI commit swallowed an in-progress palette redesign, five
+source files and `PRODUCT.md`, and had to be unpicked with `reset --soft` and a
+force-push. `git status` before committing, and name the paths.
+
 ## CI and deployment (`.github/workflows/ci.yml`)
 
 **Production deploys are gated on CI, and `main` no longer deploys on push.**

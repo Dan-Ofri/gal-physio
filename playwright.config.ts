@@ -8,7 +8,12 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:4321',
-    trace: 'on-first-retry',
+    // Not `on-first-retry`: that keeps the retry's trace and throws the first
+    // attempt away, and the first attempt is the one that ran under whatever
+    // conditions caused the failure. Chasing the contact-form failure of
+    // 2026-09-19 cost that attempt's network log, which is where the answer
+    // was.
+    trace: 'retain-on-failure',
   },
   // Mobile first: most visitors arrive on a phone (see CLAUDE.md), so the
   // mobile project runs first and is the one to check when something fails.

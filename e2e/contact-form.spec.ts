@@ -51,7 +51,16 @@ test.describe('Contact form', () => {
     await page.locator('#contact-name').fill('דנה כהן');
     await page.locator('#contact-phone').fill('0501234567');
     await page.locator('#contact-message').fill('כאב בגב תחתון כבר שבועיים.');
+
+    // Armed before the click, so this cannot race it. It splits the one way
+    // this test used to fail into two that say different things: no request
+    // at all means the click never reached the submit handler, while a request
+    // with no success panel means the handler mishandled the response. CI hit
+    // the first of those on 2026-09-19 and the trace could only say "#form-
+    // success is still hidden", which fits both.
+    const submitted = page.waitForRequest('https://api.web3forms.com/submit');
     await page.locator('#submit-btn').click();
+    await submitted;
 
     await expect(page.locator('#form-success')).toBeVisible();
     await expect(
@@ -69,7 +78,10 @@ test.describe('Contact form', () => {
     await page.locator('#contact-name').fill('דנה כהן');
     await page.locator('#contact-phone').fill('0501234567');
     await page.locator('#contact-message').fill('כאב בגב תחתון כבר שבועיים.');
+
+    const submitted = page.waitForRequest('https://api.web3forms.com/submit');
     await page.locator('#submit-btn').click();
+    await submitted;
 
     await expect(page.locator('#form-error-state')).toBeVisible();
     await expect(page.locator('#form-error-state')).toBeFocused();
