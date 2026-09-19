@@ -23,51 +23,76 @@
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 @theme {
-  /* ── Brand palette — soft peach-orange (H 20°, warm, healing) ── */
+  /* ── Brand palette — bright tangerine on warm graphite ──
+     Rebuilt Sep 2026 after the practitioner rejected the previous scale as
+     "orange-brown-red". The cause was structural, not a bad hue pick: the
+     600/700/800 steps were carrying running text and the CTA, and any orange
+     dark enough to sit under white text at 4.5:1 is, by definition, rust.
+     So the roles were separated instead of the hue being re-tuned —
+     graphite carries every job that needs contrast, and orange is freed to
+     stay bright. The rule that keeps this working:
 
-  /* Peach Orange scale — primary brand */
-  --color-teal-50: #fff5f1;
-  --color-teal-100: #ffe5d4;
-  --color-teal-200: #ffcaab;
-  --color-teal-300: #ffaa80;
-  --color-teal-400: #f8906a;
-  --color-teal-500: #f48249; /* signature peach-orange — PRIMARY */
-  --color-teal-600: #be4a1e; /* hover / eyebrow text — 4.87:1 on warm white ✅ */
-  --color-teal-700: #8e3812; /* headings — 7.52:1 on warm white ✅ */
-  --color-teal-800: #692608; /* CTA button — 11.2:1 on warm white ✅ WCAG AAA */
-  --color-teal-900: #421505; /* deepest */
+       ORANGE NEVER CARRIES SMALL TEXT, AND NEVER CARRIES MEANING ALONE.
 
-  /* Deep warm-dark — footer / dark sections */
-  --color-navy-700: #2c1a10;
-  --color-navy-800: #1c0e08;
-  --color-navy-900: #100804;
+     --color-teal-500 (#f97316) is 2.70:1 on the page background. That is
+     below 4.5:1 for text and below 3:1 for a UI boundary, so it is a
+     decorative fill only: discs, rules, dots, icon backgrounds. If you need
+     it to say something, use graphite and let the orange sit next to it. */
+
+  /* Tangerine scale — decorative fills 50–500, ink from 600 up.
+     600/700/800 are deliberately NOT orange. They kept their names because
+     ~50 `text-teal-700` call sites across the components and the policy
+     pages point at them, and renaming the scale is the large unrequested
+     diff CLAUDE.md rules out. The scale is a ramp of roles, not of one hue. */
+  --color-teal-50: #fff7ed;
+  --color-teal-100: #ffedd5; /* card tint — 1.10:1 on the page bg, so it always needs a border */
+  --color-teal-200: #fed7aa; /* card / ring borders */
+  --color-teal-300: #fdba74; /* bright accent on dark — 10.37:1 on graphite ✅ */
+  --color-teal-400: #fb923c;
+  --color-teal-500: #f97316; /* signature tangerine — PRIMARY, decorative only (see above) */
+  --color-teal-600: #44403c; /* body-weight ink — 9.90:1 on warm white ✅ (was orange text) */
+  --color-teal-700: #1c1917; /* headings — 16.86:1 on warm white ✅ WCAG AAA */
+  --color-teal-800: #1c1917; /* CTA surface — white on it is 17.49:1 ✅ WCAG AAA */
+  --color-teal-900: #292524; /* CTA hover — white on it is 14.62:1 ✅ */
+
+  /* Deep warm-neutral dark — footer / dark sections.
+     Faintly warm rather than a true neutral on purpose: navy-900 is used at
+     84% over a sunlit clinic photo, and a fully neutral ink there leaves the
+     warm room showing through as flat grey — measurably worse than the brown
+     it replaced. Verified by rendering, not by reading the hex. */
+  --color-navy-700: #292524;
+  --color-navy-800: #1c1917;
+  --color-navy-900: #14100e; /* photo overlays only, at /84 */
 
   /* Contact & quote section dark bg */
-  --color-section-dark: #2d1808;
+  --color-section-dark: #1c1917;
 
-  /* Warm neutrals — site background warm oatmeal */
-  --color-neutral-50: #fdfbf7;
+  /* Warm neutrals — site background warm white */
+  --color-neutral-50: #fffaf5;
   --color-neutral-100: #f7f6f4;
   --color-neutral-200: #e8e3db;
   --color-neutral-300: #d1c9bf;
   --color-neutral-400: #b0a79e;
   --color-neutral-500: #8a8078;
-  --color-neutral-600: #6b6259;
-  --color-neutral-700: #504740;
+  --color-neutral-600: #6b6259; /* secondary text — 5.76:1 on warm white ✅ */
+  --color-neutral-700: #44403c; /* body text — 9.90:1 on warm white ✅ */
   --color-neutral-800: #3a322c;
   --color-neutral-900: #1f1714;
 
   /* Accents */
-  /* Peachy gold — text on the dark photo sections. Lightened from #e8a878,
-     which only cleared 4.5:1 once the overlay reached 75% and left the photo
-     behind it invisible. 4.92:1 against a 70% overlay over the brightest part
-     of a photo, so the overlay can lift and the image can actually read. */
-  --color-accent-gold: #f0bd9a;
-  --color-accent-rose: #f5916b; /* bright peach — decorative */
+  /* Apricot — text and icons on the dark photo sections. 10.37:1 against the
+     graphite overlay, which leaves room for the overlay to lift further
+     without the text falling under AA. */
+  --color-accent-gold: #fdba74;
+  --color-accent-rose: #fb923c; /* bright apricot — decorative */
 
-  /* Gradient endpoints — btn-primary + hero heading */
-  --color-brand-amber: #c44520; /* warm peach-amber — 4.88:1 w/ white ✅ */
-  --color-brand-amber-hover: #9a3510; /* deep hover — 7.24:1 w/ white ✅ */
+  /* Display accent — the one orange allowed to carry type, and only type at
+     24px+/18.66px+bold, where the threshold is 3:1 rather than 4.5:1.
+     3.43:1 on warm white ✅ large text only. Also the focused-field border,
+     where the same 3:1 applies because it is a UI component boundary.
+     Do NOT use it for body copy, links, labels or button text. */
+  --color-brand-amber: #ea580c;
+  --color-brand-amber-hover: #c2410c; /* 4.99:1 on warm white ✅ */
 
   /* Third-party brand */
   --color-whatsapp: #25d366; /* brand fill only — 1.98:1 on white, never for text */
@@ -96,7 +121,7 @@
   --radius-3xl: 2rem;
 
   /* Shadows */
-  --shadow-teal: 0 4px 24px -4px rgb(190 74 30 / 0.25);
+  --shadow-teal: 0 4px 24px -4px rgb(28 25 23 / 0.22);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 8px 24px -4px rgb(0 0 0 / 0.08);
   --shadow-card-hover: 0 2px 6px 0 rgb(0 0 0 / 0.06), 0 16px 40px -8px rgb(0 0 0 / 0.14);
 
@@ -178,7 +203,7 @@
 
   /* Focus styles — always visible, never outline:none */
   :focus-visible {
-    outline: 2px solid var(--color-teal-600);
+    outline: 2px solid var(--color-teal-700); /* graphite ring — 16.86:1 on warm white ✅ */
     outline-offset: 3px;
     border-radius: 3px;
   }
@@ -226,8 +251,8 @@
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
-    background: linear-gradient(to left, var(--color-teal-800), var(--color-brand-amber));
-    color: white;
+    background-color: var(--color-teal-800);
+    color: white; /* 17.49:1 on graphite ✅ WCAG AAA */
     font-weight: 600;
     font-size: 0.9375rem;
     letter-spacing: 0.01em;
@@ -249,8 +274,8 @@
      feedback a touch device should get. */
   @media (hover: hover) {
     .btn-primary:hover {
-      background: linear-gradient(to left, var(--color-teal-900), var(--color-brand-amber-hover));
-      box-shadow: 0 6px 32px -4px rgb(190 74 30 / 0.35);
+      background-color: var(--color-teal-900); /* white on it is 14.62:1 ✅ */
+      box-shadow: 0 6px 32px -4px rgb(28 25 23 / 0.3);
       transform: translateY(-1px);
     }
   }
@@ -291,6 +316,21 @@
 
   .btn-secondary:active {
     transform: translateY(0) scale(0.97);
+  }
+
+  /* Short tangerine rule under a section heading. This carries most of the
+     brand colour on the light sections now that no text is orange — without
+     it the page renders as graphite on cream and the palette disappears.
+     Decorative and aria-hidden by construction (a pseudo-element), so it
+     never has to meet a text contrast threshold. */
+  .heading-rule::after {
+    content: '';
+    display: block;
+    width: 2.75rem;
+    height: 0.25rem;
+    margin: 0.875rem auto 0;
+    border-radius: 9999px;
+    background-color: var(--color-teal-500);
   }
 
   .section-padding {
@@ -347,8 +387,8 @@
 
   .form-input:focus {
     outline: none;
-    border-bottom-color: var(--color-teal-600); /* 4.85:1 on white ✅ */
-    box-shadow: 0 1.5px 0 0 var(--color-teal-600);
+    border-bottom-color: var(--color-brand-amber); /* 3.43:1 on warm white ✅ (3:1 UI boundary) */
+    box-shadow: 0 1.5px 0 0 var(--color-brand-amber);
   }
 
   .form-input[aria-invalid='true']:focus {
@@ -356,7 +396,7 @@
   }
 
   .form-input::placeholder {
-    color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
+    color: var(--color-neutral-600); /* 5.76:1 on warm white ✅ */
   }
 
   .form-input[aria-invalid='true'] {
@@ -379,7 +419,7 @@
     inset-inline-start: 0;
     top: 0.75rem;
     font-size: 1rem;
-    color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
+    color: var(--color-neutral-600); /* 5.76:1 on warm white ✅ */
     pointer-events: none;
     transition:
       top 150ms ease,
@@ -396,13 +436,13 @@
   }
 
   .form-input:focus ~ .form-float-label {
-    color: var(--color-teal-600); /* 4.85:1 on white ✅ */
+    color: var(--color-teal-600); /* 9.90:1 on warm white ✅ */
   }
 
   /* Error wins over focus, and has to come after it to do so. */
   .form-input[aria-invalid='true'] ~ .form-float-label,
   .form-input[aria-invalid='true']:focus ~ .form-float-label {
-    color: var(--color-error); /* 4.83:1 on white ✅ */
+    color: var(--color-error); /* 4.83:1 on warm white ✅ */
   }
 
   /* At rest this field shows its prompt rather than the word "הודעה". The
@@ -418,7 +458,7 @@
      delete the label. Screen readers read "הודעה" throughout, and a speech-input
      user is not being shown one name and having another one registered. */
   .form-field textarea.form-input::placeholder {
-    color: var(--color-neutral-600); /* 5.97:1 on white ✅ */
+    color: var(--color-neutral-600); /* 5.76:1 on warm white ✅ */
   }
 
   /* The other two fields answer an error by turning their label red. This one
@@ -426,7 +466,7 @@
      this it was the only field in the form whose error showed as a red
      underline and a message with nothing red in the field itself. */
   .form-field textarea.form-input[aria-invalid='true']::placeholder {
-    color: var(--color-error); /* 4.83:1 on white ✅ */
+    color: var(--color-error); /* 4.83:1 on warm white ✅ */
   }
 
   /* A textarea's label sits on its first line, not centred against a 3-row box. */

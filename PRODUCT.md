@@ -34,7 +34,7 @@ Static site (Astro), no backend/CMS — content updates require code changes. No
 
 ## Brand Commitments
 
-Name: גל עופרי פיזיותרפיה (Gal Ofri Physiotherapy). Language: Hebrew only, RTL. Voice: warm, personal, professional but not clinically cold — first-person ("נעים מאוד, אני גל..."). Existing warm "peach-orange" visual identity is established (`src/styles/global.css` design tokens) — not to be reopened without an explicit request.
+Name: גל עופרי פיזיותרפיה (Gal Ofri Physiotherapy). Language: Hebrew only, RTL. Voice: warm, personal, professional but not clinically cold — first-person ("נעים מאוד, אני גל..."). Visual identity: **bright tangerine on warm graphite** (`src/styles/global.css` design tokens). Rebuilt Sep 2026 at the practitioner's request — she rejected the previous peach-orange scale as "orange-brown-red". The cause was structural: the deep steps of the orange scale were carrying headings, links and the CTA, and an orange dark enough to sit under white text at 4.5:1 is necessarily rust. The fix separated the roles rather than re-tuning the hue — graphite (`#1c1917`) carries every job that needs contrast, and orange stays bright because it no longer has to be readable. The load-bearing rule is **orange never carries small text and never carries meaning alone**; breaking it walks the identity straight back to the brown she rejected. Not to be reopened without an explicit request.
 
 ## Evidence on Hand
 
