@@ -91,6 +91,22 @@ const { bodyClass, ...seoProps } = Astro.props;
         { threshold: 0, rootMargin: '0px 0px 15% 0px' }
       );
       document.querySelectorAll('section:not(#hero)').forEach((el) => {
+        // Never blank a section that is already on screen. The hero is sized
+        // with min-h-svh, which on iOS is the height WITH the browser toolbar
+        // showing. Enter the page with the toolbar already collapsed - a back
+        // navigation, or a second visit - and the visible area is taller than
+        // the hero, so About starts above the fold. It was then set to opacity
+        // 0 and faded up in front of the reader: measured at a 984px viewport
+        // against an 844px hero, 140px of it on screen at opacity 0. That is
+        // the masking reported from a real iPhone, and no amount of trigger
+        // tuning reaches it, because the section is visible before the first
+        // scroll event exists.
+        //
+        // This deliberately does not special-case #about. About is simply the
+        // section that sits against the hero; any section that ends up above
+        // the fold has the same problem and the same answer.
+        const box = el.getBoundingClientRect();
+        if (box.top < window.innerHeight && box.bottom > 0) return;
         el.classList.add('reveal-init');
         observer.observe(el);
       });
