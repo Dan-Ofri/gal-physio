@@ -2,9 +2,10 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-import orthoImg from '../assets/service-ortho-ref.png';
-import sportsImg from '../assets/service-sports.jpeg';
-import preventImg from '../assets/service-preventive-ref.png';
+// Oct 2026 shoot, pre-edit: 104A7506, 104A7714, 104A7864.
+import orthoImg from '../assets/photos/service-ortho.jpg';
+import sportsImg from '../assets/photos/service-sports.jpg';
+import preventImg from '../assets/photos/service-preventive.jpg';
 
 interface Service {
   id: string;
@@ -19,7 +20,7 @@ const services: Service[] = [
   {
     id: 'ortho-rehab',
     image: orthoImg,
-    imageAlt: 'פיזיותרפיסטית מבצעת טיפול ידני בגב, שיקום אורתופדי',
+    imageAlt: 'גל עופרי מבצעת טיפול ידני בכתף ובשכמה של מטופלת השוכבת על מיטת טיפולים',
     imagePosition: 'object-center',
     title: 'שיקום אורתופדי',
     description:
@@ -28,7 +29,7 @@ const services: Service[] = [
   {
     id: 'sports-rehab',
     image: sportsImg,
-    imageAlt: 'גל עופרי מטפלת בספורטאי צעיר בחדר טיפולים, שיקום ספורטאים ושיפור ביצועים',
+    imageAlt: 'גל עופרי מדריכה ספורטאי צעיר בתרגיל סקוואט עם גומיית התנגדות',
     imagePosition: 'object-center',
     title: 'שיקום ספורטאים ושיפור ביצועים',
     description:
@@ -37,8 +38,9 @@ const services: Service[] = [
   {
     id: 'preventive',
     image: preventImg,
-    imageAlt: 'פיזיותרפיסטית מבצעת הערכת יציבה לפציינטית עומדת, פיזיותרפיה מניעתית',
-    imagePosition: 'object-center',
+    imageAlt: 'גל עופרי מלווה מטופלת בתרגיל חיזוק כתפיים עם גומיית התנגדות',
+    // Faces sit high in this portrait; centre cropped the patient's head.
+    imagePosition: 'object-[center_30%]',
     title: 'פיזיותרפיה מניעתית ותחזוקת הגוף',
     description:
       'שיפור היציבה, איזון עומסים יומיומיים ובניית חוסן גופני ארוך\u00A0טווח באמצעות\u00A0תרגול מותאם אישית לצרכים שלך.',
@@ -91,13 +93,14 @@ const services: Service[] = [
             role="listitem"
             class="group flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-neutral-200 transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_4px_20px_-4px_rgb(0_0_0_/_0.08)] hover:ring-teal-200/70"
           >
-            {/* Photo */}
+            {/* Photo. An off-centre imagePosition ships without height, so the build
+              does not pre-crop it and the class still has excess to position. */}
             <div class="overflow-hidden">
               <Image
                 src={service.image}
                 alt={service.imageAlt}
                 width={480}
-                height={360}
+                height={service.imagePosition === 'object-center' ? 360 : undefined}
                 widths={[400, 600, 800, 1100]}
                 sizes="(min-width: 768px) 33vw, 90vw"
                 loading="lazy"
