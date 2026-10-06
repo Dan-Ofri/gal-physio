@@ -66,10 +66,12 @@ import aboutPhoto from '../assets/photos/about.jpg';
         Oct 2026 shoot, pre-edit). Setting both width and height makes Astro's
         sharp service crop it at build time with fit: cover / position: centre,
         and the object-position below would then have nothing left to position.
-        25% from the top is not one of the named build-time positions, so the
-        whole portrait ships and the browser does the crop - it keeps her face
-        and shoulders in both the 4:3 mobile box and the square lg box, with the
-        window above her. Re-check the 25% when the photographer's edit lands.
+        The framing is not a named build-time position, so the whole portrait
+        ships and the browser does the crop, with a different position per box:
+        66% in the short 4:3 mobile box keeps room above her head and brings in
+        the ball, where 75% already cuts her hair; 85% in the square lg box shows
+        the ball, her hand on the bed and only a strip of window. Re-check both
+        when the photographer's edit lands.
       -->
       <figure
         class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center lg:rounded-3xl"
@@ -81,7 +83,7 @@ import aboutPhoto from '../assets/photos/about.jpg';
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-[4/3] w-full object-cover object-[center_25%] lg:aspect-square"
+          class="block aspect-[4/3] w-full object-cover object-[center_66%] lg:aspect-square lg:object-[center_85%]"
         />
       </figure>
 
