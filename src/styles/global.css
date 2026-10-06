@@ -52,8 +52,8 @@
   --color-teal-500: #f97316; /* signature tangerine — PRIMARY, decorative only (see above) */
   --color-teal-600: #44403c; /* body-weight ink — 9.90:1 on warm white ✅ (was orange text) */
   --color-teal-700: #1c1917; /* headings — 16.86:1 on warm white ✅ WCAG AAA */
-  --color-teal-800: #1c1917; /* CTA surface — white on it is 17.49:1 ✅ WCAG AAA */
-  --color-teal-900: #292524; /* CTA hover — white on it is 14.62:1 ✅ */
+  --color-teal-800: #1c1917; /* skip-link surface, link hover — white on it is 17.49:1 ✅ WCAG AAA */
+  --color-teal-900: #292524; /* white on it is 14.62:1 ✅ */
 
   /* Deep warm-neutral dark — footer / dark sections.
      Faintly warm rather than a true neutral on purpose: navy-900 is used at
@@ -245,22 +245,27 @@
 
 /* ─── Components ─────────────────────────────────────────────────────────── */
 @layer components {
+  /* Apricot fill, graphite label. Was a graphite pill with a tangerine glow
+     until Oct 2026; it was the heaviest mass on the phone screen and read as
+     shouting over the headline. The label stays graphite, so orange is still
+     only a fill here and the rule above holds. No resting shadow on purpose:
+     the glow was half of what made it loud. */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.75rem 2rem;
-    background-color: var(--color-teal-800);
-    color: white; /* 17.49:1 on graphite ✅ WCAG AAA */
+    background-color: var(--color-teal-300);
+    color: var(--color-teal-700); /* 10.37:1 on apricot ✅ WCAG AAA */
     font-weight: 600;
     font-size: 0.9375rem;
     letter-spacing: 0.01em;
     border-radius: 9999px;
     transition:
+      background-color 200ms ease,
       box-shadow 200ms ease,
       transform 150ms ease;
-    box-shadow: var(--shadow-teal);
     text-decoration: none;
   }
 
@@ -274,8 +279,8 @@
      feedback a touch device should get. */
   @media (hover: hover) {
     .btn-primary:hover {
-      background-color: var(--color-teal-900); /* white on it is 14.62:1 ✅ */
-      box-shadow: 0 6px 32px -4px rgb(249 115 22 / 0.38);
+      background-color: var(--color-teal-400); /* graphite on it is 7.73:1 ✅ */
+      box-shadow: 0 6px 20px -6px rgb(249 115 22 / 0.35);
       transform: translateY(-1px);
     }
   }
