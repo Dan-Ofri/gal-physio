@@ -29,12 +29,14 @@ export const SITE = {
     longitude: 34.7818,
   },
 
-  // Single source: the JSON-LD, the contact panel and the FAQ all derive from
-  // this. `days` feeds Schema.org, `daysHebrew` is what visitors read.
+  // Single source: the JSON-LD, the contact panel, the FAQ and the
+  // cancellation policy all derive from this (the last two through
+  // `OPENING_HOURS_TEXT` below). `days` feeds Schema.org, `daysHebrew` is what
+  // visitors read.
   openingHours: [
     {
-      days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-      daysHebrew: 'ימים ב׳–ה׳',
+      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      daysHebrew: 'ימים א׳–ה׳',
       opens: '08:00',
       closes: '19:00',
     },
@@ -61,3 +63,8 @@ export const SITE = {
     imageHeight: 630,
   },
 } as const;
+
+/** The opening hours as one line of running text, e.g. for an FAQ answer. */
+export const OPENING_HOURS_TEXT = SITE.openingHours
+  .map((slot) => `${slot.daysHebrew} ${slot.opens}–${slot.closes}`)
+  .join(', ');
