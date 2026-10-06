@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import galAboutPro from '../assets/About example.png';
+import aboutPhoto from '../assets/photos/about.jpg';
 ---
 
 <section id="about" aria-labelledby="about-heading" class="section-padding relative bg-neutral-50">
@@ -62,31 +62,26 @@ import galAboutPro from '../assets/About example.png';
       <!--
         Photo: row 2 on mobile, the full-height right column from lg.
 
-        position="top": the source is a tall portrait (1536x2752). With both
-        width and height set, Astro's sharp service crops it square at build
-        time with fit: cover / position: centre, which sliced the top of her
-        head off, and object-top never got a say because the file it receives
-        was already square. Anchoring the build crop to the top fixes that.
-
-        The square that ships is still the right thing to ship now that mobile
-        displays 4:3: 1:1 is the taller of the two display aspects, so the file
-        carries excess height for the 4:3 box and object-top has something to
-        work with there. At lg the box is square again and the build-time crop
-        is what is showing.
+        No height on purpose: the source is a tall portrait (104A8009 from the
+        Oct 2026 shoot, pre-edit). Setting both width and height makes Astro's
+        sharp service crop it at build time with fit: cover / position: centre,
+        and the object-position below would then have nothing left to position.
+        25% from the top is not one of the named build-time positions, so the
+        whole portrait ships and the browser does the crop - it keeps her face
+        and shoulders in both the 4:3 mobile box and the square lg box, with the
+        window above her. Re-check the 25% when the photographer's edit lands.
       -->
       <figure
         class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center lg:rounded-3xl"
       >
         <Image
-          src={galAboutPro}
-          alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת, תמונת ייחוס"
+          src={aboutPhoto}
+          alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת"
           width={480}
-          height={480}
-          position="top"
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-[4/3] w-full object-cover object-top lg:aspect-square"
+          class="block aspect-[4/3] w-full object-cover object-[center_25%] lg:aspect-square"
         />
       </figure>
 

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import clinicHero from '../assets/hero-ref.png';
+import heroPhoto from '../assets/photos/hero.jpg';
 ---
 
 <section
@@ -102,26 +102,27 @@ import clinicHero from '../assets/hero-ref.png';
           <!--
             No height on purpose. Setting both width and height makes Astro's
             sharp service crop to that aspect at build time with fit: cover /
-            position: centre, which left the object-[center_18%] below nothing
-            to position - the shipped file was already square, so the framing
-            was silently centred and her hair grazed the top edge.
+            position: centre, which leaves the object-[center_55%] below nothing
+            to position - the shipped file is already cropped, so the framing is
+            silently centred.
 
             Width only means the full portrait ships and the browser does the
-            18% crop, as the class asks. It costs ~28kB on the largest variant,
-            which is the deliberate trade while this photo is a placeholder:
-            the framing survives swapping in a photo of any dimensions. Once
-            the real photo is final and cropped to the display aspect, restore
-            height={480} here to get those bytes back.
+            55% crop, as the class asks. 55% keeps her face, the patient's
+            raised hand and the ball shelf in both the 4:3 mobile box and the
+            square desktop one. The photo is from the Oct 2026 shoot (104A7375)
+            but not yet the photographer's edit; the framing survives swapping
+            in the edited file at any dimensions. Once it is final, re-check
+            the 55% against it.
           -->
           <Image
-            src={clinicHero}
-            alt="פיזיותרפיסטית עומדת בקליניקה מקצועית ומוארת, תמונת ייחוס עד לצילום של גל עופרי"
+            src={heroPhoto}
+            alt="גל עופרי מחייכת למצלמה בזמן שהיא מלווה מטופלת בתרגיל הרמת יד"
             width={480}
             widths={[400, 600, 800, 1100]}
             sizes="(min-width: 1024px) 480px, min(90vw, 384px)"
             loading="eager"
             fetchpriority="high"
-            class="block aspect-[4/3] w-full object-cover object-[center_18%] lg:aspect-square"
+            class="block aspect-[4/3] w-full object-cover object-[center_55%] lg:aspect-square"
           />
         </figure>
       </div>
