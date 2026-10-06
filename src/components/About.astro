@@ -115,36 +115,13 @@ import aboutPhoto from '../assets/photos/about.jpg';
         </p>
 
         <!--
-          Credentials. These used to be sr-only: on a healthcare page the
-          qualifications are the trust signal, not metadata, so they are visible
-          now and still read as a list.
+          No credentials list here on purpose (removed Oct 2026). Its badges
+          only repeated what this section already says: B.P.T and the
+          gymnastics background sit under the name, and "graduate of the
+          physiotherapy department" is what B.P.T means. Bring one back only
+          with qualifications the section does not already state (courses,
+          certificates, licence number), confirmed by Gal.
         -->
-        <ul class="mt-7 flex flex-wrap gap-2" aria-label="כישורים ורקע מקצועי של גל עופרי">
-          {
-            ['פיזיותרפיסטית מוסמכת B.P.T', 'בוגרת החוג לפיזיותרפיה', 'לשעבר מתעמלת תחרותית'].map(
-              (item) => (
-                <li class="inline-flex items-center gap-1.5 rounded-full bg-teal-50 px-3 py-1.5 text-xs font-medium text-teal-700 ring-1 ring-teal-100">
-                  {/* 2.5 at 14px renders 1.46px, on the site's ~1.5px standard; 2 would be a 1.17px hairline. */}
-                  <svg
-                    class="h-3.5 w-3.5 shrink-0 text-teal-500"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    aria-hidden="true"
-                  >
-                    <polyline
-                      points="20 6 9 17 4 12"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  {item}
-                </li>
-              )
-            )
-          }
-        </ul>
 
         <!-- CTA -->
         <div class="mt-8 flex justify-start">

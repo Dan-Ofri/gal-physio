@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Nav from '@components/Nav.astro';
 import Footer from '@components/Footer.astro';
-import { SITE } from '@data/site';
+import { SITE, OPENING_HOURS_TEXT } from '@data/site';
 ---
 
 <BaseLayout
@@ -186,7 +186,7 @@ import { SITE } from '@data/site';
             </li>
           </ul>
           <p class="mt-4 text-sm text-neutral-600">
-            זמינה לשיחות ומסרים בשעות פעילות הקליניקה: ימים ב׳–ה׳ 08:00–19:00, יום ו׳ 08:00–14:00.
+            זמינה לשיחות ומסרים בשעות פעילות הקליניקה: {OPENING_HOURS_TEXT}.
           </p>
         </section>
 
