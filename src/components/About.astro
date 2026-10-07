@@ -30,16 +30,19 @@ import aboutPhoto from '@assets/photos/about.jpg';
       into two columns (column 1 is the right one, since grid columns follow
       dir="rtl"):
 
-        column 1: photo (rows 1-2, bottom-aligned), quote (row 3)
-        column 2: name (row 1), story (row 2), CTA (row 3)
+        column 1: photo (rows 1-2, filling them), quote (row 3)
+        column 2: name (row 1), story (row 2), CTA (row 3, bottom-aligned)
 
       The quote moved under the photo in Oct 2026 (Dan's call). In the text
       column it made that column ~730px tall beside a 496px photo, leaving
       ~117px of empty cream above and below the picture at 1440. Under the
-      photo the two columns come out within ~60px of each other, and her
-      words sit under her face. The photo is bottom-aligned so the two stay
-      one unit at every width; centred, they drift apart wherever the story
-      runs taller than the photo (1024px).
+      photo her words sit under her face.
+
+      The two columns start and end on the same lines at every width: the
+      photo stretches over exactly the rows the name and story occupy, and
+      the CTA sits at the bottom of row 3, level with the end of the quote.
+      A fixed square photo could only match the text at one width; it ran
+      48px long at 1440 and 173px short at 1024.
 
       Row gap is 0 from lg because the heading and the body are one continuous
       text block there; the body's own mt-5 is the spacing, and the quote and
@@ -86,15 +89,23 @@ import aboutPhoto from '@assets/photos/about.jpg';
         sharp service crop it at build time with fit: cover / position: centre,
         and the object-position below would then have nothing left to position.
         The framing is not a named build-time position, so the whole portrait
-        ships and the browser does the crop. The box is square at every width,
-        at 85%: the ball, her hand on the bed and only a strip of window. Mobile
+        ships and the browser does the crop. The box is square below lg, at
+        85%: the ball, her hand on the bed and only a strip of window. Mobile
         was 4:3 until Oct 2026, and a box that short could not hold her head and
         the ball together (66% was the best it managed); square costs about 85px
         of scroll at 390 and shows the whole scene. Re-check the 85% when the
         photographer's edit lands.
+
+        From lg the box is as tall as the name and story beside it (about
+        496x516 at 1440, 432x605 at 1024), so the image is absolutely
+        positioned: in flow, its natural 2:3 height would size the rows
+        instead of the text. The min-height only guards against a story so
+        short the photo would turn into a strip. The box is always less tall,
+        relative to its width, than the 2:3 source, so the image still scales
+        by width and the sizes attribute stays right.
       -->
       <figure
-        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-end lg:rounded-3xl"
+        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:relative lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:min-h-[26rem] lg:self-stretch lg:rounded-3xl"
       >
         <Image
           src={aboutPhoto}
@@ -103,7 +114,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-square w-full object-cover object-[center_85%]"
+          class="block aspect-square w-full object-cover object-[center_85%] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
         />
       </figure>
 
@@ -187,7 +198,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
       </blockquote>
 
       <!-- CTA: row 5 on mobile, under the story from lg -->
-      <div class="flex justify-start lg:col-start-2 lg:row-start-3 lg:mt-8 lg:self-start">
+      <div class="flex justify-start lg:col-start-2 lg:row-start-3 lg:mt-8 lg:self-end">
         <a
           href="#contact"
           class="btn-primary"
