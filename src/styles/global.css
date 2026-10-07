@@ -58,13 +58,13 @@
   --color-teal-900: #292524; /* white on it is 14.62:1 ✅ */
 
   /* Deep warm-neutral dark — footer / dark sections.
-     Faintly warm rather than a true neutral on purpose: navy-900 is used at
-     84% over a sunlit clinic photo, and a fully neutral ink there leaves the
-     warm room showing through as flat grey — measurably worse than the brown
-     it replaced. Verified by rendering, not by reading the hex. */
+     Faintly warm rather than a true neutral on purpose: navy-900 overlays a
+     sunlit clinic photo, and a fully neutral ink there leaves the warm room
+     showing through as flat grey — measurably worse than the brown it
+     replaced. Verified by rendering, not by reading the hex. */
   --color-navy-700: #292524;
   --color-navy-800: #1c1917;
-  --color-navy-900: #14100e; /* photo overlays only, at /84 */
+  --color-navy-900: #14100e; /* photo overlays only: /64 in Quote, /76 in Contact (each says why) */
 
   /* Contact & quote section dark bg */
   --color-section-dark: #1c1917;

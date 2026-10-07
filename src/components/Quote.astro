@@ -22,8 +22,10 @@ import quoteBg from '@assets/photos/quote-bg.jpg';
       loading="lazy"
       class="h-full w-full object-cover object-center"
     />
-    <!-- Dark brand overlay -->
-    <div class="bg-navy-900/84 absolute inset-0"></div>
+    <!-- Dark brand overlay. 64%, lighter than Contact's 76%, because this text
+         is all display size (3:1) and the photo of Gal is the point here. The
+         quote measures 5.73:1 against the brightest pixel behind it. -->
+    <div class="bg-navy-900/64 absolute inset-0"></div>
   </div>
 
   <div class="container-prose relative z-10">
