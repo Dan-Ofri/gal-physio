@@ -44,6 +44,11 @@ jobs:
 
       - run: npm run format:check
 
+      # Orphaned assets, unreferenced public/ files, finished plans, doc
+      # passages about files that are gone. None of these break the site, which
+      # is why they used to pile up unnoticed; failing here is what stops that.
+      - run: npm run check:tidy
+
       - run: npm run build
 
       # No cache step and no install step: the image already has chromium,

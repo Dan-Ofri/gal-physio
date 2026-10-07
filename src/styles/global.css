@@ -18,8 +18,10 @@
   unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
 }
 
-/* Tailwind v4 entry point */
-@import 'tailwindcss';
+/* Tailwind v4 entry point. `source('..')` limits class detection to src/.
+   Without it Tailwind scans every non-ignored file in the repo, so a word in
+   CLAUDE.md or a maintenance script ("lowercase", "grow") ships as a CSS rule. */
+@import 'tailwindcss' source('..');
 
 /* ─── Design Tokens ──────────────────────────────────────────────────────── */
 @theme {

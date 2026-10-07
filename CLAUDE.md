@@ -1,6 +1,6 @@
 # Gal Ofri Physiotherapy — CLAUDE.md
 
-Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Astro 5 + Tailwind v4 + TypeScript, fully Hebrew, RTL. Static, no backend, no CMS — content lives in code.
+Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Astro 7 + Tailwind v4 + TypeScript, fully Hebrew, RTL. Static, no backend, no CMS — content lives in code.
 
 ## Mobile-first priority
 
@@ -8,11 +8,12 @@ Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Ast
 
 ## Stack & structure
 
-- **Astro 5** (`.astro` components/pages), **Tailwind v4** via `@tailwindcss/vite` (config lives in `src/styles/global.css` under `@theme`, not a `tailwind.config.js`), strict TypeScript.
-- Path aliases (`tsconfig.json`): `@components/*`, `@layouts/*`, `@styles/*`, `@data/*`. Use these, not relative `../../` chains.
+- **Astro 7** (`.astro` components/pages), **Tailwind v4** via `@tailwindcss/vite` (config lives in `src/styles/global.css` under `@theme`, not a `tailwind.config.js`), strict TypeScript.
+- Path aliases (`tsconfig.json`): `@components/*`, `@layouts/*`, `@styles/*`, `@data/*`, `@assets/*`. Use these, not relative `../` chains; `src/` has none left.
 - `src/data/site.ts` is the single source of truth for site-wide facts — phone, WhatsApp link, address, opening hours, socials, OG image. Never hardcode these values in a component; import from `@data/site`.
 - `src/components/` — one component per section (`Hero`, `About`, `Services`, `Quote`, `Testimonials`, `Contact`, `Nav`, `Footer`, `SEO`). `src/layouts/BaseLayout.astro` wraps every page and owns the `<html lang="he" dir="rtl">`, skip-link, and scroll-reveal `IntersectionObserver` script.
-- `src/pages/` — `index.astro` plus standalone legal pages (`privacy`, `accessibility`, `cancellation`).
+- `src/pages/` — `index.astro` plus standalone pages: `faq` and the legal ones (`privacy`, `accessibility`, `cancellation`).
+- `scripts/` — repo maintenance, not site code: `check-tidy.mjs` (the CI check behind "Housekeeping" below), `prune-screenshots.mjs`, and `screenshots-layout.mjs`, the one definition of what `screenshots/capture.mjs` writes.
 
 ## Design system (`src/styles/global.css`)
 
@@ -46,7 +47,7 @@ Two families on purpose, and an audit keeps proposing to collapse them into one.
 - This is a healthcare-adjacent business (physiotherapy). Keep medical claims modest and accurate — no diagnostic or treatment-outcome guarantees in marketing copy.
 - **Never select the testimonial cards, or anything else the scripts drive, by tag name.** `Testimonials.astro`'s dot observer used `article[id^="testimonial-card-"]`; the cards became `<div role="listitem">` when the list roles were fixed, the selector went quiet rather than throwing, and the pagination dots sat grey and equal-width at every scroll position for anyone who did not look. Key on the id or a class the markup owns. Guarded now by "the pagination dot follows the card on screen" in `e2e/homepage.spec.ts`.
 
-- `jsx-a11y` lint rules run on `.astro` files — accessibility is enforced, not optional. Real photos of the clinic/practitioner are being integrated into `src/assets/`; prefer them over stock imagery when swapping placeholders.
+- `jsx-a11y` lint rules run on `.astro` files — accessibility is enforced, not optional. Every photo on the site is a real one from the October 2026 clinic shoot (`src/assets/photos/`); never bring stock or AI imagery back.
 
 ## Commands
 
@@ -55,6 +56,9 @@ npm run dev           # astro dev, localhost:4321
 npm run build          # astro build
 npm run lint / lint:fix
 npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (class sorting) — run before committing
+npm run check:tidy     # repo hygiene, runs in CI — see "Housekeeping"
+npm run clean:shots    # prune screenshots/ topic folders untouched for 30 days (capture.mjs runs it too)
+npm test               # Playwright e2e (stop any `npm run dev` on 4321 first)
 ```
 
 ## Design skills (installed)
@@ -67,19 +71,21 @@ npm run format / format:check   # prettier, incl. prettier-plugin-tailwindcss (c
 
 ## Source images in `src/assets`
 
-The six large PNGs behind the hero, about, quote, contact and service cards look like obvious optimisation targets. They are not — each candidate was measured against what Astro actually ships (`dist/_astro/*.webp`, compared pixel-by-pixel at every generated variant) and every one made things worse:
+Every photo the site uses is in `src/assets/photos/`, named by role (`hero.jpg`, `about.jpg`, `service-ortho.jpg`, …), and nothing else lives in `src/assets`. They are full-resolution frames from the October 2026 clinic shoot, before the photographer's edit. When the edited set arrives, overwrite each file under the same name: no code changes, but re-check the crops (next section), because a re-framed photo shifts the subject.
 
-- **Converting them to WebP degrades the output.** libvips takes a scale-on-load fast path for WebP input, using libwebp's rescaler instead of lanczos3. Forcing a full decode first gives bit-identical output, which proves the cause — but nothing in the source file can opt out of it. Down to 33 dB PSNR on the largest service-card variant. PNG input has no such path.
-- **Downscaling them changes the output and makes the site heavier.** The sources are cropped by `object-cover` to a different aspect than their own, so the source height needed is larger than the widths in `widths={[…]}` imply — naively resizing by width alone silently dropped the largest service-card variant from 1100×825 to 1100×600. Sizing them correctly fixes that, but the extra resampling step still costs 32–43 dB and adds ~8% to shipped bytes.
-- **Recompressing the PNGs losslessly makes them bigger** (9.13 MB vs 8.20 MB for `quote-bg`); they are already better compressed than libvips manages. Note that sharp's `png({ effort: … })` turns on palette quantisation, which is lossy — it looks like a lossless knob and is not.
+These ~1 MB JPEGs at 4000×6000 look like obvious optimisation targets. They are not; each idea was measured against what Astro actually ships (`dist/_astro/*.webp`, pixel-by-pixel at every variant):
 
-What did work was deleting 55 MB of exact duplicates and unreferenced renders, which left every shipped byte identical. Full-resolution originals of everything removed are in `../GalOfriPhysiotherapy-source-assets/`, outside the repo.
+- **Don't convert a source to WebP.** libvips takes a scale-on-load fast path for WebP input, using libwebp's rescaler instead of lanczos3, and nothing in the file can opt out of it: down to 33 dB PSNR on the largest service-card variant. JPEG's shrink-on-load costs 0.1 dB here; PNG has no such path.
+- **Don't pre-shrink.** Full resolution beat the photographer's 1067px web set by 3–4 dB on the large variants and gives the backgrounds real 1440/1920 variants. Resizing by width alone is also a trap: `object-cover` crops to a different aspect than the source's, so the height needed is larger than `widths={[…]}` implies, and a naive resize once silently turned an 1100×825 variant into 1100×600.
+- sharp's `png({ effort: … })` turns on palette quantisation, which is lossy. It looks like a lossless knob and is not.
 
-The same applies to `public/`, which is not an archive — every byte in it is served from the CDN at a guessable URL whether or not anything links to it. The header's wordmark was cropped down to `public/logo-compact.svg` in Sep 2026, and the full `public/logo.svg` it came from was moved out to `../GalOfriPhysiotherapy-source-assets/Logo/current/logo.svg` (that folder's `README.md` catalogues the designer's originals and drafts beside it) rather than left to ship unreferenced. Restoring it needs no copy of the file, only `git show f244434:public/logo.svg > public/logo.svg`.
+A file nothing imports does not belong here even though it costs nothing at runtime; that is exactly how 25 orphans and ~57 MB piled up by Oct 2026. Move it to `../GalOfriPhysiotherapy-source-assets/` (its README has the rules) and delete it. `npm run check:tidy` fails on an orphan.
 
-**`public/logo-compact.svg` is a deliberate re-trace, not the designer's file, and its lines are thickened on purpose.** Until Oct 2026 it was an auto-trace of a 2025 PNG: straight segments where the drawing has curves, polygon spine dots, rust fills from the rejected palette. It is now traced with potrace from the designer's 2784px master, recoloured (ring and hand `--color-teal-500`, everything else `--color-teal-700`). The drawing, but not the letters, is grown by about 3 user units per side, because at the header's `h-14` the original lines render at ~0.8px, under the 1.3–1.7px every icon beside it sits at. Don't "restore" the thinner lines, and don't redraw the figure: the owner chose this exact drawing over a clean redraw and a new mark. The original-weight master is in `../GalOfriPhysiotherapy-source-assets/Logo/current/`, the script that produced both in `Logo/scripts/`, and its source PNG in `Logo/original-2025-12/`.
+The same applies to `public/`, which is not an archive — every byte in it is served from the CDN at a guessable URL whether or not anything links to it. The header's wordmark was cropped down to `public/logo-compact.svg` in Sep 2026, and the full `public/logo.svg` it came from was moved out to `../GalOfriPhysiotherapy-source-assets/logo/current/logo.svg` (that folder's `README.md` catalogues the designer's originals and drafts beside it) rather than left to ship unreferenced. Restoring it needs no copy of the file, only `git show f244434:public/logo.svg > public/logo.svg`.
 
-**Every icon in `public/` is generated from one definition** by `Logo/scripts/build-icons.mjs` in the source-assets folder: the logo's own G (ring open at the top right, crossbar on the centre line), bold and cream on a `--color-teal-400` → `--color-brand-amber` tile. Regenerate rather than edit a PNG by hand. It replaced a chunky G on a rust gradient in Oct 2026; that icon was the bar a replacement had to clear, so keep what made it work — a full-bleed colour tile, one bold letter, strong contrast — if this is ever redone. The set is the minimal modern one: `favicon.ico` (16+32, the file browsers and crawlers request unprompted), `favicon.svg`, `apple-touch-icon.png` (full bleed, iOS rounds it), `android-chrome-192/512` (rounded, manifest `any`) and `icon-maskable-512.png` (full bleed, manifest `maskable`). The separate 16/32 PNGs are gone on purpose. The favicon is a filled tile, not a bare glyph, because the old graphite G vanished on dark browser tabs; that is also why it needs no dark-mode variant. `theme-color` is the single page background `#fffaf5`: the site has no dark mode, and the old dark value painted a black browser bar over a cream page.
+**`public/logo-compact.svg` is a deliberate re-trace, not the designer's file, and its lines are thickened on purpose.** Until Oct 2026 it was an auto-trace of a 2025 PNG: straight segments where the drawing has curves, polygon spine dots, rust fills from the rejected palette. It is now traced with potrace from the designer's 2784px master, recoloured (ring and hand `--color-teal-500`, everything else `--color-teal-700`). The drawing, but not the letters, is grown by about 3 user units per side, because at the header's `h-14` the original lines render at ~0.8px, under the 1.3–1.7px every icon beside it sits at. Don't "restore" the thinner lines, and don't redraw the figure: the owner chose this exact drawing over a clean redraw and a new mark. The original-weight master is in `../GalOfriPhysiotherapy-source-assets/logo/current/`, the script that produced both in `logo/scripts/`, and its source PNG in `logo/original-2025-12/`.
+
+**Every icon in `public/` is generated from one definition** by `logo/scripts/build-icons.mjs` in the source-assets folder: the logo's own G (ring open at the top right, crossbar on the centre line), bold and cream on a `--color-teal-400` → `--color-brand-amber` tile. Regenerate rather than edit a PNG by hand. It replaced a chunky G on a rust gradient in Oct 2026; that icon was the bar a replacement had to clear, so keep what made it work — a full-bleed colour tile, one bold letter, strong contrast — if this is ever redone. The set is the minimal modern one: `favicon.ico` (16+32, the file browsers and crawlers request unprompted), `favicon.svg`, `apple-touch-icon.png` (full bleed, iOS rounds it), `android-chrome-192/512` (rounded, manifest `any`) and `icon-maskable-512.png` (full bleed, manifest `maskable`). The separate 16/32 PNGs are gone on purpose. The favicon is a filled tile, not a bare glyph, because the old graphite G vanished on dark browser tabs; that is also why it needs no dark-mode variant. `theme-color` is the single page background `#fffaf5`: the site has no dark mode, and the old dark value painted a black browser bar over a cream page.
 
 ### Setting both `width` and `height` crops at build time, silently
 
@@ -90,18 +96,19 @@ resize with `fit: cover` and `position: centre` (see
 has no excess left to position and does nothing. There is no warning: the page
 just quietly shows a centre crop.
 
-This bit twice, because most sources here are tall portraits (1536x2752) pulled
-into square or 4:3 slots:
+This bit twice with the placeholder photos, because almost every source here is
+a tall portrait (2:3) pulled into a square or 4:3 slot: About asked for
+`object-top` and got a centre crop that sliced the top of Gal's head off, and
+Hero's `object-[center_18%]` did nothing at all. A percentage has **no**
+build-time equivalent - `position` only takes named values (`top`/`centre`/
+`bottom`, plus `attention`/`entropy`), and the percentage is measured against
+the full image, so the arithmetic only closes if the whole portrait ships.
 
-- `About.astro` asked for `object-top` and got a centre crop that sliced the top
-  of Gal's head off. Fixed with `position="top"`, which is the build-time
-  equivalent of `object-top` (both are 0%).
-- `Hero.astro` asked for `object-[center_18%]`. That one has **no** build-time
-  equivalent - `position` only takes named values (`top`/`centre`/`bottom`, plus
-  `attention`/`entropy`), and 18% is measured against the full image, so the
-  arithmetic only closes if the whole portrait ships. Fixed by dropping `height`
-  so only the width is resized and the browser does the crop, at ~28kB on the
-  largest srcset variant.
+Today that applies to `Hero.astro` (`object-[center_40%]`), `About.astro`
+(`object-[center_85%]`) and two of the three service cards in `Services.astro`
+(62% and 38%; the third is `object-center`). All four ship without `height`.
+`Services.astro` derives `height` from `imagePosition`, so a card that moves to
+or from `object-center` picks the right mode by itself.
 
 Rules of thumb:
 
@@ -117,9 +124,9 @@ Rules of thumb:
   `<figure>` itself - `screenshots/capture.mjs` anchors to section tops, and on
   mobile the About and Hero photos sit outside that frame.
 
-The hero and about photos are **placeholders**. When the real ones land, re-check
-this for each: the same `position="top"` that fixes today's About photo will crop
-a differently framed photo just as badly, and the symptom looks identical.
+The photos are the unedited shoot frames. When the edited ones replace them,
+re-check every percentage above by rendering: a percentage tuned to one framing
+crops a re-framed photo just as badly, and the symptom looks identical.
 
 ## Visual QA
 
@@ -127,12 +134,34 @@ a differently framed photo just as badly, and the symptom looks identical.
 
 - After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done — check `mobile-*` first per the mobile-first priority above, not just `desktop-*`.
 - `capture.mjs`/`quote_shot.mjs` are tracked source (real tooling); the PNGs they generate (`screenshots/*.png`) are git-ignored output, and excluded from Claude's own context via `.claudeignore`.
-- **The top level of `screenshots/` belongs to `capture.mjs` and nothing else.** Its twelve files are overwritten every run, so that directory never grows. Every other render — variant sweeps, transition frames, candidate comparisons — goes in a subfolder named after what is being investigated (`header/`, `logo/`, `pal/`, `sheet/`, `comps/`). `screenshots/README.md` has the full convention. Ad-hoc measurement scripts are named `.<name>.tmp.mjs` and deleted when done; they had piled up at the top level until Sep 2026.
+- **The top level of `screenshots/` belongs to `capture.mjs` and nothing else.** Its twelve files are overwritten every run, so that directory never grows. Every other render — variant sweeps, transition frames, candidate comparisons — goes in a subfolder named after what is being investigated (`header/`, `cta/`). **Those folders expire**: one untouched for 30 days is deleted the next time `capture.mjs` runs, so anything worth keeping goes to `../GalOfriPhysiotherapy-source-assets/` instead. `screenshots/README.md` has the full convention. Ad-hoc measurement scripts are named `.<name>.tmp.mjs` and deleted when done.
 - For interactive iteration on a specific section's design (not just a static check), prefer Impeccable's `live` mode over extending `capture.mjs` — it already does real-browser, HMR-backed variant iteration; don't reinvent that in the Puppeteer script.
+
+## Housekeeping
+
+The repo was tidied in Oct 2026 after it had drifted for months: 25 of 32 files in `src/assets` imported by nothing (~57 MB), 126 MB of renders in `screenshots/` with ten loose at the top level, six finished plans in `plans/`, and a CLAUDE.md section defending six PNGs that nothing used any more. Every rule below already existed in prose. None was checked, so none held. The fix was to make each one fail something.
+
+| Rule                                                                                                      | Enforced by                                                      |
+| --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Every file in `src/assets` is imported somewhere                                                          | `check:tidy` in CI                                               |
+| Every file in `public/` is linked from somewhere (`favicon.ico`, `robots.txt` excepted)                   | `check:tidy` in CI                                               |
+| Shipped file names are lowercase kebab-case, no spaces                                                    | `check:tidy` in CI                                               |
+| Every repo path and code file name in CLAUDE.md, README.md, PRODUCT.md and `screenshots/README.md` exists | `check:tidy` in CI                                               |
+| `plans/` holds open work only                                                                             | `check:tidy` in CI                                               |
+| No `*.tmp.mjs` is committed; the top level of `screenshots/` holds only the canonical set                 | `check:tidy` (the second locally, since renders are git-ignored) |
+| `screenshots/` topic folders expire after 30 days                                                         | `prune-screenshots.mjs`, run by `capture.mjs`                    |
+
+How to work with it:
+
+- **Replacing a file? Remove the old one in the same commit.** Move it to `../GalOfriPhysiotherapy-source-assets/` first if it is an original (that folder's README has the rules: originals are never deleted, every folder gets a README). That is the whole reason orphans accumulated.
+- **A plan is deleted in the commit that finishes it.** Git history keeps it. `plans/` exists only while there is open work in it.
+- **When a doc passage stops being true, fix it in the change that made it untrue.** `check:tidy` catches a vanished path, not a claim that went stale around a path that still exists, so this half is on whoever makes the change. To mention a removed file on purpose, write it as `git show <sha>:<path>`; the check skips that form.
+- **Don't silence a `check:tidy` failure by widening an allowlist.** Each rule has a one-line reason in `scripts/check-tidy.mjs`; if a rule is wrong, change the rule and its comment together.
+- Run `npm run check:tidy` before pushing; it takes well under a second.
 
 ## Git conventions
 
-Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`. Keep that prefix convention. Only commit when explicitly asked.
+Commit subjects follow Conventional Commits style already used in history: `feat:`, `fix:`, `refactor:`, `redesign:`, plus `docs:`, `test:`, `ci:` and `chore:` (repo maintenance). Keep that prefix convention. Only commit when explicitly asked.
 
 **Never `git add -A` or `git add .` — stage the specific files you changed.**
 This working tree routinely holds someone else's half-finished work, and a
