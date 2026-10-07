@@ -30,16 +30,27 @@ import aboutPhoto from '@assets/photos/about.jpg';
       into two columns (column 1 is the right one, since grid columns follow
       dir="rtl"):
 
-        column 1: photo (rows 1-2, bottom-aligned), quote (row 3)
-        column 2: name (row 1), story (row 2), CTA (row 3)
+        rows:     1 auto | 2 1fr | 3 auto | 4 auto
+        column 1: photo (rows 1-2, filling them), quote (rows 3-4, at the end)
+        column 2: name (row 1), story (rows 2-3), CTA (row 4)
 
       The quote moved under the photo in Oct 2026 (Dan's call). In the text
       column it made that column ~730px tall beside a 496px photo, leaving
       ~117px of empty cream above and below the picture at 1440. Under the
-      photo the two columns come out within ~60px of each other, and her
-      words sit under her face. The photo is bottom-aligned so the two stay
-      one unit at every width; centred, they drift apart wherever the story
-      runs taller than the photo (1024px).
+      photo her words sit under her face.
+
+      The two columns start and end on the same lines at every width, and the
+      CTA stays 32px under the story. The quote is taller than the CTA, so it
+      has to start higher than the CTA does: it spans rows 3-4 while the CTA
+      takes row 4 alone, which makes row 3 exactly the difference between
+      the two. Row 2 is 1fr, so the story, which spans rows 2-3, sizes it to
+      whatever is left and row 3 is set by the quote alone (a spanning item
+      that crosses a flexible track feeds only that track). The photo fills
+      rows 1-2, so it ends where the quote begins, less the quote's own
+      margin. Measured at 1024-1920: both edges level, 32px from story to
+      CTA and from photo to quote. A fixed square photo could only match the
+      text at one width (48px long at 1440, 173px short at 1024), and
+      bottom-aligning the CTA instead pushed it 80-112px away from the text.
 
       Row gap is 0 from lg because the heading and the body are one continuous
       text block there; the body's own mt-5 is the spacing, and the quote and
@@ -49,7 +60,9 @@ import aboutPhoto from '@assets/photos/about.jpg';
       the text column used to add px-6 on top of that, which left this section's
       copy at 48px while every other section sits at 24px.
     -->
-    <div class="grid gap-y-8 lg:grid-cols-2 lg:items-center lg:gap-x-20 lg:gap-y-0">
+    <div
+      class="grid gap-y-8 lg:grid-cols-2 lg:grid-rows-[auto_1fr_auto_auto] lg:items-center lg:gap-x-20 lg:gap-y-0"
+    >
       <!-- Name block: row 1 -->
       <div class="text-start lg:col-start-2 lg:row-start-1">
         <!-- Eyebrow -->
@@ -86,15 +99,23 @@ import aboutPhoto from '@assets/photos/about.jpg';
         sharp service crop it at build time with fit: cover / position: centre,
         and the object-position below would then have nothing left to position.
         The framing is not a named build-time position, so the whole portrait
-        ships and the browser does the crop. The box is square at every width,
-        at 85%: the ball, her hand on the bed and only a strip of window. Mobile
+        ships and the browser does the crop. The box is square below lg, at
+        85%: the ball, her hand on the bed and only a strip of window. Mobile
         was 4:3 until Oct 2026, and a box that short could not hold her head and
         the ball together (66% was the best it managed); square costs about 85px
         of scroll at 390 and shows the whole scene. Re-check the 85% when the
         photographer's edit lands.
+
+        From lg the box fills grid rows 1-2 (about 496x468 at 1440, 432x525
+        at 1024; see the grid comment above), so the image is absolutely
+        positioned: in flow, its natural 2:3 height would size the rows
+        instead of the text. The min-height only guards against a story so
+        short the photo would turn into a strip. The box is always less tall,
+        relative to its width, than the 2:3 source, so the image still scales
+        by width and the sizes attribute stays right.
       -->
       <figure
-        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-end lg:rounded-3xl"
+        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:relative lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:min-h-[26rem] lg:self-stretch lg:rounded-3xl"
       >
         <Image
           src={aboutPhoto}
@@ -103,12 +124,12 @@ import aboutPhoto from '@assets/photos/about.jpg';
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-square w-full object-cover object-[center_85%]"
+          class="block aspect-square w-full object-cover object-[center_85%] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
         />
       </figure>
 
-      <!-- Story: row 3 on mobile, under the name from lg -->
-      <div class="text-start lg:col-start-2 lg:row-start-2">
+      <!-- Story: row 3 on mobile, under the name from lg (rows 2-3) -->
+      <div class="text-start lg:col-start-2 lg:row-span-2 lg:row-start-2">
         <!--
           Each sentence starts on its own line, like a personal letter (Oct
           2026, Dan's call). Breaks sit only at sentence ends, plus once after
@@ -155,7 +176,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
       </div>
 
       <!--
-        Quote: row 4 on mobile, under the photo from lg.
+        Quote: row 4 on mobile, under the photo from lg (rows 3-4).
 
         Gal's own sentence, approved by her in Oct 2026, wording revised with
         her in the same month. A pull quote rather than a heading: regular
@@ -166,7 +187,9 @@ import aboutPhoto from '@assets/photos/about.jpg';
         before that with a coloured side border, a stock template tell.
         The glyph is Lucide's "quote" drawn filled: an ornament, not an icon.
       -->
-      <blockquote class="mt-1 text-start lg:col-start-1 lg:row-start-3 lg:mt-8 lg:self-start">
+      <blockquote
+        class="mt-1 text-start lg:col-start-1 lg:row-span-2 lg:row-start-3 lg:mt-8 lg:self-end"
+      >
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -186,8 +209,8 @@ import aboutPhoto from '@assets/photos/about.jpg';
         </p>
       </blockquote>
 
-      <!-- CTA: row 5 on mobile, under the story from lg -->
-      <div class="flex justify-start lg:col-start-2 lg:row-start-3 lg:mt-8 lg:self-start">
+      <!-- CTA: row 5 on mobile, under the story from lg (row 4) -->
+      <div class="flex justify-start lg:col-start-2 lg:row-start-4 lg:mt-8 lg:self-start">
         <a
           href="#contact"
           class="btn-primary"
