@@ -11,7 +11,13 @@ import Footer from '@components/Footer.astro';
 import { SITE } from '@data/site';
 ---
 
-<BaseLayout title="שיקום ספורט וטיפול בכאב בתל אביב" description={SITE.description}>
+<!-- Name first: this title is also what a shared link shows, where it reads as
+     a person's recommendation rather than an ad. "פיזיותרפיה" still leads, inside
+     the name. Positioning is unconfirmed (PRODUCT.md), so it names no single niche. -->
+<BaseLayout
+  fullTitle="גל עופרי פיזיותרפיה | שיקום וטיפול בכאב בתל אביב"
+  description={SITE.description}
+>
   <Nav slot="header" />
 
   <Hero />

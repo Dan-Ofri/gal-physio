@@ -2,7 +2,10 @@ export const SITE = {
   name: 'גל עופרי פיזיותרפיה',
   tagline: 'חזרה לתנועה מלאה, בהתאמה אישית אליך',
   description:
-    'גל עופרי, פיזיותרפיסטית מוסמכת B.P.T בתל אביב. שיקום ספורט, טיפול בכאב ופציעות אורטופדיות, ליווי אישי לכל שלב בחיים.',
+    // Hebrew only on purpose: meta text has no markup, so each app lays out a
+    // Latin run like "B.P.T" on its own and WhatsApp scrambled it. The degree
+    // stays on the page itself, where the markup controls its direction.
+    'פיזיותרפיסטית מוסמכת בתל אביב: שיקום אחרי פציעות וניתוחים, שיקום ספורטאים ופיזיותרפיה מניעתית, בליווי אישי בכל שלב.',
   // TEMPORARY: the live Vercel address, so link previews (og:image) and
   // canonical URLs work before the real domain is connected. When
   // www.galofri-physio.co.il points at Vercel, switch back here, in

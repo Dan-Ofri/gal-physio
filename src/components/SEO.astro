@@ -3,6 +3,8 @@ import { SITE } from '@data/site';
 
 export interface Props {
   title?: string;
+  /** The whole <title>, for a page that should not follow the "page | site" pattern. */
+  fullTitle?: string;
   description?: string;
   image?: string;
   imageAlt?: string;
@@ -13,6 +15,7 @@ export interface Props {
 
 const {
   title,
+  fullTitle: fullTitleProp,
   description = SITE.description,
   image = SITE.openGraph.image,
   imageAlt = SITE.openGraph.imageAlt,
@@ -21,13 +24,13 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = title ? `${title} | ${SITE.name}` : SITE.name;
+const fullTitle = fullTitleProp ?? (title ? `${title} | ${SITE.name}` : SITE.name);
 const canonicalUrl = new URL(url, SITE.url).href;
 const imageUrl = new URL(image, SITE.url).href;
 
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'MedicalBusiness'],
+  '@type': ['LocalBusiness', 'Physiotherapy'],
   '@id': SITE.url,
   name: SITE.name,
   description: SITE.description,
@@ -60,11 +63,24 @@ const jsonLd = {
     contactType: 'reservations',
     availableLanguage: { '@type': 'Language', name: 'Hebrew' },
   },
-  medicalSpecialty: 'PhysicalTherapy',
+  // A MedicalSpecialty member; 'PhysicalTherapy' is not one (it is a MedicalTherapy type).
+  medicalSpecialty: 'Physiotherapy',
   image: imageUrl,
   // priceRange intentionally omitted — not yet confirmed with Gal (see PRODUCT.md → Positioning).
   // Add back once she confirms an actual value; don't guess.
   sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.linkedin].filter(Boolean),
+};
+
+// Google takes the site name shown above a result mostly from WebSite data on
+// the home page, and only there; without it the name falls back to guesses.
+const isHome = new URL(url, SITE.url).pathname === '/';
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  alternateName: ['גל עופרי', 'Gal Ofri Physiotherapy'],
+  url: SITE.url,
+  inLanguage: 'he',
 };
 ---
 
@@ -95,3 +111,4 @@ const jsonLd = {
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+{isHome && <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />}
