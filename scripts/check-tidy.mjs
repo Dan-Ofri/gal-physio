@@ -7,7 +7,7 @@
 // CI checkout without git and locally, where it also catches untracked strays
 // before they are committed.
 
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { TOP_LEVEL, isThrowaway } from './screenshots-layout.mjs';
@@ -99,7 +99,44 @@ for (const f of [...under('src/assets'), ...under('public')]) {
   }
 }
 
-// 4. The top level of screenshots/ holds the tooling, its README and the twelve
+// 4. Size ceilings. Removing a file from the repo does not remove it from git
+//    history, so the only cheap moment to stop a heavy one is before its first
+//    commit: the 7-9 MB placeholder PNGs are still in .git today.
+//    - src/assets: Astro re-encodes these, so the source only has to be good,
+//      not small, and it must stay full resolution (CLAUDE.md, "Source images").
+//      The shoot photos are ~1.1 MB at 4000x6000; re-encoded with sharp they
+//      measure 1.1-1.35 MB at quality 85-90 and ~3.5 MB at 100, so 3 MB leaves
+//      room for the photographer's edits and stops a PNG or quality-100 export.
+//    - public/: served byte for byte, never re-encoded. og-image.jpg is the
+//      largest at 85 kB, and WhatsApp drops a share image over ~300 kB.
+const MB = 1024 * 1024;
+const CEILINGS = [
+  [
+    'src/assets',
+    3 * MB,
+    'Re-export as JPEG, full resolution, quality 85-90. Do not downscale (CLAUDE.md).',
+  ],
+  [
+    'public',
+    300 * 1024,
+    'Compress it; public/ is served as-is, and WhatsApp ignores share images over ~300 kB.',
+  ],
+];
+for (const [dir, limit, hint] of CEILINGS) {
+  for (const f of under(dir)) {
+    const size = statSync(join(ROOT, f)).size;
+    if (size > limit) {
+      const fmt = (n) => (n >= MB ? `${(n / MB).toFixed(1)} MB` : `${Math.round(n / 1024)} kB`);
+      fail(
+        'file too large',
+        f,
+        `${fmt(size)}, over the ${fmt(limit)} ceiling for ${dir}/. ${hint}`
+      );
+    }
+  }
+}
+
+// 5. The top level of screenshots/ holds the tooling, its README and the fourteen
 //    files capture.mjs overwrites on every run. Anything else goes in a topic
 //    subfolder (screenshots/README.md).
 for (const f of under('screenshots')) {
@@ -109,7 +146,7 @@ for (const f of under('screenshots')) {
   }
 }
 
-// 5. Throwaway scripts (`.<name>.tmp.mjs`) are deleted when done. Locally they
+// 6. Throwaway scripts (`.<name>.tmp.mjs`) are deleted when done. Locally they
 //    are allowed while work is in progress; in CI one can only be there because
 //    it was committed.
 if (process.env.CI) {
@@ -118,7 +155,7 @@ if (process.env.CI) {
   }
 }
 
-// 6. plans/ holds open work only. A finished plan is deleted in the commit that
+// 7. plans/ holds open work only. A finished plan is deleted in the commit that
 //    finishes it; git history keeps it. Six DONE plans sat here for three weeks.
 for (const f of under('plans').filter((f) => f.endsWith('.md'))) {
   if (/\|\s*DONE\s*\||^\s*status\s*:\s*done\b/im.test(read(f))) {
@@ -126,7 +163,7 @@ for (const f of under('plans').filter((f) => f.endsWith('.md'))) {
   }
 }
 
-// 7. Paths named in the docs exist. CLAUDE.md is read at the start of every
+// 8. Paths named in the docs exist. CLAUDE.md is read at the start of every
 //    session, so a paragraph about a file that is gone is worse than no
 //    paragraph: it was spent defending six PNGs that nothing used any more.
 //    Globs, placeholders and generated output (git-ignored renders, dist/) are

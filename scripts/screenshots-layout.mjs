@@ -6,6 +6,7 @@ export const sections = [
   { name: 'hero', selector: 'body' },
   { name: 'services', selector: '#services' },
   { name: 'about', selector: '#about' },
+  { name: 'quote', selector: '#quote' },
   { name: 'testimonials', selector: '#testimonials' },
   { name: 'contact', selector: '#contact' },
   { name: 'footer', selector: 'footer[aria-label]' },
@@ -24,8 +25,6 @@ export const shotName = (viewport, section) => `${viewport}-${section}.png`;
 export const TOP_LEVEL = new Set([
   'README.md',
   'capture.mjs',
-  'quote_shot.mjs',
-  'quote.png',
   ...viewports.flatMap(({ key }) => sections.map(({ name }) => shotName(key, name))),
 ]);
 

@@ -9,7 +9,7 @@ import { pruneScreenshots } from '../scripts/prune-screenshots.mjs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Clear out investigation folders nobody has touched in 30 days, so this
-// directory stays the size of the twelve files below. Prints what it removed.
+// directory stays the size of the fourteen files below. Prints what it removed.
 pruneScreenshots();
 
 const browser = await puppeteer.launch({
