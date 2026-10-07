@@ -67,11 +67,12 @@ import aboutPhoto from '../assets/photos/about.jpg';
         sharp service crop it at build time with fit: cover / position: centre,
         and the object-position below would then have nothing left to position.
         The framing is not a named build-time position, so the whole portrait
-        ships and the browser does the crop, with a different position per box:
-        66% in the short 4:3 mobile box keeps room above her head and brings in
-        the ball, where 75% already cuts her hair; 85% in the square lg box shows
-        the ball, her hand on the bed and only a strip of window. Re-check both
-        when the photographer's edit lands.
+        ships and the browser does the crop. The box is square at every width,
+        at 85%: the ball, her hand on the bed and only a strip of window. Mobile
+        was 4:3 until Oct 2026, and a box that short could not hold her head and
+        the ball together (66% was the best it managed); square costs about 85px
+        of scroll at 390 and shows the whole scene. Re-check the 85% when the
+        photographer's edit lands.
       -->
       <figure
         class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center lg:rounded-3xl"
@@ -83,7 +84,7 @@ import aboutPhoto from '../assets/photos/about.jpg';
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-[4/3] w-full object-cover object-[center_66%] lg:aspect-square lg:object-[center_85%]"
+          class="block aspect-square w-full object-cover object-[center_85%]"
         />
       </figure>
 
