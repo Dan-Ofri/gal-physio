@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'גל עופרי פיזיותרפיה',
-  tagline: 'חזרה לתנועה מלאה, בהתאמה אישית אליך',
+  tagline: 'חזרה לתנועה מלאה, בהתאמה אישית אליכם',
   description:
     // Hebrew only on purpose: meta text has no markup, so each app lays out a
     // Latin run like "B.P.T" on its own and WhatsApp scrambled it. The degree
