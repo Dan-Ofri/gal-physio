@@ -51,7 +51,10 @@ const contactItems = [
       loading="lazy"
       class="h-full w-full object-cover object-center"
     />
-    <div class="bg-navy-900/84 absolute inset-0"></div>
+    <!-- 76%, set by the 12px white/85 labels (4.5:1): they measure 6.16:1
+         against the brightest pixel behind them. 70% is the floor, at 5.22:1;
+         the margin is kept for the photographer's edit, likely brighter. -->
+    <div class="bg-navy-900/76 absolute inset-0"></div>
   </div>
 
   <div class="container-prose relative z-10">

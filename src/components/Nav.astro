@@ -87,12 +87,12 @@ const links = [
     <!-- Desktop Actions; hidden on mobile -->
     <div class="hidden items-center gap-4 lg:flex">
       {
-        /* neutral-700, matching the links beside it: 8.59:1 at worst, where the
-          header's frosted glass sits over the dark quote and contact sections
-          and darkens to rgb(239,234,229). Keep it there. neutral-600 measured
-          4.11:1 against the 82% glass this header had until Oct 2026, under
-          AA, and clears it now only by 4.92:1, which is no margin for a
-          lighter overlay or a darker photo. */
+        /* neutral-700, matching the links beside it: 8.67:1 at worst, where the
+          header's frosted glass sits over the dark contact section and darkens
+          to rgb(240,235,230). Keep it there. neutral-600 measured 4.11:1
+          against the 82% glass this header had until Oct 2026, under AA, and
+          clears it now only by 5.04:1, which is little margin for a darker
+          overlay or photo. */
       }
       <a
         href={`tel:${SITE.phoneE164}`}
@@ -307,7 +307,7 @@ const links = [
     transition: transform 250ms var(--ease-out);
   }
   #site-header nav a[data-current] {
-    /* 16.86:1 on warm white, 14.63:1 at worst on the glass over the dark sections ✅ */
+    /* 16.86:1 on warm white, 14.77:1 at worst on the glass over the dark sections ✅ */
     color: var(--color-teal-700);
   }
   #site-header nav a[data-current]::after {
