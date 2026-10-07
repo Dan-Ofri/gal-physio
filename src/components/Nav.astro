@@ -642,8 +642,8 @@ const links = [
       '#site-header nav a[href^="#"], #mobile-menu nav a[href^="#"]'
     ),
   ];
-  // Document order, not link order — the nav lists אודות before שירותים while
-  // the page puts #services first, and the spy has to pick the topmost match.
+  // Document order, not link order — the spy has to pick the topmost match,
+  // and that must not depend on the nav's links staying in page order.
   const spied = [...new Set(sectionLinks.map((a) => a.hash.slice(1)))]
     .map((id) => document.getElementById(id))
     .filter((el): el is HTMLElement => el !== null)
