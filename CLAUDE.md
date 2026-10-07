@@ -174,6 +174,61 @@ on 2026-09-19: a CI commit swallowed an in-progress palette redesign, five
 source files and `PRODUCT.md`, and had to be unpicked with `reset --soft` and a
 force-push. `git status` before committing, and name the paths.
 
+### Parallel sessions
+
+The owner routinely runs several Claude sessions on this repo at once. The
+signs: changes in files you never touched, untracked files, new `screenshots/`
+folders, a dev or preview server you did not start, `main` moving under you,
+extra entries in `git worktree list`. **That is the normal state, not an
+incident.** Their work is not yours to clean up: never `stash`, `reset`,
+`checkout --`, `restore` or `clean` it, and never stop a server you did not
+start. Mention what you saw to the owner in a line, and carry on.
+
+- **Do substantive work in your own worktree**, not the shared folder:
+  `git fetch origin && git worktree add <scratchpad>/wt-<topic> -b <branch> origin/main`,
+  then `npm ci` inside it, since worktrees share history but not
+  `node_modules`. Don't link the shared `node_modules` in instead: a recursive
+  delete through a link can take the original with it. Your builds,
+  measurements and screenshots then see only your changes. The shared
+  folder's `dist/` is whatever the last session built, other people's
+  uncommitted work included.
+- **If you already edited in the shared folder** and a file you changed also
+  carries someone else's hunks, stage only yours: take your hunks from
+  `git diff -U0 <file>` into a patch, `git apply --cached --unidiff-zero` it,
+  and read `git diff --cached` before committing.
+- **Merge from a throwaway worktree, never by switching the shared folder.**
+  `git checkout main` there fails whenever another session has uncommitted
+  changes in a file your branch touches. Instead:
+
+  ```
+  git fetch origin
+  git worktree add --detach <scratchpad>/wt-merge origin/main
+  cd <scratchpad>/wt-merge
+  git merge --no-ff <branch> -m "Merge branch '<branch>'"
+  git push origin HEAD:main
+  ```
+
+  Then `git worktree remove` it and delete the branch, locally and on origin.
+  This works wherever `main` is checked out and whatever the shared folder
+  holds. A rejected push means another session merged first: remove the
+  worktree and start again from the fetch. Don't move refs by hand
+  (`commit-tree`, `update-ref`, `symbolic-ref`); the permission layer blocks
+  it as destructive, and rightly.
+
+- The shared folder's local `main` may lag `origin/main` afterwards. Leave it;
+  whoever works there pulls once their tree allows it.
+- **Servers are one per project folder.** `astro dev` and `astro preview` run
+  as daemons (`astro dev stop`, `astro preview stop`), and a second start only
+  reports the running one, e.g. "already running at http://localhost:4322".
+  Read from that server if you need one; don't stop it. The same lock keeps
+  `npm test` from starting its own preview while someone else's is up, so push
+  your branch and let CI run the suite: it tests exactly your commit, with
+  nobody's uncommitted work in it, which is the cleaner signal anyway.
+- **Leave the shared folder on the branch you found it on.** If it ends up on
+  yours, the next session's commit lands there. Switch it back once
+  `git diff --quiet main <branch>` holds, which is when the switch changes no
+  file.
+
 ## CI and deployment (`.github/workflows/ci.yml`)
 
 **Production deploys are gated on CI, and `main` no longer deploys on push.**
