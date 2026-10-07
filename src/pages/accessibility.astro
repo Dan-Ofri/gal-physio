@@ -7,7 +7,7 @@ import { SITE } from '@data/site';
 
 <BaseLayout
   title="הצהרת נגישות"
-  description="הצהרת הנגישות של אתר גל עופרי לפיזיותרפיה: רמת נגישות WCAG 2.1 AA, תכונות נגישות, ופרטי רכזת הנגישות."
+  description="הצהרת הנגישות של אתר גל עופרי לפיזיותרפיה: התאמת האתר לתקן הישראלי 5568, תכונות הנגישות באתר ופרטי רכזת הנגישות."
   bodyClass="!pb-0"
 >
   <Nav slot="header" />
@@ -35,7 +35,7 @@ import { SITE } from '@data/site';
       </a>
 
       <h1 class="font-heading text-3xl font-bold text-teal-700 md:text-4xl">הצהרת נגישות</h1>
-      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: ספטמבר 2026</p>
+      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: אוקטובר 2026</p>
 
       <!-- Intro callout -->
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
@@ -49,12 +49,20 @@ import { SITE } from '@data/site';
       <div class="mt-10 space-y-10 leading-relaxed text-neutral-700">
         <section>
           <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">1. מחויבות לנגישות</h2>
+          <!--
+            The standard and the guidelines are two facts, not one: IS 5568 is the
+            legal requirement, and it is built on WCAG 2.0 with Israeli additions.
+            The site is built to WCAG 2.1 AA, which contains every 2.0 AA criterion.
+            Until Oct 2026 this read "IS 5568 at WCAG 2.1 AA", which tied the
+            standard to a version it is not based on.
+          -->
           <p>
             אתר זה מיועד לעמוד בדרישות <strong class="font-semibold text-neutral-800"
-              >תקן ישראלי IS 5568</strong
-            > ברמת <strong class="font-semibold text-neutral-800">WCAG 2.1 AA</strong>, בהתאם לתקנות
-            שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג–2013. רמה זו מבטיחה שהאתר
-            נגיש לרוב האוכלוסייה, כולל בעלי לקויות ראייה, שמיעה, מוטוריות, ועיבוד קוגניטיבי.
+              >תקן ישראלי 5568</strong
+            >, המבוסס על הנחיות הנגישות הבינלאומיות (WCAG), בהתאם לתקנות שוויון זכויות לאנשים עם
+            מוגבלות (התאמות נגישות לשירות), התשע"ג–2013. האתר נבנה לפי{' '}
+            <strong class="font-semibold text-neutral-800">WCAG 2.1 ברמה AA</strong>, רמה שמבטיחה
+            שהאתר נגיש לרוב האוכלוסייה, כולל בעלי לקויות ראייה, שמיעה, מוטוריות ועיבוד קוגניטיבי.
           </p>
         </section>
 
