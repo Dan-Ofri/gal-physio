@@ -62,6 +62,15 @@ export const SITE = {
     linkedin: '',
   },
 
+  // ── Google reviews ────────────────────────────────────────────────────────
+  // `profile` opens the Google Business Profile; `write` is the profile's own
+  // "Ask for reviews" link (Oct 2026), which opens the write-a-review dialog
+  // directly (it redirects to search.google.com/local/writereview?placeid=…).
+  googleReviews: {
+    profile: 'https://www.google.com/search?kgmid=/g/11ynf97pzh',
+    write: 'https://g.page/r/Ce9YSpzcmUTaEBM/review',
+  },
+
   // ── Open Graph ────────────────────────────────────────────────────────────
   openGraph: {
     image: '/og-image.jpg',
