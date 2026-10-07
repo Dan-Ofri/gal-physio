@@ -22,11 +22,15 @@ test.describe('SEO metadata', () => {
 
   test('homepage ships valid LocalBusiness structured data', async ({ page }) => {
     await page.goto('/');
-    const raw = await page.locator('script[type="application/ld+json"]').textContent();
-    expect(raw).toBeTruthy();
+    // The home page carries two blocks: the business, and WebSite (the site name
+    // Google shows above a result, read from the home page only).
+    const blocks = (await page.locator('script[type="application/ld+json"]').allTextContents()).map(
+      (raw) => JSON.parse(raw)
+    );
+    expect(blocks.some((b) => b['@type'] === 'WebSite' && b.name)).toBe(true);
 
-    const json = JSON.parse(raw!);
-    expect(json['@type']).toContain('LocalBusiness');
+    const json = blocks.find((b) => [b['@type']].flat().includes('LocalBusiness'));
+    expect(json, 'no LocalBusiness block').toBeTruthy();
     expect(json.telephone).toMatch(/^\+/);
     expect(json.address?.addressCountry).toBeTruthy();
     // priceRange is intentionally omitted until Gal confirms one — see CLAUDE.md.
