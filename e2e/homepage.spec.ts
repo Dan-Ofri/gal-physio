@@ -21,7 +21,14 @@ test.describe('Homepage', () => {
   test('renders every marketing section', async ({ page }) => {
     await page.goto('/');
 
-    for (const selector of ['#hero', '#about', '#services', '#testimonials', '#contact']) {
+    for (const selector of [
+      '#hero',
+      '#about',
+      '#services',
+      '#testimonials',
+      '#first-visit',
+      '#contact',
+    ]) {
       await expect(page.locator(selector)).toBeVisible();
     }
     await expect(page.locator('footer[aria-label]')).toBeAttached();

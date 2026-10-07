@@ -61,13 +61,14 @@ const jsonLd = {
     '@type': 'ContactPoint',
     telephone: SITE.phoneE164,
     contactType: 'reservations',
-    availableLanguage: { '@type': 'Language', name: 'Hebrew' },
+    availableLanguage: SITE.languages.map((name) => ({ '@type': 'Language', name })),
   },
   // A MedicalSpecialty member; 'PhysicalTherapy' is not one (it is a MedicalTherapy type).
   medicalSpecialty: 'Physiotherapy',
   image: imageUrl,
-  // priceRange intentionally omitted — not yet confirmed with Gal (see PRODUCT.md → Positioning).
-  // Add back once she confirms an actual value; don't guess.
+  priceRange: `${SITE.price.currency}${SITE.price.min}-${SITE.price.max}`,
+  // Home visits only; the clinic itself is the address above.
+  areaServed: SITE.homeVisitAreas.map((area) => ({ '@type': 'City', name: area.en })),
   sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.linkedin].filter(Boolean),
 };
 

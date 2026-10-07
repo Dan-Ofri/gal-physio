@@ -35,7 +35,7 @@ import { SITE, OPENING_HOURS_TEXT } from '@data/site';
       </a>
 
       <h1 class="font-heading text-3xl font-bold text-teal-700 md:text-4xl">מדיניות ביטולים</h1>
-      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: מאי 2026</p>
+      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: אוקטובר 2026</p>
 
       <!-- Intro callout -->
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
@@ -52,9 +52,9 @@ import { SITE, OPENING_HOURS_TEXT } from '@data/site';
             1. ביטול או שינוי מועד
           </h2>
           <p>
-            על מנת לכבד הדדית את הזמן של כולנו, אנא בטלו או שנו את מועד הטיפול לפחות <strong
+            על מנת לכבד הדדית את הזמן של כולנו, אנא בטלו או הזיזו את מועד הטיפול לפחות <strong
               class="font-semibold text-neutral-800">24 שעות מראש</strong
-            >.
+            >. המדיניות זהה לטיפולים בקליניקה ולטיפולים בבית.
           </p>
           <!--
             The check/X below carry stroke-width 3 because they render at 12px:
@@ -103,10 +103,56 @@ import { SITE, OPENING_HOURS_TEXT } from '@data/site';
               </span>
               <span class="text-sm"
                 >ביטול <strong class="font-semibold text-neutral-800"
-                  >פחות מ-24 שעות לפני הטיפול</strong
-                > או אי-הגעה ללא הודעה (no-show): יחויב <strong
-                  class="font-semibold text-neutral-800">מחיר הטיפול המלא</strong
+                  >פחות מ־24 שעות לפני הטיפול</strong
+                >, שלא בגלל מצב חירום פתאומי: נחשב כטיפול שהתבצע ויחויב ב־<strong
+                  class="font-semibold text-neutral-800">50% מעלות הטיפול</strong
                 >.</span
+              >
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-3 w-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  ><line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round"></line><line
+                    x1="6"
+                    y1="6"
+                    x2="18"
+                    y2="18"
+                    stroke-linecap="round"></line></svg
+                >
+              </span>
+              <span class="text-sm"
+                ><strong class="font-semibold text-neutral-800">אי־הגעה ללא הודעה</strong>: יחויב{
+                  ' '
+                }
+                <strong class="font-semibold text-neutral-800">מחיר הטיפול המלא</strong>.</span
+              >
+            </li>
+            <li class="flex items-start gap-3">
+              <span
+                class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal-100 text-teal-700"
+                aria-hidden="true"
+              >
+                <svg
+                  class="h-3 w-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="3"
+                  ><polyline points="20 6 9 17 4 12" stroke-linecap="round" stroke-linejoin="round"
+                  ></polyline></svg
+                >
+              </span>
+              <span class="text-sm"
+                >ביטול <strong class="font-semibold text-neutral-800">בגלל מחלה</strong>: ללא חיוב,
+                גם אם הוא מאוחר.</span
               >
             </li>
           </ul>
@@ -122,12 +168,15 @@ import { SITE, OPENING_HOURS_TEXT } from '@data/site';
         </section>
 
         <section>
-          <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">
-            3. חריגים ומצבי חירום
-          </h2>
+          <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">3. מחלה ומצבי חירום</h2>
           <p>
-            אני מבינה שהחיים לא תמיד צפויים: מחלה פתאומית, אירוע משפחתי, או נסיבות חריגות. במקרים
-            כאלה, אנא פנו אליי ישירות ונמצא יחד פתרון הוגן. הגישה שלי תמיד אנושית ורגישה להקשר.
+            שמירה על הבריאות של כולנו: נא לא להגיע לטיפול, ולא לקיים טיפול בבית, כשאתם חולים. במקרה
+            של מחלה פתאומית חובה לעדכן ולבטל את הטיפול, והביטול לא יחויב. אם אינכם מרגישים טוב מספיק
+            כדי ללכת לעבודה או ללימודים, אנא דחו את הטיפול.
+          </p>
+          <p class="mt-3">
+            אני מבינה שהחיים לא תמיד צפויים. במצב חירום פתאומי, פנו אליי ישירות ונמצא יחד פתרון
+            הוגן.
           </p>
         </section>
 

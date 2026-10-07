@@ -26,15 +26,36 @@ export const SITE = {
     city: 'Tel Aviv-Yafo',
     cityHebrew: 'תל אביב-יפו',
     region: 'Tel Aviv District',
-    postalCode: '6522407',
+    postalCode: '6468104', // confirmed by Dan, Oct 2026
     country: 'IL',
     countryName: 'Israel',
   },
 
+  // The building itself (OpenStreetMap node 2079043539). Until Oct 2026 this
+  // held the generic centre of Tel Aviv, about 300m off.
   geo: {
-    latitude: 32.0853,
-    longitude: 34.7818,
+    latitude: 32.0833,
+    longitude: 34.7849,
   },
+
+  // Confirmed by Gal, Oct 2026. Feeds the FAQ and the JSON-LD priceRange.
+  price: { min: 350, max: 400, currency: '₪' },
+
+  // Follow-up session length, confirmed by Gal, Oct 2026. The first visit is
+  // always an hour, which the copy says in words ("שעה"). Feeds the FAQ and
+  // the first-visit section.
+  sessionMinutes: { followUpMin: 45, followUpMax: 60 },
+
+  // Languages Gal treats in. Schema.org names, for the JSON-LD contactPoint.
+  languages: ['Hebrew', 'English'],
+
+  // Where Gal makes home visits, confirmed Oct 2026. `en` feeds the JSON-LD
+  // areaServed, `he` the copy (through HOME_VISIT_AREAS_TEXT below).
+  homeVisitAreas: [
+    { he: 'תל אביב', en: 'Tel Aviv-Yafo' },
+    { he: 'רמת גן', en: 'Ramat Gan' },
+    { he: 'גבעתיים', en: 'Givatayim' },
+  ],
 
   // Single source: the JSON-LD, the contact panel, the FAQ and the
   // cancellation policy all derive from this (the last two through
@@ -70,6 +91,13 @@ export const SITE = {
     imageHeight: 630,
   },
 } as const;
+
+/** The home-visit areas as running text: "תל אביב, רמת גן וגבעתיים". */
+const homeVisitNames = SITE.homeVisitAreas.map((area) => area.he);
+export const HOME_VISIT_AREAS_TEXT =
+  homeVisitNames.length > 1
+    ? `${homeVisitNames.slice(0, -1).join(', ')} ו${homeVisitNames.at(-1)}`
+    : homeVisitNames[0];
 
 /** The opening hours as one line of running text, e.g. for an FAQ answer. */
 export const OPENING_HOURS_TEXT = SITE.openingHours

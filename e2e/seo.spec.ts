@@ -33,8 +33,8 @@ test.describe('SEO metadata', () => {
     expect(json, 'no LocalBusiness block').toBeTruthy();
     expect(json.telephone).toMatch(/^\+/);
     expect(json.address?.addressCountry).toBeTruthy();
-    // priceRange is intentionally omitted until Gal confirms one — see CLAUDE.md.
-    expect(json.priceRange).toBeUndefined();
+    // Confirmed by Gal in Oct 2026, and derived from SITE.price.
+    expect(json.priceRange).toMatch(/^₪\d+-\d+$/);
   });
 
   test('favicon and manifest links resolve', async ({ page, request }) => {

@@ -1,0 +1,83 @@
+---
+import { SITE } from '@data/site';
+
+// The three steps Gal confirmed in Oct 2026 as a fair description of a first
+// visit. Their wording first came from the retired v2 experiment
+// (source-assets/site-versions-v2-v3-retired), minus its dry-needling mention:
+// where dry needling goes on the homepage is still Gal's call.
+const steps = [
+  {
+    title: 'הקשבה ואבחון',
+    text: 'נתחיל בשיחה: מתי התחיל הכאב, מה הוא מונע מכם לעשות ומה המטרות שלכם. אחריה בדיקה גופנית שמחפשת את מקור הבעיה, ולא רק את המקום שכואב.',
+  },
+  {
+    title: 'טיפול ותנועה',
+    text: 'טיפול ידני לצד תרגול שמתחיל כבר במפגש הראשון, וממוקד במה שחשוב לכם לחזור לעשות.',
+  },
+  {
+    title: 'כלים להמשך',
+    text: 'תוכנית תרגול קצרה לבית והתאמות לשגרה, כדי שתצאו עם ביטחון ביכולת של הגוף שלכם ולא תהיו תלויים בטיפולים.',
+  },
+];
+---
+
+<section
+  id="first-visit"
+  aria-labelledby="first-visit-heading"
+  class="section-padding relative bg-neutral-50"
+>
+  <!-- relative + content at z-10: the house pattern, see About/Testimonials. -->
+  <div class="container-prose relative z-10">
+    <div class="mx-auto max-w-2xl text-center">
+      <p class="eyebrow text-xs font-semibold tracking-wide text-teal-600">איך זה עובד</p>
+      <h2
+        id="first-visit-heading"
+        class="font-heading heading-rule mt-3 text-3xl font-bold text-teal-700 md:text-4xl"
+      >
+        מה קורה בטיפול הראשון?
+      </h2>
+      <p class="mt-4 leading-relaxed text-balance text-neutral-600">
+        הטיפול הראשון נמשך שעה, כדי שיהיה זמן להכיר, לבדוק ולהתחיל&nbsp;לעבוד.
+      </p>
+    </div>
+
+    <!--
+      One list, two shapes. Below lg it is a vertical timeline: number disc at
+      the start edge, a hairline running down to the next disc. From lg it is
+      three columns and the hairline turns horizontal, running across the gap
+      to the next disc. The line is a pseudo-element on each step but the last,
+      so there is nothing to keep in sync with the step count.
+
+      The disc is apricot (--color-teal-300) with a graphite numeral, the same
+      pairing as .btn-primary: 10.37:1, and orange stays a fill.
+    -->
+    <ol
+      class="stagger-children mx-auto mt-12 grid max-w-md gap-y-10 lg:mt-16 lg:max-w-5xl lg:grid-cols-3 lg:gap-x-12"
+    >
+      {
+        steps.map((step, i) => (
+          <li class="relative grid grid-cols-[2.5rem_1fr] content-start gap-x-4 before:absolute before:start-5 before:top-13 before:-bottom-8 before:w-px before:bg-neutral-300 last:before:hidden lg:grid-cols-1 lg:gap-y-5 lg:before:start-14 lg:before:-end-10 lg:before:top-5 lg:before:bottom-auto lg:before:h-px lg:before:w-auto">
+            <span
+              aria-hidden="true"
+              class="font-heading flex h-10 w-10 items-center justify-center rounded-full bg-teal-300 text-lg font-bold text-teal-700"
+            >
+              {i + 1}
+            </span>
+            <div>
+              <h3 class="font-heading text-lg leading-snug font-bold text-neutral-900 lg:text-xl">
+                {step.title}
+              </h3>
+              <p class="mt-2 leading-relaxed text-neutral-600">{step.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <p class="mt-12 text-center text-sm text-neutral-600 lg:mt-16">
+      {
+        `טיפולי ההמשך נמשכים בין ${SITE.sessionMinutes.followUpMin} ל־${SITE.sessionMinutes.followUpMax} דקות.`
+      }
+    </p>
+  </div>
+</section>
