@@ -14,7 +14,13 @@ for (const path of pages) {
     // false-positive contrast failure.
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(path);
-    const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
+    // axe tags each rule with the WCAG version that introduced it, so 'wcag2aa'
+    // alone stops at 2.0 - the suite ran that way, under a 2.1 title, until
+    // Oct 2026. The 2.1 tags add the criteria that version brought in, mostly
+    // for phones (orientation, text spacing, input purpose).
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+      .analyze();
     expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
 }
