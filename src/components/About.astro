@@ -3,8 +3,15 @@ import { Image } from 'astro:assets';
 import aboutPhoto from '@assets/photos/about.jpg';
 ---
 
-<section id="about" aria-labelledby="about-heading" class="section-padding relative bg-neutral-50">
+<section id="about" aria-labelledby="about-heading" class="section-padding relative">
   <!--
+    No background, on purpose: the body is already --color-neutral-50. Hero's
+    lower glow disc runs past the hero's bottom edge, and an opaque fill here
+    painted over it and cut it along a straight line - a faint tangerine band
+    ending exactly at the seam, most visible on a phone. Without a fill the
+    glow fades out on its own blur. Don't "restore" bg-neutral-50 for
+    consistency with the other sections.
+
     relative + content at z-10: the house pattern, see Hero/Services/Quote/Contact.
     A section left at position:static has its content painted in the in-flow
     phase, which the whole of every POSITIONED sibling paints on top of - so
