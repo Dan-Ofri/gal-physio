@@ -94,17 +94,18 @@ import aboutPhoto from '@assets/photos/about.jpg';
       <!--
         Photo: row 2 on mobile, the right column above the quote from lg.
 
-        No height on purpose: the source is a tall portrait (104A8009 from the
+        No height on purpose: the source is a tall portrait (104A8007 from the
         Oct 2026 shoot, pre-edit). Setting both width and height makes Astro's
         sharp service crop it at build time with fit: cover / position: centre,
         and the object-position below would then have nothing left to position.
         The framing is not a named build-time position, so the whole portrait
         ships and the browser does the crop. The box is square below lg, at
-        85%: the ball, her hand on the bed and only a strip of window. Mobile
-        was 4:3 until Oct 2026, and a box that short could not hold her head and
-        the ball together (66% was the best it managed); square costs about 85px
-        of scroll at 390 and shows the whole scene. Re-check the 85% when the
-        photographer's edit lands.
+        45%: the window and its plants above her, the ball and the bed below.
+        This is a wider frame than the 104A8009 close-up it replaced, chosen
+        for showing the clinic around her; the cost is a smaller face and a
+        sliver of the wall poster at the photo's right edge, which a portrait source
+        cannot crop sideways. Re-check the 45% when the photographer's edit
+        lands.
 
         From lg the box fills grid rows 1-2 (about 496x468 at 1440, 432x525
         at 1024; see the grid comment above), so the image is absolutely
@@ -119,12 +120,12 @@ import aboutPhoto from '@assets/photos/about.jpg';
       >
         <Image
           src={aboutPhoto}
-          alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת בקליניקה ומחייכת"
+          alt="גל עופרי פיזיותרפיסטית מוסמכת יושבת על מיטת הטיפולים בקליניקה ומחייכת"
           width={480}
           widths={[400, 600, 800, 1100]}
           sizes="(min-width: 1024px) 496px, calc(100vw - 3rem)"
           loading="lazy"
-          class="block aspect-square w-full object-cover object-[center_85%] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
+          class="block aspect-square w-full object-cover object-[center_45%] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full"
         />
       </figure>
 
