@@ -22,16 +22,28 @@ import aboutPhoto from '@assets/photos/about.jpg';
   -->
   <div class="container-prose relative z-10">
     <!--
-      Three grid children, not two, because the photo sits in a different place
-      at each breakpoint and one element cannot be in two places. On mobile the
-      natural source order is the reading order: name, face, story, CTA - the
-      face arrives in the first scroll instead of after the CTA. From lg the
-      children are placed explicitly, which rebuilds the two-column layout:
-      photo in column 1 (the right one, since grid columns follow dir="rtl")
-      spanning both rows, heading and body stacked in column 2.
+      Five grid children, because the photo and the quote sit in different
+      places at each breakpoint and one element cannot be in two places. On
+      mobile the source order is the reading order: name, face, story, quote,
+      CTA - the face arrives in the first scroll, and the quote comes after
+      Gal has introduced herself. From lg the children are placed explicitly
+      into two columns (column 1 is the right one, since grid columns follow
+      dir="rtl"):
+
+        column 1: photo (rows 1-2, bottom-aligned), quote (row 3)
+        column 2: name (row 1), story (row 2), CTA (row 3)
+
+      The quote moved under the photo in Oct 2026 (Dan's call). In the text
+      column it made that column ~730px tall beside a 496px photo, leaving
+      ~117px of empty cream above and below the picture at 1440. Under the
+      photo the two columns come out within ~60px of each other, and her
+      words sit under her face. The photo is bottom-aligned so the two stay
+      one unit at every width; centred, they drift apart wherever the story
+      runs taller than the photo (1024px).
 
       Row gap is 0 from lg because the heading and the body are one continuous
-      text block there; the body's own mt-5 is the spacing.
+      text block there; the body's own mt-5 is the spacing, and the quote and
+      CTA carry lg:mt-8.
 
       No horizontal padding here: container-prose already insets by 1.5rem, and
       the text column used to add px-6 on top of that, which left this section's
@@ -67,7 +79,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
       </div>
 
       <!--
-        Photo: row 2 on mobile, the full-height right column from lg.
+        Photo: row 2 on mobile, the right column above the quote from lg.
 
         No height on purpose: the source is a tall portrait (104A8009 from the
         Oct 2026 shoot, pre-edit). Setting both width and height makes Astro's
@@ -82,7 +94,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
         photographer's edit lands.
       -->
       <figure
-        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-center lg:rounded-3xl"
+        class="shadow-card overflow-hidden rounded-2xl ring-1 ring-neutral-200/60 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:self-end lg:rounded-3xl"
       >
         <Image
           src={aboutPhoto}
@@ -95,7 +107,7 @@ import aboutPhoto from '@assets/photos/about.jpg';
         />
       </figure>
 
-      <!-- Story, credentials and CTA: row 3 on mobile, under the name from lg -->
+      <!-- Story: row 3 on mobile, under the name from lg -->
       <div class="text-start lg:col-start-2 lg:row-start-2">
         <!--
           Each sentence starts on its own line, like a personal letter (Oct
@@ -133,36 +145,6 @@ import aboutPhoto from '@assets/photos/about.jpg';
         </p>
 
         <!--
-          Gal's own sentence, approved by her in Oct 2026, wording revised with
-          her in the same month. A pull quote rather than a heading: regular
-          weight, a step up from body size, and an opening quotation mark in
-          tangerine as its only ornament. The mark is a fill, like the site's
-          discs and dots, so the text itself stays graphite. It was first marked
-          with the .heading-rule bar, which made it read as a new heading, and
-          before that with a coloured side border, a stock template tell.
-          The glyph is Lucide's "quote" drawn filled: an ornament, not an icon.
-        -->
-        <blockquote class="mt-9">
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            class="mb-2 h-6 w-6 text-teal-400"
-          >
-            <path
-              d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"
-            ></path>
-            <path
-              d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"
-            ></path>
-          </svg>
-          <p class="font-heading text-lg leading-relaxed font-normal text-teal-700 md:text-xl">
-            המטרה שלי היא לא שתישארו אצלי לתמיד, אלא שתצאו עם ההבנה, הכלים והביטחון לנוע בחופשיות
-            גם&nbsp;בלעדיי.
-          </p>
-        </blockquote>
-
-        <!--
           No credentials list here on purpose (removed Oct 2026). Its badges
           only repeated what this section already says: B.P.T and the
           gymnastics background sit under the name, and "graduate of the
@@ -170,28 +152,60 @@ import aboutPhoto from '@assets/photos/about.jpg';
           with qualifications the section does not already state (courses,
           certificates, licence number), confirmed by Gal.
         -->
+      </div>
 
-        <!-- CTA -->
-        <div class="mt-8 flex justify-start">
-          <a
-            href="#contact"
-            class="btn-primary"
-            aria-label="לתיאום ייעוץ ראשוני ופגישה ראשונה עם גל עופרי, פיזיותרפיסטית מוסמכת"
+      <!--
+        Quote: row 4 on mobile, under the photo from lg.
+
+        Gal's own sentence, approved by her in Oct 2026, wording revised with
+        her in the same month. A pull quote rather than a heading: regular
+        weight, a step up from body size, and an opening quotation mark in
+        tangerine as its only ornament. The mark is a fill, like the site's
+        discs and dots, so the text itself stays graphite. It was first marked
+        with the .heading-rule bar, which made it read as a new heading, and
+        before that with a coloured side border, a stock template tell.
+        The glyph is Lucide's "quote" drawn filled: an ornament, not an icon.
+      -->
+      <blockquote class="mt-1 text-start lg:col-start-1 lg:row-start-3 lg:mt-8 lg:self-start">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="mb-2 h-6 w-6 text-teal-400"
+        >
+          <path
+            d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"
+          ></path>
+          <path
+            d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"
+          ></path>
+        </svg>
+        <p class="font-heading text-lg leading-relaxed font-normal text-teal-700 md:text-xl">
+          המטרה שלי היא לא שתישארו אצלי לתמיד, אלא שתצאו עם ההבנה, הכלים והביטחון לנוע בחופשיות
+          גם&nbsp;בלעדיי.
+        </p>
+      </blockquote>
+
+      <!-- CTA: row 5 on mobile, under the story from lg -->
+      <div class="flex justify-start lg:col-start-2 lg:row-start-3 lg:mt-8 lg:self-start">
+        <a
+          href="#contact"
+          class="btn-primary"
+          aria-label="לתיאום ייעוץ ראשוני ופגישה ראשונה עם גל עופרי, פיזיותרפיסטית מוסמכת"
+        >
+          <svg
+            class="h-5 w-5 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
           >
-            <svg
-              class="h-5 w-5 shrink-0"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              aria-hidden="true"
-            >
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linejoin="round"></rect>
-              <path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"></path>
-            </svg>
-            לתיאום ייעוץ ראשוני
-          </a>
-        </div>
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-linejoin="round"></rect>
+            <path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"></path>
+          </svg>
+          לתיאום ייעוץ ראשוני
+        </a>
       </div>
     </div>
   </div>
