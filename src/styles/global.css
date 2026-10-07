@@ -370,15 +370,36 @@
     background-color: var(--color-teal-500);
   }
 
+  /* Two neighbouring sections stack their padding, so the gap a visitor sees
+     is twice this. It was 6rem/9rem until Oct 2026: ~192px of empty cream
+     between same-coloured sections on a phone, a quarter of the screen, which
+     read as the end of the page rather than a pause. Keep the doubled gap
+     clearly larger than the biggest gap inside a section (mt-14, 56px), or
+     the sections stop reading as separate. */
   .section-padding {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
   }
 
   @media (min-width: 768px) {
     .section-padding {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+  }
+
+  /* A page that opens on a padded section (the FAQ and policy pages) needs
+     its top padding to clear the fixed header first (~72px, ~88px from md),
+     so it keeps the old values there. The homepage opens on the hero, which
+     clears the header itself. `:first-of-type`, not `:first-child`: the FAQ's
+     JSON-LD <script> comes first in <main>. Guarded in navigation.spec.ts. */
+  main > section.section-padding:first-of-type {
+    padding-top: 6rem;
+  }
+
+  @media (min-width: 768px) {
+    main > section.section-padding:first-of-type {
       padding-top: 9rem;
-      padding-bottom: 9rem;
     }
   }
 
