@@ -1,24 +1,16 @@
 import puppeteer from 'puppeteer';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+// The section list, the viewports (mobile first) and the output names live in
+// one place, shared with the pruner and check:tidy.
+import { sections, viewports, shotName } from '../scripts/screenshots-layout.mjs';
+import { pruneScreenshots } from '../scripts/prune-screenshots.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const sections = [
-  { name: 'hero', selector: 'body' },
-  { name: 'services', selector: '#services' },
-  { name: 'about', selector: '#about' },
-  { name: 'testimonials', selector: '#testimonials' },
-  { name: 'contact', selector: '#contact' },
-  { name: 'footer', selector: 'footer[aria-label]' },
-];
-
-// Mobile-first: most visitors are on a phone (see CLAUDE.md), so mobile is captured
-// by default alongside desktop, not as an opt-in extra.
-const viewports = [
-  { key: 'mobile', width: 390, height: 844, deviceScaleFactor: 2 }, // iPhone 12/13/14-class
-  { key: 'desktop', width: 1440, height: 900, deviceScaleFactor: 1 },
-];
+// Clear out investigation folders nobody has touched in 30 days, so this
+// directory stays the size of the twelve files below. Prints what it removed.
+pruneScreenshots();
 
 const browser = await puppeteer.launch({
   headless: true,
@@ -72,7 +64,7 @@ for (const { key, width, height, deviceScaleFactor } of viewports) {
         );
         await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), absoluteY);
         await new Promise((r) => setTimeout(r, 500));
-        const outPath = join(__dirname, `${key}-${name}.png`);
+        const outPath = join(__dirname, shotName(key, name));
         await page.screenshot({ path: outPath });
         console.log(`✓ ${key}-${name}`);
       }

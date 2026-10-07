@@ -27,7 +27,7 @@ export default [
     },
   },
   {
-    files: ['screenshots/**/*.mjs'],
+    files: ['screenshots/**/*.mjs', 'scripts/**/*.mjs'],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },
     },
