@@ -1,27 +1,27 @@
 # screenshots/
 
-Everything here except the two `.mjs` scripts and this file is generated and
-git-ignored (`screenshots/**/*.png|jpg|svg|html`), and nothing in here is
-precious. Two rules keep it that way, and both are enforced by code rather than
-by memory.
+Everything here except `capture.mjs` and this file is generated and git-ignored
+(`screenshots/**/*.png|jpg|svg|html`), and nothing in here is precious. Two
+rules keep it that way, and both are enforced by code rather than by memory.
 
-## The top level belongs to the capture scripts
+## The top level belongs to the capture script
 
-`node screenshots/capture.mjs` writes exactly twelve files here, overwriting
+`node screenshots/capture.mjs` writes exactly fourteen files here, overwriting
 them on every run, so the top level never grows:
 
 ```
-mobile-hero.png   mobile-services.png   mobile-about.png
-mobile-testimonials.png   mobile-contact.png   mobile-footer.png
-desktop-hero.png  desktop-services.png  desktop-about.png
-desktop-testimonials.png  desktop-contact.png  desktop-footer.png
+mobile-hero.png      mobile-services.png   mobile-about.png    mobile-quote.png
+mobile-testimonials.png    mobile-contact.png    mobile-footer.png
+desktop-hero.png     desktop-services.png  desktop-about.png   desktop-quote.png
+desktop-testimonials.png   desktop-contact.png   desktop-footer.png
 ```
 
 Those are the canonical "what does the site look like right now" set, and the
-ones CLAUDE.md tells you to read after a visual change, mobile first.
-`quote_shot.mjs` adds `quote.png`. The list itself lives in
-`scripts/screenshots-layout.mjs`; `npm run check:tidy` fails on anything else
-at this level.
+ones CLAUDE.md tells you to read after a visual change, mobile first. Every
+section of the home page is in it: the quote joined in Oct 2026, having been
+covered until then by a separate desktop-only script, so it was never captured
+on a phone. The list lives in `scripts/screenshots-layout.mjs`;
+`npm run check:tidy` fails on anything else at this level.
 
 ## Every other render goes in a topic folder, and expires
 
