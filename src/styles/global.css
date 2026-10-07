@@ -90,10 +90,15 @@
 
   /* Display accent — the one orange allowed to carry type, and only type at
      24px+/18.66px+bold, where the threshold is 3:1 rather than 4.5:1.
-     3.43:1 on warm white ✅ large text only. Also the focused-field border,
-     where the same 3:1 applies because it is a UI component boundary.
+     3.30:1 on warm white ✅ large text only, and 3.11:1 ✅ on the darkest
+     pixel of the hero glow behind the mobile H1, which is the case that
+     sets the limit. Also the focused-field border, where the same 3:1
+     applies because it is a UI component boundary.
+     Same hue as --color-teal-500 (OKLCH h≈48°), darkened only as far as the
+     glow requires. It was #ea580c until Oct 2026: about as light, but at
+     h≈41° it leaned red and read as a third orange beside the tangerine.
      Do NOT use it for body copy, links, labels or button text. */
-  --color-brand-amber: #ea580c;
+  --color-brand-amber: #e36501;
   --color-brand-amber-hover: #c2410c; /* 4.99:1 on warm white ✅ */
 
   /* Third-party brand */
@@ -419,7 +424,7 @@
 
   .form-input:focus {
     outline: none;
-    border-bottom-color: var(--color-brand-amber); /* 3.43:1 on warm white ✅ (3:1 UI boundary) */
+    border-bottom-color: var(--color-brand-amber); /* 3.30:1 on warm white ✅ (3:1 UI boundary) */
     box-shadow: 0 1.5px 0 0 var(--color-brand-amber);
   }
 
