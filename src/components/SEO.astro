@@ -89,6 +89,13 @@ const websiteJsonLd = {
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
+<!--
+  Google Search Console ownership. Not a secret: the token only proves that
+  whoever added it controls the page. It belongs to the owner's Google account,
+  not to an address, so it keeps verifying when the real domain is connected.
+  Removing it un-verifies the property.
+-->
+<meta name="google-site-verification" content="osdWhC4kADC2FmrdRjT0B_dh06vg5YUZgwyCaNMYyGo" />
 
 <!-- OpenGraph -->
 <meta property="og:type" content={type} />
