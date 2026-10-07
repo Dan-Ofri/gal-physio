@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE } from '@data/site';
+import { SITE, HOME_VISIT_AREAS_TEXT } from '@data/site';
 // Oct 2026 shoot, pre-edit: 104A8081, the empty treatment room.
 import contactBg from '@assets/photos/contact-bg.jpg';
 
@@ -29,6 +29,9 @@ const contactItems = [
     value: `${SITE.address.street}, ${SITE.address.cityHebrew}`,
     href: `https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`,
     ariaLabel: `פתח מפה: ${SITE.address.street}, ${SITE.address.cityHebrew}`,
+    // Gal also treats at the patient's home (confirmed Oct 2026), so the
+    // address is where the clinic is, not the only place treatment happens.
+    note: `וגם טיפולי בית ב${HOME_VISIT_AREAS_TEXT}`,
     iconPath: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
   },
 ];
@@ -115,6 +118,7 @@ const contactItems = [
                     >
                       {item.value}
                     </a>
+                    {item.note && <p class="mt-0.5 text-sm text-white/85">{item.note}</p>}
                   </div>
                 </div>
               ))
@@ -248,7 +252,7 @@ const contactItems = [
           </div>
           <h3 class="font-heading text-xl font-bold text-neutral-900">הפנייה נשלחה!</h3>
           <p class="mt-2 text-sm leading-relaxed text-balance text-neutral-600">
-            נחזור אליכם תוך יום עסקים אחד.<br />לתגובה מהירה יותר, שלחו הודעה בוואטסאפ.
+            נחזור אליכם תוך 3 ימי עסקים.<br />לתגובה מהירה יותר, שלחו הודעה בוואטסאפ.
           </p>
           <a
             href={SITE.whatsappUrl}

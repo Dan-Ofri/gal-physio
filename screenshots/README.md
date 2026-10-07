@@ -6,14 +6,14 @@ rules keep it that way, and both are enforced by code rather than by memory.
 
 ## The top level belongs to the capture script
 
-`node screenshots/capture.mjs` writes exactly fourteen files here, overwriting
+`node screenshots/capture.mjs` writes exactly sixteen files here, overwriting
 them on every run, so the top level never grows:
 
 ```
 mobile-hero.png      mobile-services.png   mobile-about.png    mobile-quote.png
-mobile-testimonials.png    mobile-contact.png    mobile-footer.png
+mobile-testimonials.png    mobile-first-visit.png    mobile-contact.png    mobile-footer.png
 desktop-hero.png     desktop-services.png  desktop-about.png   desktop-quote.png
-desktop-testimonials.png   desktop-contact.png   desktop-footer.png
+desktop-testimonials.png   desktop-first-visit.png   desktop-contact.png   desktop-footer.png
 ```
 
 Those are the canonical "what does the site look like right now" set, and the

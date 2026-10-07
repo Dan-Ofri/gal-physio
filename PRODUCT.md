@@ -16,13 +16,15 @@ The site presents Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv, and 
 
 ## Positioning
 
-Undecided — not yet confirmed with the practitioner. The existing copy leans on Gal's personal history as a former competitive gymnast who went through injury and rehab herself, and a stated "whole person" philosophy (habits, mind, and the body's own capacity to heal) alongside personalized, ongoing care. The site owner explicitly did not confirm this as the actual competitive differentiator vs. other Tel Aviv clinics — confirm with Gal before treating it as the lead positioning claim.
+Confirmed by Gal in Oct 2026. The existing copy (her history as a former competitive gymnast who went through injury and rehab herself, the "whole person" philosophy, personalized ongoing care) is broadly right. What she added, and what new copy should lean on, is **function and self-efficacy**: the work is aimed at what the patient can do in daily life, and at their sense that they are capable of doing it themselves, not at the painful spot alone and not at keeping them in treatment. Her approved About quote says exactly this ("המטרה שלי אינה שתישארו אצלי לעולם…"), and step 3 of the first-visit section ("כלים להמשך") carries it too.
 
-Price positioning is also unconfirmed — the site's JSON-LD (`SEO.astro`) previously carried a guessed `priceRange: "$$"`; removed until Gal confirms an actual value (this is a public-facing claim Google can surface, not just internal copy).
+Price: 350–400 ₪ per session, confirmed by Gal in Oct 2026. Published in the FAQ and as the JSON-LD `priceRange`, both from `SITE.price` in `src/data/site.ts`.
+
+Session length: the first visit is always an hour, follow-ups 45–60 minutes. Treatment is offered in Hebrew and English. Gal holds a formal dry-needling certification; it is a secondary skill, and where it appears on the homepage is still her decision.
 
 ## Operating Context
 
-Physical clinic at Bloch 38, Tel Aviv-Yafo. Hours: Mon–Thu 08:00–19:00, Fri 08:00–14:00. Contact channels: phone, WhatsApp, on-site contact form, Instagram.
+Physical clinic at Bloch 38, Tel Aviv-Yafo, **and home visits** at the patient's home (confirmed Oct 2026; service area not yet stated). Gal's written procedures for both, approved by her, are the source for the cancellation policy (24h free, later cancellation charged 50%, illness never charged, same for clinic and home) and payment methods (cash, bank transfer, PayBox). Hours: Sun–Thu 08:00–19:00, Fri 08:00–14:00 (`SITE.openingHours` is the source). Contact channels: phone, WhatsApp, on-site contact form, Instagram.
 
 **Mobile is the primary device.** The site owner confirmed most visitors arrive on a phone. Mobile is not a secondary breakpoint to check after desktop — it is the primary experience every design/UX decision should be evaluated against first (layout, tap targets, load performance, copy length, form usability, animation cost on lower-end devices).
 
@@ -30,7 +32,7 @@ Physical clinic at Bloch 38, Tel Aviv-Yafo. Hours: Mon–Thu 08:00–19:00, Fri 
 
 Static site (Astro), no backend/CMS — content updates require code changes. No online booking; conversion happens through manual contact (phone/WhatsApp/form).
 
-**The contact form is not live yet** — it posts to Web3Forms but with a placeholder access key, so real submissions currently fail (see `CLAUDE.md` → Known issues). Until a real key is configured, phone and WhatsApp are the only contact channels that actually reach Gal.
+The contact form posts to Web3Forms and has worked end to end since Sep 2026 (see `CLAUDE.md` → Known issues). The success message promises a reply within 3 business days, which is Gal's own figure.
 
 ## Brand Commitments
 
@@ -38,7 +40,7 @@ Name: גל עופרי פיזיותרפיה (Gal Ofri Physiotherapy). Language: H
 
 ## Evidence on Hand
 
-Real photos of Gal and the clinic (being integrated, `src/assets/`). Service content: orthopedic rehab, sports rehab & performance, preventive physiotherapy. Policy pages: accessibility, privacy, cancellation. No patient testimonials/reviews are documented on the site currently — do not fabricate any.
+Real photos of Gal and the clinic from the October 2026 shoot (`src/assets/photos/`). Service content: orthopedic rehab, sports rehab & performance, preventive physiotherapy. Policy pages: accessibility, privacy, cancellation, plus an FAQ. Testimonials are three real Google reviews, quoted verbatim in `Testimonials.astro`; never fabricate or edit one.
 
 ## Product Principles
 

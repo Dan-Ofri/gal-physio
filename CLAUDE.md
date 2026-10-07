@@ -11,7 +11,7 @@ Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Ast
 - **Astro 7** (`.astro` components/pages), **Tailwind v4** via `@tailwindcss/vite` (config lives in `src/styles/global.css` under `@theme`, not a `tailwind.config.js`), strict TypeScript.
 - Path aliases (`tsconfig.json`): `@components/*`, `@layouts/*`, `@styles/*`, `@data/*`, `@assets/*`. Use these, not relative `../` chains; `src/` has none left.
 - `src/data/site.ts` is the single source of truth for site-wide facts — phone, WhatsApp link, address, opening hours, socials, OG image. Never hardcode these values in a component; import from `@data/site`.
-- `src/components/` — one component per section (`Hero`, `About`, `Services`, `Quote`, `Testimonials`, `Contact`, `Nav`, `Footer`, `SEO`). `src/layouts/BaseLayout.astro` wraps every page and owns the `<html lang="he" dir="rtl">`, skip-link, and scroll-reveal `IntersectionObserver` script.
+- `src/components/` — one component per section (`Hero`, `About`, `Services`, `Quote`, `Testimonials`, `FirstVisit`, `Contact`, `Nav`, `Footer`, `SEO`). `src/layouts/BaseLayout.astro` wraps every page and owns the `<html lang="he" dir="rtl">`, skip-link, and scroll-reveal `IntersectionObserver` script.
 - `src/pages/` — `index.astro` plus standalone pages: `faq` and the legal ones (`privacy`, `accessibility`, `cancellation`).
 - `scripts/` — repo maintenance, not site code: `check-tidy.mjs` (the CI check behind "Housekeeping" below), `prune-screenshots.mjs`, and `screenshots-layout.mjs`, the one definition of what `screenshots/capture.mjs` writes.
 
@@ -133,11 +133,11 @@ crops a re-framed photo just as badly, and the symptom looks identical.
 
 ## Visual QA
 
-`screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#quote`, `#testimonials`, `#contact`, `footer[aria-label]`; the list is in `scripts/screenshots-layout.mjs`), and screenshots each at two viewports — **mobile (390×844) first, then desktop (1440×900)** — into `screenshots/mobile-*.png` and `screenshots/desktop-*.png`.
+`screenshots/capture.mjs` drives headless **Puppeteer** against a running `npm run dev` server, scrolls to each section (`#services`, `#about`, `#quote`, `#testimonials`, `#first-visit`, `#contact`, `footer[aria-label]`; the list is in `scripts/screenshots-layout.mjs`), and screenshots each at two viewports — **mobile (390×844) first, then desktop (1440×900)** — into `screenshots/mobile-*.png` and `screenshots/desktop-*.png`.
 
 - After any visual/layout change, start the dev server, run `node screenshots/capture.mjs`, and actually look at the resulting PNGs (via Read) before calling the change done — check `mobile-*` first per the mobile-first priority above, not just `desktop-*`.
 - `capture.mjs` is tracked source (real tooling); the PNGs they generate (`screenshots/*.png`) are git-ignored output, and excluded from Claude's own context via `.claudeignore`.
-- **The top level of `screenshots/` belongs to `capture.mjs` and nothing else.** Its fourteen files are overwritten every run, so that directory never grows. Every other render — variant sweeps, transition frames, candidate comparisons — goes in a subfolder named after what is being investigated (`header/`, `cta/`). **Those folders expire**: one untouched for 30 days is deleted the next time `capture.mjs` runs, so anything worth keeping goes to `../GalOfriPhysiotherapy-source-assets/` instead. `screenshots/README.md` has the full convention. Ad-hoc measurement scripts are named `.<name>.tmp.mjs` and deleted when done.
+- **The top level of `screenshots/` belongs to `capture.mjs` and nothing else.** Its sixteen files are overwritten every run, so that directory never grows. Every other render — variant sweeps, transition frames, candidate comparisons — goes in a subfolder named after what is being investigated (`header/`, `cta/`). **Those folders expire**: one untouched for 30 days is deleted the next time `capture.mjs` runs, so anything worth keeping goes to `../GalOfriPhysiotherapy-source-assets/` instead. `screenshots/README.md` has the full convention. Ad-hoc measurement scripts are named `.<name>.tmp.mjs` and deleted when done.
 - For interactive iteration on a specific section's design (not just a static check), prefer Impeccable's `live` mode over extending `capture.mjs` — it already does real-browser, HMR-backed variant iteration; don't reinvent that in the Puppeteer script.
 
 ## Housekeeping

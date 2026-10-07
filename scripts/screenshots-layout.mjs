@@ -8,6 +8,7 @@ export const sections = [
   { name: 'about', selector: '#about' },
   { name: 'quote', selector: '#quote' },
   { name: 'testimonials', selector: '#testimonials' },
+  { name: 'first-visit', selector: '#first-visit' },
   { name: 'contact', selector: '#contact' },
   { name: 'footer', selector: 'footer[aria-label]' },
 ];
