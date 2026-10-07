@@ -3,7 +3,11 @@ export const SITE = {
   tagline: 'חזרה לתנועה מלאה, בהתאמה אישית אליך',
   description:
     'גל עופרי, פיזיותרפיסטית מוסמכת B.P.T בתל אביב. שיקום ספורט, טיפול בכאב ופציעות אורטופדיות, ליווי אישי לכל שלב בחיים.',
-  url: 'https://www.galofri-physio.co.il',
+  // TEMPORARY: the live Vercel address, so link previews (og:image) and
+  // canonical URLs work before the real domain is connected. When
+  // www.galofri-physio.co.il points at Vercel, switch back here, in
+  // astro.config.mjs (site) and in public/robots.txt (Sitemap line).
+  url: 'https://gal-physio.vercel.app',
   locale: 'he_IL',
 
   // ── Contact ──────────────────────────────────────────────────────────────
