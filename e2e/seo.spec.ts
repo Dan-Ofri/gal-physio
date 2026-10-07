@@ -47,4 +47,17 @@ test.describe('SEO metadata', () => {
       expect(res.ok(), `${selector} -> ${href} returned ${res.status()}`).toBeTruthy();
     }
   });
+
+  test('every manifest icon resolves, and the browser-default favicon.ico exists', async ({
+    request,
+  }) => {
+    const manifest = await (await request.get('/site.webmanifest')).json();
+    const icons: { src: string; purpose?: string }[] = manifest.icons;
+    // Without a maskable icon, Android shrinks the "any" one onto a white plate.
+    expect(icons.some((i) => i.purpose === 'maskable')).toBe(true);
+    for (const src of [...icons.map((i) => i.src), '/favicon.ico']) {
+      const res = await request.get(src);
+      expect(res.ok(), `${src} returned ${res.status()}`).toBeTruthy();
+    }
+  });
 });
