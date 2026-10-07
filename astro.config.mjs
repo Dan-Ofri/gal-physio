@@ -3,7 +3,8 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://www.galofri-physio.co.il',
+  // TEMPORARY: see the note on SITE.url in src/data/site.ts.
+  site: 'https://gal-physio.vercel.app',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],
