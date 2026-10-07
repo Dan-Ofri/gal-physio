@@ -69,4 +69,21 @@ test.describe('Navigation', () => {
       'inert was left behind after closing the menu'
     ).toHaveCount(0);
   });
+
+  // These pages open on a `.section-padding` section, and its top padding is
+  // all that keeps the first line out from under the fixed header. The shared
+  // padding is smaller than the header's height on a phone, so global.css
+  // restores it for the first section — once by `:first-child`, which missed
+  // the FAQ because its JSON-LD <script> comes first in <main>.
+  for (const path of ['/faq', '/privacy', '/accessibility', '/cancellation']) {
+    test(`${path} starts below the fixed header`, async ({ page }) => {
+      await page.goto(path);
+      const gap = await page.evaluate(() => {
+        const header = document.getElementById('site-header')!.getBoundingClientRect();
+        const first = document.querySelector('main section a, main section h1')!;
+        return first.getBoundingClientRect().top - header.bottom;
+      });
+      expect(gap, 'first line of the page sits under the header').toBeGreaterThanOrEqual(16);
+    });
+  }
 });
