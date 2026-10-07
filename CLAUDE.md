@@ -108,8 +108,8 @@ build-time equivalent - `position` only takes named values (`top`/`centre`/
 the full image, so the arithmetic only closes if the whole portrait ships.
 
 Today that applies to `Hero.astro` (`object-[center_40%]`), `About.astro`
-(`object-[center_85%]`) and two of the three service cards in `Services.astro`
-(62% and 38%; the third is `object-center`). All four ship without `height`.
+(`object-[center_45%]`) and two of the three service cards in `Services.astro`
+(62% and 40%; the third is `object-center`). All four ship without `height`.
 `Services.astro` derives `height` from `imagePosition`, so a card that moves to
 or from `object-center` picks the right mode by itself.
 
