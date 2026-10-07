@@ -68,69 +68,67 @@ import { SITE } from '@data/site';
 
         <section>
           <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">2. תכונות הנגישות</h2>
-          <p class="mb-5">האתר כולל מגוון התאמות המיושמות ברמת הקוד:</p>
+          <!--
+            Written for the people this page serves, not for developers: each item
+            says what the visitor gets, in Hebrew, with no attribute names. Until
+            Oct 2026 it listed aria-modal, inert, prefers-reduced-motion and the
+            like in code type. Every claim here is checked against the code: the
+            skip link and <main id="main-content"> in BaseLayout, Escape and the
+            inert backdrop in Nav, focus on the first invalid field in Contact.
+          -->
+          <p class="mb-5">באתר שולבו ההתאמות הבאות:</p>
 
           <div class="space-y-6">
             <div>
               <p class="mb-2 text-sm font-semibold text-neutral-800">ניווט ומבנה</p>
               <ul class="list-inside list-disc space-y-2 text-sm">
-                <li>ניווט מלא במקלדת בלבד: ללא צורך בעכבר</li>
-                <li>קישור דילוג לתוכן הראשי (Skip to main content) בראש כל עמוד</li>
-                <li>כותרות מסודרות בהיררכיה ברורה (H1–H3) בכל עמוד</li>
+                <li>אפשר לגלוש בכל האתר באמצעות המקלדת בלבד, בלי עכבר.</li>
                 <li>
-                  HTML סמנטי עם <code class="rounded bg-neutral-100 px-1 text-xs"
-                    >lang="he" dir="rtl"</code
-                  >
+                  בראש כל עמוד יש קישור "דלג לתוכן הראשי", שמאפשר לעבור ישר לתוכן בלי לעבור שוב על
+                  התפריט.
+                </li>
+                <li>
+                  לכל עמוד יש מבנה כותרות מסודר והיררכי, שמקל על התמצאות ודילוג בין חלקי העמוד.
+                </li>
+                <li>
+                  שפת האתר וכיוון הכתיבה מוגדרים כעברית מימין לשמאל, כך שקוראי מסך מקריאים את התוכן
+                  בעברית.
                 </li>
               </ul>
             </div>
 
             <div>
-              <p class="mb-2 text-sm font-semibold text-neutral-800">קוראי מסך</p>
+              <p class="mb-2 text-sm font-semibold text-neutral-800">התאמה לקוראי מסך</p>
               <ul class="list-inside list-disc space-y-2 text-sm">
                 <li>
-                  בנייה לפי כללי ARIA landmark roles ותוויות נגישות לאורך כל האתר, לתמיכה בקוראי מסך
-                  נפוצים (כגון NVDA, VoiceOver, TalkBack)
-                </li>
-                <li>תיאורי alt לכל התמונות</li>
-                <li>
-                  ניהול פוקוס בתפריט הנייד עם <code class="rounded bg-neutral-100 px-1 text-xs"
-                    >aria-modal</code
-                  > ו-<code class="rounded bg-neutral-100 px-1 text-xs">inert</code>
+                  אזורי העמוד (תפריט, תוכן ראשי ותחתית העמוד) מסומנים, ולכל כפתור וקישור יש תווית
+                  ברורה. ההתאמות מיועדות לקוראי המסך הנפוצים, כמו NVDA, VoiceOver ו־TalkBack.
                 </li>
                 <li>
-                  הודעות שגיאה בטפסים עם <code class="rounded bg-neutral-100 px-1 text-xs"
-                    >aria-live</code
-                  >, <code class="rounded bg-neutral-100 px-1 text-xs">aria-invalid</code>, ו-<code
-                    class="rounded bg-neutral-100 px-1 text-xs">aria-describedby</code
-                  >
+                  לכל תמונה שמוסיפה מידע יש תיאור מילולי. תמונות שנועדו לעיצוב בלבד מוסתרות מקוראי
+                  המסך.
                 </li>
                 <li>
-                  תפריט נייד עם <code class="rounded bg-neutral-100 px-1 text-xs"
-                    >aria-expanded</code
-                  >, <code class="rounded bg-neutral-100 px-1 text-xs">aria-controls</code>, ועצירה
-                  ב-Escape
+                  בטלפון, כשתפריט הניווט פתוח, קורא המסך יודע שהוא פתוח, המיקוד נשאר בתוך התפריט,
+                  ואפשר לסגור אותו גם במקש Escape.
+                </li>
+                <li>
+                  בטופס יצירת הקשר, הודעות השגיאה מוקראות מיד ומשויכות לשדה שבו הן נמצאות, והסמן
+                  עובר לשדה הראשון שדורש תיקון.
                 </li>
               </ul>
             </div>
 
             <div>
-              <p class="mb-2 text-sm font-semibold text-neutral-800">עיצוב ותנועה</p>
+              <p class="mb-2 text-sm font-semibold text-neutral-800">תצוגה ותנועה</p>
               <ul class="list-inside list-disc space-y-2 text-sm">
-                <li>ניגוד צבעים ברמת WCAG AA, ובחלק מהרכיבים ברמת AAA</li>
+                <li>ניגודיות הצבעים עומדת ברמה AA, ובחלק מהרכיבים גם ברמה AAA, הגבוהה ביותר.</li>
                 <li>
-                  טקסט תוכן עיקרי בגודל 14px ומעלה, עם גמישות מלאה לזום דפדפן; רכיבי משנה (תוויות
-                  ניווט, קרדיטים) עשויים להיות קטנים יותר
+                  טקסט התוכן בגודל 14 פיקסלים לפחות, ואפשר להגדיל את התצוגה בעזרת הזום של הדפדפן.
+                  רכיבי משנה, כמו תוויות קטנות וקרדיטים, עשויים להיות קטנים יותר.
                 </li>
-                <li>
-                  עיצוב <code class="rounded bg-neutral-100 px-1 text-xs">focus-visible</code> מובהק על
-                  כל הרכיבים האינטראקטיביים
-                </li>
-                <li>
-                  תמיכה ב-<code class="rounded bg-neutral-100 px-1 text-xs"
-                    >prefers-reduced-motion</code
-                  >: האנימציות מבוטלות לפי הגדרת המשתמש
-                </li>
+                <li>בגלישה במקלדת, הרכיב שנמצא כרגע במיקוד מסומן במסגרת בולטת.</li>
+                <li>מי שהגדיר במכשיר "הפחתת תנועה" יקבל את האתר בלי אנימציות.</li>
               </ul>
             </div>
           </div>
@@ -191,14 +189,19 @@ import { SITE } from '@data/site';
 
         <section>
           <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">
-            6. גורם אחראי ותאריך בדיקה
+            6. גורם אחראי ובדיקות נגישות
           </h2>
           <p>
             הגורם האחראי לנגישות: <strong class="font-semibold text-neutral-800">גל עופרי</strong>,
             פיזיותרפיסטית מוסמכת.<br />
-            תאריך בדיקת נגישות אוטומטית אחרונה: <strong class="font-semibold text-neutral-800"
-              >ספטמבר 2026</strong
-            >. בדיקה ידנית מקיפה עם קורא מסך טרם בוצעה.<br />
+            <!--
+              Not a date: the axe suite in e2e/accessibility.spec.ts runs on every
+              push, and the deploy job waits for it, so a version that fails it
+              never reaches production. A month written here went stale on the
+              first update after it.
+            -->
+            בדיקת נגישות אוטומטית מתבצעת בכל עדכון של האתר, ועדכון שלא עובר אותה אינו עולה לאוויר. בדיקה
+            ידנית מקיפה עם קורא מסך טרם בוצעה.<br />
             הצהרה זו הוכנה בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג–2013.
           </p>
         </section>
