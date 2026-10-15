@@ -51,6 +51,15 @@ jobs:
 
       - run: npm run build
 
+      # The Cloudflare deploy job ships exactly this build, so what was tested
+      # is what goes out, and the site is not built a second time.
+      - name: Keep the built site for the deploy job
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: dist/
+          retention-days: 1
+
       # No cache step and no install step: the image already has chromium,
       # firefox and webkit, and their system dependencies.
       #
@@ -122,3 +131,49 @@ jobs:
             echo "::error::Deploy hook returned HTTP $status"
             exit 1
           fi
+
+  # Cloudflare hosting, built beside the Vercel deploy above while the move is
+  # in progress. It ships the build `verify` tested, behind the same gate, and
+  # skips (a warning, not a red run) until the CLOUDFLARE_API_TOKEN repository
+  # secret exists. Create that token from the "Edit Cloudflare Workers"
+  # template at dash.cloudflare.com/profile/api-tokens; like the Vercel hook it
+  # must never be pasted into a file, a commit or a chat.
+  deploy-cloudflare:
+    name: Deploy to Cloudflare
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+
+      - name: Check the API token is set
+        id: token
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN is not set, so nothing was deployed to Cloudflare."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # dist/_headers carries the security policy; it is written from
+      # vercel.json so the policy has one source while both hosts run.
+      - name: Write the security headers
+        if: steps.token.outputs.skip != 'true'
+        run: node scripts/cloudflare-headers.mjs
+
+      # Pinned: this runs with a token that can publish the site.
+      - name: Deploy
+        if: steps.token.outputs.skip != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: npx --yes wrangler@4.151.0 deploy

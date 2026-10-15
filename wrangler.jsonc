@@ -1,0 +1,14 @@
+{
+  // Cloudflare hosting for the static build in dist/. There is no Worker script:
+  // `assets` alone serves the files. Headers come from dist/_headers, which
+  // scripts/cloudflare-headers.mjs writes from vercel.json after the build, so
+  // the security policy still has one source.
+  "name": "gal-physio",
+  // An identifier, not a credential. Naming it spares the deploy token the
+  // permission it would need to look the account up.
+  "account_id": "fee9ec7ad61ae2deecf260f7511afe4b",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+  },
+}
