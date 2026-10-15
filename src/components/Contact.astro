@@ -42,17 +42,20 @@ const contactItems = [
   aria-labelledby="contact-heading"
   class="section-padding relative overflow-hidden"
 >
-  <!-- Full-bleed background image + dark overlay -->
+  <!-- Full-bleed background image + dark overlay. No height on purpose: the
+       source is a portrait, and a width + height pair would pre-crop it to a
+       1440x900 strip at build time, which the tall mobile section then
+       enlarged about 4x into brown mush. Shipping the whole portrait lets
+       object-cover show the room itself, with the position choosing the band. -->
   <div class="absolute inset-0" aria-hidden="true">
     <Image
       src={contactBg}
       alt=""
       width={1440}
-      height={900}
-      widths={[640, 1024, 1440, 1920]}
+      widths={[640, 1024, 1440]}
       sizes="100vw"
       loading="lazy"
-      class="h-full w-full object-cover object-center"
+      class="h-full w-full object-cover object-[40%_55%]"
     />
     <!-- 76%, set by the 12px white/85 labels (4.5:1): they measure 6.16:1
          against the brightest pixel behind them. 70% is the floor, at 5.22:1;
