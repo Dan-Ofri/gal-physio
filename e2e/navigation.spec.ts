@@ -86,4 +86,18 @@ test.describe('Navigation', () => {
       expect(gap, 'first line of the page sits under the header').toBeGreaterThanOrEqual(16);
     });
   }
+
+  // Cloudflare answers /faq with a 307 to /faq/, because the built pages are
+  // directories. Every internal link that omits the slash costs a visitor a
+  // round trip, on a phone, for nothing. The sitemap and canonical already use it.
+  for (const path of ['/', '/faq/', '/privacy/', '/accessibility/', '/cancellation/']) {
+    test(`${path} links to other pages with a trailing slash`, async ({ page }) => {
+      await page.goto(path);
+      const hrefs = await page
+        .locator('a[href^="/"]')
+        .evaluateAll((links) => links.map((a) => a.getAttribute('href') ?? ''));
+      const bare = hrefs.filter((h) => !/\/(?:[#?].*)?$/.test(h));
+      expect(bare, 'internal links without a trailing slash').toEqual([]);
+    });
+  }
 });
