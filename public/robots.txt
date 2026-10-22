@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+# The short WhatsApp link only redirects; it has nothing to index.
+Disallow: /wa$
 
 Sitemap: https://physiog.co.il/sitemap-index.xml
