@@ -1,0 +1,14 @@
+{
+  // The www redirect. Its own Worker, separate from the site in ../wrangler.jsonc,
+  // so a mistake here cannot take the site down. Deploy by hand after a change:
+  //   npx wrangler@4.151.0 deploy --config redirect-www/wrangler.jsonc
+  // CI does not deploy it: attaching a custom domain needs a zone permission the
+  // CI token deliberately lacks.
+  "name": "gal-physio-www",
+  "account_id": "fee9ec7ad61ae2deecf260f7511afe4b",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "www.physiog.co.il", "custom_domain": true }],
+}

@@ -33,6 +33,13 @@ export default [
     },
   },
   {
+    // A Cloudflare Worker: Request, Response and URL are runtime globals there.
+    files: ['redirect-www/**/*.js'],
+    languageOptions: {
+      globals: { ...globals.browser },
+    },
+  },
+  {
     files: ['**/*.astro'],
     plugins: { 'jsx-a11y': pluginJsxA11y },
     settings: {
