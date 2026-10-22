@@ -11,4 +11,8 @@
   "assets": {
     "directory": "./dist",
   },
+  // The apex is canonical. Wrangler creates the DNS record and the certificate.
+  // www is not attached here: a custom domain cannot redirect, that is a
+  // Redirect Rule in the Cloudflare dashboard.
+  "routes": [{ "pattern": "physiog.co.il", "custom_domain": true }],
 }
