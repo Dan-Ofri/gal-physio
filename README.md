@@ -2,7 +2,7 @@
 
 Marketing site for Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv. Hebrew, RTL, static — built with [Astro](https://astro.build) and [Tailwind CSS v4](https://tailwindcss.com).
 
-🔗 Live at [gal-physio.vercel.app](https://gal-physio.vercel.app) until the domain [www.galofri-physio.co.il](https://www.galofri-physio.co.il) is connected.
+🔗 Live at [physiog.co.il](https://physiog.co.il).
 
 ## Stack
 

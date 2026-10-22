@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gal-physio.vercel.app/sitemap-index.xml
+Sitemap: https://physiog.co.il/sitemap-index.xml

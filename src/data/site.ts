@@ -6,11 +6,9 @@ export const SITE = {
     // Latin run like "B.P.T" on its own and WhatsApp scrambled it. The degree
     // stays on the page itself, where the markup controls its direction.
     'פיזיותרפיסטית מוסמכת בתל אביב: שיקום אחרי פציעות וניתוחים, שיקום ספורטאים ופיזיותרפיה מניעתית, בליווי אישי בכל שלב.',
-  // TEMPORARY: the live Vercel address, so link previews (og:image) and
-  // canonical URLs work before the real domain is connected. When
-  // www.galofri-physio.co.il points at Vercel, switch back here, in
-  // astro.config.mjs (site) and in public/robots.txt (Sitemap line).
-  url: 'https://gal-physio.vercel.app',
+  // The apex, no www: it is the canonical address. Also set in astro.config.mjs
+  // (site) and public/robots.txt (Sitemap line).
+  url: 'https://physiog.co.il',
   locale: 'he_IL',
 
   // ── Contact ──────────────────────────────────────────────────────────────
