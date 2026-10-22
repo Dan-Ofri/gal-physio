@@ -5,6 +5,13 @@
       "main": false
     }
   },
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://physiog.co.il/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
