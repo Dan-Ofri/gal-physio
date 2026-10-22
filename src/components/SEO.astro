@@ -91,12 +91,13 @@ const websiteJsonLd = {
 <link rel="canonical" href={canonicalUrl} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 <!--
-  Google Search Console ownership. Not a secret: the token only proves that
-  whoever added it controls the page. It belongs to the owner's Google account,
-  not to an address, so it keeps verifying when the real domain is connected.
-  Removing it un-verifies the property.
+  Google Search Console ownership, one token per property. Not a secret: a token
+  only proves that whoever added it controls the page. The first belongs to the
+  old gal-physio.vercel.app property, the second to https://physiog.co.il/.
+  Removing either un-verifies its property.
 -->
 <meta name="google-site-verification" content="osdWhC4kADC2FmrdRjT0B_dh06vg5YUZgwyCaNMYyGo" />
+<meta name="google-site-verification" content="WrnaOnAtUqobXm2NT3ffzef9ICug1PpD5AL59z7-6-E" />
 
 <!-- OpenGraph -->
 <meta property="og:type" content={type} />
