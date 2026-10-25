@@ -26,7 +26,7 @@ Session length: the first visit is always an hour, follow-ups 45–60 minutes. T
 
 ## Operating Context
 
-Physical clinic at Bloch 38, Tel Aviv-Yafo, **and home visits** at the patient's home (confirmed Oct 2026; service area not yet stated). Gal's written procedures for both, approved by her, are the source for the cancellation policy (24h free, later cancellation charged 50%, illness never charged, same for clinic and home) and payment methods (cash, bank transfer, PayBox). Hours: Sun–Thu 08:00–19:00, Fri 08:00–14:00 (`SITE.openingHours` is the source). Contact channels: phone, WhatsApp, on-site contact form, Instagram.
+Physical clinic at Bloch 38, Tel Aviv-Yafo, **and home visits** at the patient's home (confirmed Oct 2026; service area not yet stated). Gal's written procedures for both, approved by her, are the source for the cancellation policy (24h free, later cancellation charged 50%, illness never charged, same for clinic and home) and payment methods (cash, bank transfer, PayBox). Hours (taken from the Google Business Profile, Oct 2026): Sun, Tue, Thu 09:00–20:00, Mon and Fri 09:00–14:00, closed Wed and Sat (`SITE.openingHours` is the source). Contact channels: phone, WhatsApp, on-site contact form, Instagram.
 
 **Mobile is the primary device.** The site owner confirmed most visitors arrive on a phone. Mobile is not a secondary breakpoint to check after desktop — it is the primary experience every design/UX decision should be evaluated against first (layout, tap targets, load performance, copy length, form usability, animation cost on lower-end devices).
 
