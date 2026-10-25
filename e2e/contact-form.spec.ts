@@ -119,4 +119,11 @@ test.describe('Contact form', () => {
       page.locator('#form-intro').getByRole('link', { name: /שאלות הנפוצות/ })
     ).toHaveAttribute('href', '/faq/');
   });
+
+  // Prettier drops a space that sits only in a line break next to an inline tag,
+  // and this sentence once rendered as "בית?התשובות". Compare the rendered text.
+  test('keeps a space between the FAQ question and its link', async ({ page }) => {
+    const text = await page.locator('#form-intro').innerText();
+    expect(text).toContain('טיפולי בית? התשובות');
+  });
 });
