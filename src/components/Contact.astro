@@ -233,6 +233,14 @@ const contactItems = [
           <p class="mt-1.5 text-sm text-neutral-600">
             ספרו לי על הכאב שלכם, ונמצא יחד את&nbsp;הפתרון הנכון.
           </p>
+          <p class="mt-1 text-sm text-neutral-600">
+            שאלות על מחיר, ביטולים או טיפולי בית?
+            <a
+              href="/faq/"
+              class="inline-block py-1.5 font-semibold text-teal-700 underline underline-offset-2 transition-colors hover:text-teal-800"
+              >התשובות בשאלות הנפוצות</a
+            >.
+          </p>
         </div>
 
         <!-- Success state (hidden until form submit) -->
@@ -337,13 +345,10 @@ const contactItems = [
                 id="contact-message"
                 name="message"
                 rows={3}
-                required
-                aria-required="true"
-                placeholder="ספרו לי קצת על הכאב או הצורך שלכם..."
+                placeholder="ספרו לי על הכאב או הצורך שלכם (לא חובה)"
                 class="form-input resize-none"></textarea>
-              <label for="contact-message" class="form-float-label">הודעה</label>
+              <label for="contact-message" class="form-float-label">הודעה (לא חובה)</label>
             </div>
-            <p class="form-error hidden" id="message-error" role="alert"></p>
           </div>
 
           <!-- Submit -->
@@ -436,13 +441,9 @@ const contactItems = [
     let valid = true;
     const name = (document.getElementById('contact-name') as HTMLInputElement).value.trim();
     const phone = (document.getElementById('contact-phone') as HTMLInputElement).value.trim();
-    const message = (
-      document.getElementById('contact-message') as HTMLTextAreaElement
-    ).value.trim();
 
     clearError('contact-name', 'name-error');
     clearError('contact-phone', 'phone-error');
-    clearError('contact-message', 'message-error');
 
     if (!name) {
       showError('contact-name', 'name-error', 'שם מלא הוא שדה חובה.');
@@ -453,10 +454,6 @@ const contactItems = [
       valid = false;
     } else if (!isValidPhone(phone)) {
       showError('contact-phone', 'phone-error', 'אנא הכניסו מספר טלפון תקין.');
-      valid = false;
-    }
-    if (!message) {
-      showError('contact-message', 'message-error', 'הודעה היא שדה חובה.');
       valid = false;
     }
     if (!valid) {
@@ -509,7 +506,9 @@ const contactItems = [
           subject: 'פנייה חדשה מהאתר: גל עופרי פיזיותרפיה',
           name,
           phone,
-          message,
+          // Optional on the form. Web3Forms mails the fields it is given, so an
+          // empty one would arrive as a blank line; say so instead.
+          message: message || 'לא נכתבה הודעה. נא לחזור אל הפונה בטלפון.',
           botcheck,
         }),
       });
