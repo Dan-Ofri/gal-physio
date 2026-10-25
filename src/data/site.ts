@@ -65,18 +65,21 @@ export const SITE = {
   // visitors read.
   openingHours: [
     {
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-      daysHebrew: 'ימים א׳–ה׳',
-      opens: '08:00',
-      closes: '19:00',
+      days: ['Sunday', 'Tuesday', 'Thursday'],
+      daysHebrew: 'ימים א׳, ג׳, ה׳',
+      opens: '09:00',
+      closes: '20:00',
     },
     {
-      days: ['Friday'],
-      daysHebrew: 'יום ו׳',
-      opens: '08:00',
+      days: ['Monday', 'Friday'],
+      daysHebrew: 'ימים ב׳, ו׳',
+      opens: '09:00',
       closes: '14:00',
     },
   ],
+  // The days with no slot above. Not in `openingHours` because Schema.org says
+  // "closed" by leaving a day out; this is only for the people reading.
+  closedDaysHebrew: 'רביעי ושבת',
 
   // ── Social ────────────────────────────────────────────────────────────────
   social: {
@@ -111,6 +114,6 @@ export const HOME_VISIT_AREAS_TEXT =
     : homeVisitNames[0];
 
 /** The opening hours as one line of running text, e.g. for an FAQ answer. */
-export const OPENING_HOURS_TEXT = SITE.openingHours
+export const OPENING_HOURS_TEXT = `${SITE.openingHours
   .map((slot) => `${slot.daysHebrew} ${slot.opens}–${slot.closes}`)
-  .join(', ');
+  .join(', ')}, ${SITE.closedDaysHebrew}: סגור`;
