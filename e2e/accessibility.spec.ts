@@ -4,7 +4,7 @@ import AxeBuilder from '@axe-core/playwright';
 // eslint-plugin-jsx-a11y (run at lint time) only checks the static .astro
 // markup. This runs axe-core against the rendered DOM to catch computed
 // issues static analysis can't see: color contrast, focus order, ARIA tree.
-const pages = ['/', '/privacy', '/accessibility', '/cancellation', '/faq'];
+const pages = ['/', '/privacy', '/accessibility', '/cancellation', '/faq', '/404.html'];
 
 for (const path of pages) {
   test(`${path} has no automatic WCAG 2.1 AA violations`, async ({ page }) => {

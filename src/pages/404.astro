@@ -1,0 +1,54 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Nav from '@components/Nav.astro';
+import Footer from '@components/Footer.astro';
+import { SITE } from '@data/site';
+---
+
+<!--
+  Served by the host for any address that does not exist: Cloudflare through
+  `not_found_handling: "404-page"` in wrangler.jsonc, Vercel by finding 404.html.
+  noindex because the same page answers every wrong address; Google should not
+  list it, and a crawler that lands here has nothing to follow.
+-->
+<BaseLayout
+  title="הדף לא נמצא"
+  description="הדף שחיפשתם לא נמצא. אפשר לחזור לעמוד הבית או לפנות אליי ישירות."
+  noindex
+  bodyClass="!pb-0"
+>
+  <Nav slot="header" />
+
+  <section class="section-padding bg-neutral-50">
+    <div class="container-prose max-w-2xl text-center">
+      <p class="eyebrow text-xs font-semibold tracking-wide text-teal-600">שגיאה 404</p>
+      <h1 class="font-heading heading-rule mt-3 text-3xl font-bold text-teal-700 md:text-4xl">
+        הדף לא נמצא
+      </h1>
+      <p class="mt-6 leading-relaxed text-neutral-700">
+        הכתובת שחיפשתם לא קיימת, או שהדף עבר למקום אחר. אפשר לחזור לעמוד הבית, ואם חיפשתם משהו
+        מסוים, אתם מוזמנים לפנות אליי ישירות.
+      </p>
+
+      <div
+        class="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center"
+      >
+        <a href="/" class="btn-primary whitespace-nowrap">לעמוד הבית</a>
+        <a
+          href={SITE.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary whitespace-nowrap"
+        >
+          הודעה בוואטסאפ
+        </a>
+        <a href={`tel:${SITE.phoneE164}`} class="btn-secondary whitespace-nowrap">
+          התקשרו אליי
+          <span dir="ltr" class="text-sm text-neutral-600">{SITE.phone}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

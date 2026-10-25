@@ -100,4 +100,14 @@ test.describe('Navigation', () => {
       expect(bare, 'internal links without a trailing slash').toEqual([]);
     });
   }
+
+  test('an address that does not exist gets a real 404 with a way back', async ({ page }) => {
+    const response = await page.goto('/no-such-page/');
+    expect(response?.status(), 'the status must be 404, not a 200 that hides broken links').toBe(
+      404
+    );
+    await expect(page.getByRole('heading', { level: 1, name: 'הדף לא נמצא' })).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    await expect(page.getByRole('link', { name: 'לעמוד הבית' })).toHaveAttribute('href', '/');
+  });
 });
