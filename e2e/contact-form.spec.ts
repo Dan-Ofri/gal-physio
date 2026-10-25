@@ -9,13 +9,16 @@ test.describe('Contact form', () => {
     await page.locator('#contact').scrollIntoViewIfNeeded();
   });
 
-  test('shows a validation error per empty required field', async ({ page }) => {
+  test('shows a validation error for the empty name and phone, not the optional message', async ({
+    page,
+  }) => {
     await page.locator('#submit-btn').click();
 
     await expect(page.locator('#name-error')).toBeVisible();
     await expect(page.locator('#name-error')).toHaveText('שם מלא הוא שדה חובה.');
     await expect(page.locator('#phone-error')).toBeVisible();
-    await expect(page.locator('#message-error')).toBeVisible();
+    await expect(page.locator('#contact-message')).not.toHaveAttribute('aria-invalid', 'true');
+    await expect(page.locator('#contact-message')).not.toHaveAttribute('required', /.*/);
     await expect(page.locator('#contact-name')).toHaveAttribute('aria-invalid', 'true');
   });
 
@@ -86,5 +89,34 @@ test.describe('Contact form', () => {
     await expect(page.locator('#form-error-state')).toBeVisible();
     await expect(page.locator('#form-error-state')).toBeFocused();
     await expect(page.locator('#submit-btn')).toBeEnabled();
+  });
+
+  test('sends without a message, and the email says so instead of arriving blank', async ({
+    page,
+  }) => {
+    let body: Record<string, string> = {};
+    await page.route('https://api.web3forms.com/submit', (route) => {
+      body = route.request().postDataJSON();
+      return route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: '{"success":true}',
+      });
+    });
+
+    await page.locator('#contact-name').fill('דנה כהן');
+    await page.locator('#contact-phone').fill('0501234567');
+    await page.locator('#submit-btn').click();
+
+    await expect(page.locator('#form-success')).toBeVisible();
+    expect(body.message, 'an empty message must not reach Gal as an empty field').toMatch(
+      /לא נכתבה הודעה/
+    );
+  });
+
+  test('links to the FAQ from the form', async ({ page }) => {
+    await expect(
+      page.locator('#form-intro').getByRole('link', { name: /שאלות הנפוצות/ })
+    ).toHaveAttribute('href', '/faq/');
   });
 });

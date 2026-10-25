@@ -18,6 +18,8 @@ The site presents Gal Ofri, a licensed physiotherapist (B.P.T) in Tel Aviv, and 
 
 Confirmed by Gal in Oct 2026. The existing copy (her history as a former competitive gymnast who went through injury and rehab herself, the "whole person" philosophy, personalized ongoing care) is broadly right. What she added, and what new copy should lean on, is **function and self-efficacy**: the work is aimed at what the patient can do in daily life, and at their sense that they are capable of doing it themselves, not at the painful spot alone and not at keeping them in treatment. Her approved About quote says exactly this ("המטרה שלי אינה שתישארו אצלי לעולם…"), and step 3 of the first-visit section ("כלים להמשך") carries it too.
 
+What sets her apart, as Gal described it in Oct 2026 and as new copy may lean on: she is a former competitive gymnast who went through injuries and rehab herself, so she knows both sides of it; she still coaches; she holds dry-needling and fascia courses (describe these as training she has completed, nothing about outcomes); and she focuses on orthopedic treatment, all ages except infants. The Kiryat Ono address that appears on her older Instagram material is not in use. Do not add it anywhere.
+
 Price: 350–400 ₪ per session, confirmed by Gal in Oct 2026. Published in the FAQ and as the JSON-LD `priceRange`, both from `SITE.price` in `src/data/site.ts`.
 
 Session length: the first visit is always an hour, follow-ups 45–60 minutes. Treatment is offered in Hebrew and English. Gal holds a formal dry-needling certification; it is a secondary skill, and where it appears on the homepage is still her decision.
