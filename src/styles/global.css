@@ -490,7 +490,7 @@
   .form-input:focus ~ .form-float-label,
   .form-input:not(:placeholder-shown) ~ .form-float-label {
     top: -0.0625rem;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     color: var(--color-neutral-600);
   }
 
@@ -541,7 +541,7 @@
   }
 
   .form-error {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-error);
     margin-top: 0.25rem;

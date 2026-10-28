@@ -66,7 +66,9 @@ const contactItems = [
   <div class="container-prose relative z-10">
     <!-- Section header -->
     <div class="mx-auto mb-12 max-w-2xl text-center">
-      <p class="eyebrow text-accent-gold text-xs font-semibold tracking-[0.15em] uppercase">
+      <p
+        class="eyebrow text-accent-gold text-[0.8125rem] font-semibold tracking-[0.15em] uppercase"
+      >
         צור קשר
       </p>
       <h2
@@ -109,7 +111,9 @@ const contactItems = [
                     />
                   </div>
                   <div>
-                    <p class="text-xs font-semibold tracking-wide text-white/85">{item.label}</p>
+                    <p class="text-[0.8125rem] font-semibold tracking-wide text-white/85">
+                      {item.label}
+                    </p>
                     <a
                       href={item.href}
                       aria-label={item.ariaLabel}
@@ -153,7 +157,7 @@ const contactItems = [
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold tracking-wide text-white/85">שעות פעילות</p>
+              <p class="text-[0.8125rem] font-semibold tracking-wide text-white/85">שעות פעילות</p>
               <dl class="mt-0.5 space-y-0.5">
                 {
                   SITE.openingHours.map((slot) => (
@@ -182,7 +186,7 @@ const contactItems = [
               href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address.street + ', ' + SITE.address.cityHebrew)}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/85 transition-colors duration-200 hover:border-white/40 hover:text-white"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-sm font-medium text-white/85 transition-colors duration-200 hover:border-white/40 hover:text-white"
               aria-label="ניווט לקליניקה ב-Google Maps"
             >
               <!-- Google Maps' own mark (Simple Icons), not a generic pin: it sits
@@ -204,7 +208,7 @@ const contactItems = [
               href="https://waze.com/ul?q=Bloch%2038%20Tel%20Aviv"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-xs font-medium text-white/85 transition-colors duration-200 hover:border-white/40 hover:text-white"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-white/20 px-3.5 py-2 text-sm font-medium text-white/85 transition-colors duration-200 hover:border-white/40 hover:text-white"
               aria-label="ניווט לקליניקה ב-Waze"
             >
               <!-- Waze's actual logo (Simple Icons), not the navigation arrow that
@@ -391,7 +395,7 @@ const contactItems = [
                 harder to scan than centred one-liners look. The button's own
                 label stays centred, because that belongs to the button. */
             }
-            <p class="mt-3 text-xs text-neutral-600">
+            <p class="mt-3 text-sm text-neutral-600">
               הפרטים משמשים אך ורק ליצירת קשר איתכם. לפרטים&nbsp;נוספים,{' '}
               <a
                 href="/privacy/"
