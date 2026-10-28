@@ -80,11 +80,15 @@ const contactItems = [
     </div>
 
     <!-- 2-column grid: info (right in RTL) + form (left in RTL) -->
-    <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
+    <!-- From lg the two cards share one height: the grid stretches them and the info
+         panel spreads its three groups top to bottom, so the navigation buttons end
+         level with the form's submit area. Below lg they stack and keep their own
+         heights. -->
+    <div class="grid items-center gap-10 lg:grid-cols-2 lg:items-stretch lg:gap-12">
       <!-- ── Contact info — glassmorphism panel ── -->
       <div class="flex flex-col gap-5">
         <div
-          class="rounded-3xl bg-white/8 p-6 ring-1 ring-white/15 lg:p-8"
+          class="rounded-3xl bg-white/8 p-6 ring-1 ring-white/15 lg:flex lg:flex-1 lg:flex-col lg:justify-between lg:p-8"
           style="backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);"
         >
           <div class="space-y-5" role="list" aria-label="פרטי יצירת קשר">
@@ -232,7 +236,7 @@ const contactItems = [
 
       <!-- ── Contact form — pure white card ── -->
       <div
-        class="rounded-3xl bg-white px-6 py-8 shadow-[0_8px_48px_-8px_rgb(0_0_0_/_0.45)] ring-1 ring-white/20 lg:px-8 lg:py-8"
+        class="rounded-3xl bg-white px-6 py-8 shadow-[0_8px_48px_-8px_rgb(0_0_0_/_0.45)] ring-1 ring-white/20 lg:flex lg:flex-col lg:px-8 lg:py-8"
       >
         <div id="form-intro">
           <h3 class="font-heading text-2xl font-bold text-teal-700">
@@ -251,8 +255,14 @@ const contactItems = [
           </p>
         </div>
 
-        <!-- Success state (hidden until form submit) -->
-        <div id="form-success" class="hidden py-10 text-center" role="status" tabindex="-1">
+        <!-- Success state (hidden until form submit). From lg the card is as tall as the
+             info panel, so centre the message in it rather than leaving a gap below. -->
+        <div
+          id="form-success"
+          class="hidden py-10 text-center lg:my-auto"
+          role="status"
+          tabindex="-1"
+        >
           <div
             class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-teal-50 ring-1 ring-teal-200"
             aria-hidden="true"
