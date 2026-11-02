@@ -8,6 +8,19 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:4321',
+    // Every test starts with the cookie banner already answered. Unanswered, it
+    // appears a second after load, sits over the bottom of the page and would
+    // swallow clicks meant for the page under it. e2e/consent.spec.ts overrides
+    // this with an empty state to test the banner itself.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: 'http://localhost:4321',
+          localStorage: [{ name: 'gal-consent', value: 'denied' }],
+        },
+      ],
+    },
     // Not `on-first-retry`: that keeps the retry's trace and throws the first
     // attempt away, and the first attempt is the one that ran under whatever
     // conditions caused the failure. Chasing the contact-form failure of

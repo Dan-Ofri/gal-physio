@@ -11,6 +11,10 @@ export const SITE = {
   url: 'https://physiog.co.il',
   locale: 'he_IL',
 
+  // Google Analytics 4 measurement ID (a public identifier, not a secret). The
+  // tag loads only after the visitor accepts the banner: src/scripts/analytics.ts.
+  analyticsId: 'G-5JDLD83FHE',
+
   // ── Contact ──────────────────────────────────────────────────────────────
   phone: '052-308-6600', // Human-readable display
   phoneE164: '+972523086600', // E.164 for tel: links and Schema.org
