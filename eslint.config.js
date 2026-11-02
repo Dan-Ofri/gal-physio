@@ -27,6 +27,11 @@ export default [
     },
   },
   {
+    // Client scripts the page runs in the browser.
+    files: ['src/scripts/**/*.ts'],
+    languageOptions: { globals: { ...globals.browser } },
+  },
+  {
     files: ['screenshots/**/*.mjs', 'scripts/**/*.mjs'],
     languageOptions: {
       globals: { ...globals.node, ...globals.browser },

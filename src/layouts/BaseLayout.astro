@@ -1,5 +1,6 @@
 ---
 import SEO from '@components/SEO.astro';
+import ConsentBanner from '@components/ConsentBanner.astro';
 import type { Props as SEOProps } from '@components/SEO.astro';
 import '@styles/global.css';
 // Hashed URLs for the two Hebrew subsets, so they can be preloaded. Every
@@ -63,6 +64,8 @@ const { bodyClass, ...seoProps } = Astro.props;
 
     <!-- Fixed overlays (sticky bars, modals) — keeps them inside <body> -->
     <slot name="overlay" />
+
+    <ConsentBanner />
 
     <!-- Slot for page-level scripts -->
     <slot name="scripts" />

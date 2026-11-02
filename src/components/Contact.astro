@@ -539,6 +539,9 @@ const contactItems = [
       if (payload && payload.success === false) throw new Error('Submission rejected');
 
       showSuccess();
+      // Only a real, accepted submission (not the honeypot branch above). The
+      // analytics script listens for it and counts one lead, with no form data.
+      document.dispatchEvent(new CustomEvent('contact-form-sent'));
     } catch {
       submitBtn.disabled = false;
       submitText.textContent = 'שלחו הודעה';

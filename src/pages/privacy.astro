@@ -35,7 +35,7 @@ import { SITE } from '@data/site';
       </a>
 
       <h1 class="font-heading text-3xl font-bold text-teal-700 md:text-4xl">מדיניות פרטיות</h1>
-      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: מאי 2026</p>
+      <p class="mt-2 text-sm text-neutral-600">עודכן לאחרונה: נובמבר 2026</p>
 
       <!-- Intro callout -->
       <div class="mt-8 rounded-2xl border border-teal-100 bg-teal-50 px-6 py-5">
@@ -165,6 +165,12 @@ import { SITE } from '@data/site';
               >מידע רפואי מפורט אינו נאסף דרך האתר.</strong
             > כל שיחה בנושאים רפואיים מתנהלת אישית בלבד: בטלפון, בוואטסאפ, או בתוך הקליניקה.
           </p>
+          <p class="mt-4">
+            בנוסף, <strong class="font-semibold text-neutral-800">רק אם אישרתם זאת</strong> בהודעת העוגיות,
+            אנו אוספים נתוני שימוש סטטיסטיים באמצעות Google Analytics: אילו עמודים נצפו, סוג המכשיר והדפדפן,
+            מאיפה הגעתם בקירוב, ופעולות כמו לחיצה על הטלפון או הוואטסאפ ושליחת הטופס. לא נאספים שם, מספר
+            טלפון או תוכן ההודעה.
+          </p>
         </section>
 
         <section id="s3">
@@ -172,9 +178,10 @@ import { SITE } from '@data/site';
             3. כיצד אנו משתמשים במידע
           </h2>
           <p>
-            המידע משמש <strong class="font-semibold text-neutral-800">אך ורק</strong> לצורך חזרה אליכם
-            לתיאום ייעוץ ראשוני או פגישה. איננו משתמשים בו לשיווק, ניוזלטר, ניתוח נתונים, או כל מטרה מסחרית
-            אחרת ללא הסכמתכם המפורשת.
+            המידע שמסרתם בטופס משמש <strong class="font-semibold text-neutral-800">אך ורק</strong> לצורך
+            חזרה אליכם לתיאום ייעוץ ראשוני או פגישה. איננו משתמשים בו לשיווק, ניוזלטר, ניתוח נתונים, או
+            כל מטרה מסחרית אחרת ללא הסכמתכם המפורשת. נתוני השימוש הסטטיסטיים (סעיף 8) משמשים להבנת אופן
+            השימוש באתר ולשיפורו בלבד.
           </p>
         </section>
 
@@ -207,6 +214,12 @@ import { SITE } from '@data/site';
               >Web3Forms</strong
             > (web3forms.com), המשמש כמעבד נתונים מורשה. Web3Forms מאחסנת את הנתונים זמנית ומעבירה אותם
             אלינו בדוא"ל בלבד. מדיניות הפרטיות שלהם זמינה באתר web3forms.com.
+          </p>
+          <p class="mt-3">
+            אם אישרתם עוגיות, נתוני השימוש הסטטיסטיים מעובדים על ידי <strong
+              class="font-semibold text-neutral-800">Google</strong
+            > (Google Analytics), שעשויה לאחסן אותם בשרתים מחוץ לישראל. הפרסום והתאמה אישית של פרסומות
+            אינם מופעלים.
           </p>
           <p class="mt-3">איננו מוכרים, משכירים, או מעבירים מידע אישי לצדדים שלישיים נוספים.</p>
         </section>
@@ -246,8 +259,30 @@ import { SITE } from '@data/site';
         <section id="s8">
           <h2 class="font-heading mb-3 text-xl font-bold text-neutral-800">8. עוגיות (Cookies)</h2>
           <p>
-            אתר זה אינו משתמש בעוגיות לצורכי שיווק, פרסום, או מעקב. טכנולוגיות אחסון מינימליות
-            עשויות לשמש לצרכים טכניים בלבד (כגון שמירת העדפות בסיסיות), ללא יכולת זיהוי אישי.
+            האתר אינו משתמש בעוגיות לשיווק או לפרסום. עוגיות מדידה של Google Analytics נשמרות
+            <strong class="font-semibold text-neutral-800">רק אם לחצתם "אישור"</strong> בהודעה שמופיעה
+            בביקור הראשון. עד אז לא נטענת שום תוספת של גוגל ולא נשמרת עוגיה.
+          </p>
+          <ul class="mt-3 list-inside list-disc space-y-1.5 text-sm">
+            <li>
+              <strong class="font-semibold text-neutral-800">_ga ו־_ga_ ואחריה מזהה:</strong> מזהות דפדפן
+              באופן אנונימי למחצה כדי לספור ביקורים ללא כפילויות. תוקפן עד 13 חודשים.
+            </li>
+            <li>
+              <strong class="font-semibold text-neutral-800">gal-consent:</strong> לא עוגיה אלא פריט אחסון
+              מקומי בדפדפן, ששומר את בחירתכם כדי שלא נשאל שוב.
+            </li>
+          </ul>
+          <p class="mt-3">
+            לחצתם "לא תודה"? לא נטען דבר. אפשר לשנות את הבחירה בכל עת, גם לבטל אישור שניתן, בלחיצה
+            על
+            <button
+              type="button"
+              data-consent-settings
+              class="inline-block cursor-pointer py-1.5 font-medium text-teal-700 underline underline-offset-2 hover:text-teal-800"
+              >הגדרות עוגיות</button
+            >
+            (גם בתחתית כל עמוד). ביטול אישור מוחק את עוגיות המדידה מהדפדפן.
           </p>
         </section>
       </div>
