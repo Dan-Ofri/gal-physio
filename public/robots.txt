@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
-# The short WhatsApp link only redirects; it has nothing to index.
+# The short WhatsApp and review links only redirect; they have nothing to index.
 Disallow: /wa$
+Disallow: /review$
 
 Sitemap: https://physiog.co.il/sitemap-index.xml
