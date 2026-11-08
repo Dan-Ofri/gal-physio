@@ -172,3 +172,36 @@ test.describe('Internal links resolve from every page', () => {
     await expect(page.locator('#services')).toBeInViewport();
   });
 });
+
+test.describe('FAQ in the main navigation', () => {
+  const openNav = async (page: import('@playwright/test').Page, isMobile: boolean) => {
+    if (isMobile) {
+      await page.getByRole('button', { name: 'פתח תפריט ניווט' }).click();
+      await expect(page.locator('#mobile-menu')).toHaveAttribute('data-open', 'true');
+      return page.locator('#mobile-menu nav');
+    }
+    return page.getByRole('navigation', { name: 'ניווט ראשי' });
+  };
+
+  test('the menu links to the FAQ and the link opens it', async ({ page, isMobile }) => {
+    await page.goto('/');
+    const nav = await openNav(page, isMobile);
+    await nav.getByRole('link', { name: 'שאלות נפוצות' }).click();
+    await expect(page).toHaveURL(/\/faq\/$/);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  });
+
+  test('the FAQ link is marked as the current page only on the FAQ', async ({ page, isMobile }) => {
+    await page.goto('/faq/');
+    let nav = await openNav(page, isMobile);
+    await expect(nav.getByRole('link', { name: 'שאלות נפוצות' })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+    await expect(nav.locator('[aria-current]')).toHaveCount(1);
+
+    await page.goto('/privacy/');
+    nav = await openNav(page, isMobile);
+    await expect(nav.locator('[aria-current]')).toHaveCount(0);
+  });
+});

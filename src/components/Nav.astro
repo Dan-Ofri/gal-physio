@@ -12,6 +12,9 @@ const links = [
   { href: anchor('#services'), label: 'שירותים' },
   { href: anchor('#testimonials'), label: 'המלצות' },
   { href: anchor('#contact'), label: 'יצירת קשר' },
+  // A page, not a section: the scroll-spy below only tracks "#" links, so the
+  // current-page marker for this one is set here, from the URL.
+  { href: '/faq/', label: 'שאלות נפוצות', current: /^\/faq\/?$/.test(Astro.url.pathname) },
 ];
 ---
 
@@ -79,9 +82,11 @@ const links = [
     <!-- Desktop Nav Links; hidden on mobile -->
     <nav aria-label="ניווט ראשי" class="hidden items-center gap-2 lg:flex">
       {
-        links.map(({ href, label }) => (
+        links.map(({ href, label, current }) => (
           <a
             href={href}
+            aria-current={current ? 'page' : undefined}
+            data-current={current ? '' : undefined}
             class="relative rounded-lg px-5 py-2 text-sm font-medium text-neutral-700 transition-colors duration-200 hover:text-teal-600 focus-visible:text-teal-600"
           >
             {label}
@@ -187,9 +192,11 @@ const links = [
     class="flex flex-1 flex-col items-center justify-center gap-2 px-6"
   >
     {
-      links.map(({ href, label }) => (
+      links.map(({ href, label, current }) => (
         <a
           href={href}
+          aria-current={current ? 'page' : undefined}
+          data-current={current ? '' : undefined}
           class="w-full rounded-2xl py-4 text-center text-xl font-semibold text-neutral-700 transition-[background-color,color,transform] duration-150 hover:bg-neutral-100 hover:text-teal-700 active:scale-[0.97]"
         >
           {label}
@@ -408,6 +415,9 @@ const links = [
   }
   #mobile-menu[data-open='true'] nav a:nth-child(4) {
     transition-delay: 200ms;
+  }
+  #mobile-menu[data-open='true'] nav a:nth-child(5) {
+    transition-delay: 240ms;
   }
 
   /* ── Hamburger ⇄ X ──
