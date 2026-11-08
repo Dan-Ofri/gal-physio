@@ -48,7 +48,7 @@ export const SITE = {
   price: { min: 350, max: 400, currency: '₪' },
 
   // Follow-up session length, confirmed by Gal, Oct 2026. The first visit is
-  // always an hour, which the copy says in words ("שעה"). Feeds the FAQ only:
+  // about an hour, which the copy says in words ("כשעה"). Feeds the FAQ only:
   // the first-visit section is about the first visit and left it out on purpose.
   sessionMinutes: { followUpMin: 45, followUpMax: 60 },
 
