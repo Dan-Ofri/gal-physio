@@ -3,6 +3,10 @@ import { SITE } from '@data/site';
 
 const year = new Date().getFullYear();
 
+// The photographer's own files carry "© 2026 Yasmin Photography" in their metadata, so the credit
+// below uses her business name as she wrote it, not a transliteration. Hers is the copyright on the
+// photos; the line above it covers the site's text and design.
+
 // Section anchors exist only on the home page; see Nav.astro.
 const toHome = Astro.url.pathname !== '/';
 const anchor = (hash: string) => (toHome ? `/${hash}` : hash);
@@ -127,7 +131,10 @@ const socialLinks = [
     <!-- Bottom bar: copyright + policy links + social icons -->
     <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
       <div class="flex flex-col items-center gap-2 sm:items-start">
-        <p class="text-sm text-neutral-600">© {year} גל עופרי, פיזיותרפיסטית מוסמכת</p>
+        <div class="space-y-0.5 text-center text-sm text-neutral-600 sm:text-start">
+          <p>© {year} גל עופרי. כל הזכויות שמורות.</p>
+          <p>צילום: <bdi>Yasmin Photography</bdi> · בניית האתר: דן עופרי</p>
+        </div>
         <nav
           aria-label="קישורי מדיניות ונגישות"
           class="flex flex-wrap justify-center gap-x-5 gap-y-1 sm:justify-start"
