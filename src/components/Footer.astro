@@ -3,11 +3,15 @@ import { SITE } from '@data/site';
 
 const year = new Date().getFullYear();
 
+// Section anchors exist only on the home page; see Nav.astro.
+const toHome = Astro.url.pathname !== '/';
+const anchor = (hash: string) => (toHome ? `/${hash}` : hash);
+
 const navLinks = [
-  { href: '#about', label: 'אודות' },
-  { href: '#services', label: 'שירותים' },
-  { href: '#testimonials', label: 'המלצות' },
-  { href: '#contact', label: 'צור קשר' },
+  { href: anchor('#about'), label: 'אודות' },
+  { href: anchor('#services'), label: 'שירותים' },
+  { href: anchor('#testimonials'), label: 'המלצות' },
+  { href: anchor('#contact'), label: 'צור קשר' },
 ];
 
 // Both marks are the brands' own glyphs (Simple Icons), solid, filled with

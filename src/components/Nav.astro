@@ -1,11 +1,17 @@
 ---
 import { SITE } from '@data/site';
 
+// Section anchors only exist on the home page. On /faq and the policy pages a
+// bare "#contact" resolves against that page, matches nothing and the tap does
+// nothing, so everywhere else they have to point back at the home page.
+const toHome = Astro.url.pathname !== '/';
+const anchor = (hash: string) => (toHome ? `/${hash}` : hash);
+
 const links = [
-  { href: '#about', label: 'אודות' },
-  { href: '#services', label: 'שירותים' },
-  { href: '#testimonials', label: 'המלצות' },
-  { href: '#contact', label: 'יצירת קשר' },
+  { href: anchor('#about'), label: 'אודות' },
+  { href: anchor('#services'), label: 'שירותים' },
+  { href: anchor('#testimonials'), label: 'המלצות' },
+  { href: anchor('#contact'), label: 'יצירת קשר' },
 ];
 ---
 
@@ -53,7 +59,7 @@ const links = [
     <!-- Calendar shortcut — mirrors hamburger size, keeps logo centred on mobile -->
     <a
       id="nav-cal-btn"
-      href="#contact"
+      href={anchor('#contact')}
       class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-teal-200 text-teal-600 transition-colors hover:border-teal-300 hover:bg-teal-50 active:bg-teal-100 lg:hidden"
       aria-label="לקביעת תור"
     >
@@ -128,7 +134,7 @@ const links = [
         </svg>
       </a>
       <a
-        href="#contact"
+        href={anchor('#contact')}
         class="btn-primary py-2.5 text-sm"
         aria-label="לחצו לתיאום ייעוץ ראשוני עם גל עופרי פיזיותרפיה"
       >
@@ -195,7 +201,7 @@ const links = [
   <!-- Bottom CTA area -->
   <div class="container-prose flex flex-col gap-3 pt-4 pb-10">
     <a
-      href="#contact"
+      href={anchor('#contact')}
       class="btn-primary justify-center py-4 text-base"
       aria-label="תיאום ייעוץ ראשוני ופגישה ראשונה עם גל עופרי"
     >

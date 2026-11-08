@@ -87,3 +87,64 @@ test.describe('Navigation', () => {
     });
   }
 });
+
+const PAGES = ['/', '/faq', '/privacy', '/accessibility', '/cancellation'];
+
+test.describe('Internal links resolve from every page', () => {
+  // The header and footer anchors were bare "#contact" etc., which only exist
+  // on the home page: on /faq the tap resolved against /faq, matched nothing
+  // and silently did nothing. This crawls every page and checks that each
+  // internal link lands on a real page and, if it carries a #hash, on an id
+  // that exists there. Hidden links (the mobile menu on desktop) are included.
+  for (const path of PAGES) {
+    test(`every internal link on ${path} has a target`, async ({ page }) => {
+      await page.goto(path);
+      const hrefs = await page.$$eval('a[href]', (as) =>
+        as.map((a) => (a as HTMLAnchorElement).getAttribute('href') ?? '')
+      );
+      const origin = new URL(page.url()).origin;
+      const internal = [
+        ...new Set(
+          hrefs
+            .filter((h) => !/^(mailto:|tel:|javascript:)/.test(h))
+            .map((h) => new URL(h, page.url()))
+            .filter((u) => u.origin === origin)
+            .map((u) => u.pathname + u.hash)
+        ),
+      ];
+      expect(internal.length).toBeGreaterThan(0);
+
+      const problems: string[] = [];
+      for (const target of internal) {
+        const url = new URL(target, origin);
+        const res = await page.request.get(url.pathname);
+        if (!res.ok()) {
+          problems.push(`${target}: HTTP ${res.status()}`);
+          continue;
+        }
+        if (!url.hash) continue;
+        const html = await res.text();
+        const id = decodeURIComponent(url.hash.slice(1));
+        if (!html.includes(`id="${id}"`)) {
+          problems.push(`${target}: no element with id="${id}" on ${url.pathname}`);
+        }
+      }
+      expect(problems).toEqual([]);
+    });
+  }
+
+  test('header and footer section links work from an inner page', async ({ page, isMobile }) => {
+    await page.goto('/faq');
+    if (isMobile) {
+      await page.getByRole('button', { name: 'פתח תפריט ניווט' }).click();
+      await page.locator('#mobile-menu nav').getByRole('link', { name: 'שירותים' }).click();
+    } else {
+      await page
+        .getByRole('navigation', { name: 'ניווט ראשי' })
+        .getByRole('link', { name: 'שירותים' })
+        .click();
+    }
+    await expect(page).toHaveURL(/\/#services$/);
+    await expect(page.locator('#services')).toBeInViewport();
+  });
+});
