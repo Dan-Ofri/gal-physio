@@ -72,14 +72,6 @@ const testimonials: Testimonial[] = [
       <p class="mt-4 leading-relaxed text-balance text-neutral-600">
         לכל אחד ואחת יש את הקצב והדרך שלהם. הנה כמה רגעים מהתהליכים שעברנו יחד.
       </p>
-      <a
-        href={SITE.googleReviews.profile}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-3 inline-flex items-center gap-1.5 py-1.5 text-sm font-medium text-teal-700 underline underline-offset-2 transition-colors hover:text-teal-800"
-      >
-        ראו עוד ביקורות ב-Google
-      </a>
     </div>
 
     <!-- Testimonial cards: horizontal snap carousel on mobile (one card + a peek of
@@ -223,12 +215,26 @@ const testimonials: Testimonial[] = [
       }
     </div>
 
+    <!-- More reviews: after the cards, not before them. As a link under the intro
+         it came first on a phone, so the way out of the page was offered before
+         the reader had seen a single review. -->
+    <p class="mt-6 text-center">
+      <a
+        href={SITE.googleReviews.profile}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-block py-1.5 text-sm font-medium text-teal-700 underline underline-offset-2 transition-colors hover:text-teal-800"
+      >
+        ראו עוד ביקורות ב-Google
+      </a>
+    </p>
+
     <!-- Asking for a review. A quiet text line, not a button: most people here
          have not been treated yet and are deciding whether to get in touch, so
          this must not compete with the contact CTAs. It is for the returning
          patient who happens to scroll this far. The {' '} is needed: without it
          the link rendered glued to the full stop ("היה.כתבו"). -->
-    <p class="mt-8 text-center text-sm text-neutral-600">
+    <p class="mt-2 text-center text-sm text-neutral-600">
       טופלתם אצלי? אשמח לשמוע איך היה.{' '}
       <a
         href={SITE.googleReviews.write}
